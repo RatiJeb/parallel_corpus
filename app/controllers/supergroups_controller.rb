@@ -1,0 +1,2 @@
+class SupergroupsController < ApplicationController
+end

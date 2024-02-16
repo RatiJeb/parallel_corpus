@@ -1,0 +1,13 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  collection: one
+  contents: MyText
+  order_number: 1
+  language: 1
+
+two:
+  collection: two
+  contents: MyText
+  order_number: 1
+  language: 1
