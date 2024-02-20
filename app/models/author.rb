@@ -5,4 +5,6 @@ class Author < ApplicationRecord
   has_many :groups, through: :group_authors
   has_many :collections, through: :collection_authors
 
+  enum status: [:active, :inactive, :hidden, :deleted]
+
 end

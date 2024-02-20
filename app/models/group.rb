@@ -18,7 +18,8 @@ class Group < ApplicationRecord
   has_many :translators, through: :group_translators
   has_many :types, through: :group_types
 
-  enum status: [:active, :inactive]
+  enum original_language: [:ka, :en]
+  enum status: [:active, :inactive, :hidden, :deleted]
 
   after_initialize :set_default_status, if: :new_record?
 

@@ -1,0 +1,13 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  old_id: 1
+  old_text_id: 1
+  term: MyText
+  collection: one
+
+two:
+  old_id: 1
+  old_text_id: 1
+  term: MyText
+  collection: two

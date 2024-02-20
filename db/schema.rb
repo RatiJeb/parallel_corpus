@@ -10,13 +10,16 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_02_16_151220) do
+ActiveRecord::Schema[7.1].define(version: 2024_02_20_154330) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
   create_table "authors", force: :cascade do |t|
     t.string "name_ka"
     t.string "name_en"
+    t.integer "status", default: 0, null: false
+    t.text "comment"
+    t.integer "old_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
@@ -85,6 +88,10 @@ ActiveRecord::Schema[7.1].define(version: 2024_02_16_151220) do
     t.string "name_ka", null: false
     t.string "name_en", null: false
     t.text "comment"
+    t.text "additional_info"
+    t.integer "year"
+    t.integer "translation_year"
+    t.integer "original_language", default: 0, null: false
     t.integer "status", default: 0, null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -95,6 +102,9 @@ ActiveRecord::Schema[7.1].define(version: 2024_02_16_151220) do
   create_table "fields", force: :cascade do |t|
     t.string "name_ka"
     t.string "name_en"
+    t.integer "status", default: 0, null: false
+    t.text "comment"
+    t.integer "old_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
@@ -102,6 +112,9 @@ ActiveRecord::Schema[7.1].define(version: 2024_02_16_151220) do
   create_table "genres", force: :cascade do |t|
     t.string "name_ka"
     t.string "name_en"
+    t.integer "status", default: 0, null: false
+    t.text "comment"
+    t.integer "old_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
@@ -170,6 +183,10 @@ ActiveRecord::Schema[7.1].define(version: 2024_02_16_151220) do
     t.string "name_ka", null: false
     t.string "name_en", null: false
     t.text "comment"
+    t.text "additional_info"
+    t.integer "year"
+    t.integer "translation_year"
+    t.integer "original_language", default: 0, null: false
     t.integer "status", default: 0, null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -180,6 +197,9 @@ ActiveRecord::Schema[7.1].define(version: 2024_02_16_151220) do
   create_table "publishings", force: :cascade do |t|
     t.string "name_ka"
     t.string "name_en"
+    t.integer "status", default: 0, null: false
+    t.text "comment"
+    t.integer "old_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
@@ -191,6 +211,16 @@ ActiveRecord::Schema[7.1].define(version: 2024_02_16_151220) do
     t.integer "status", default: 0, null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+  end
+
+  create_table "terms", force: :cascade do |t|
+    t.integer "old_id"
+    t.integer "old_text_id"
+    t.text "term"
+    t.bigint "text_block_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["text_block_id"], name: "index_terms_on_text_block_id"
   end
 
   create_table "text_blocks", force: :cascade do |t|
@@ -207,6 +237,9 @@ ActiveRecord::Schema[7.1].define(version: 2024_02_16_151220) do
   create_table "translators", force: :cascade do |t|
     t.string "name_ka"
     t.string "name_en"
+    t.integer "status", default: 0, null: false
+    t.text "comment"
+    t.integer "old_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
@@ -214,6 +247,9 @@ ActiveRecord::Schema[7.1].define(version: 2024_02_16_151220) do
   create_table "types", force: :cascade do |t|
     t.string "name_ka"
     t.string "name_en"
+    t.integer "status", default: 0, null: false
+    t.text "comment"
+    t.integer "old_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
@@ -257,5 +293,6 @@ ActiveRecord::Schema[7.1].define(version: 2024_02_16_151220) do
   add_foreign_key "group_types", "groups"
   add_foreign_key "group_types", "types"
   add_foreign_key "groups", "supergroups"
+  add_foreign_key "terms", "text_blocks"
   add_foreign_key "text_blocks", "collections"
 end
