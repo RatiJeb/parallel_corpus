@@ -22,6 +22,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_02_20_154330) do
     t.integer "old_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["old_id"], name: "index_authors_on_old_id", unique: true
   end
 
   create_table "collection_authors", force: :cascade do |t|
@@ -93,10 +94,12 @@ ActiveRecord::Schema[7.1].define(version: 2024_02_20_154330) do
     t.integer "translation_year"
     t.integer "original_language", default: 0, null: false
     t.integer "status", default: 0, null: false
+    t.integer "old_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.bigint "group_id", null: false
     t.index ["group_id"], name: "index_collections_on_group_id"
+    t.index ["old_id"], name: "index_collections_on_old_id", unique: true
   end
 
   create_table "fields", force: :cascade do |t|
@@ -107,6 +110,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_02_20_154330) do
     t.integer "old_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["old_id"], name: "index_fields_on_old_id", unique: true
   end
 
   create_table "genres", force: :cascade do |t|
@@ -117,6 +121,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_02_20_154330) do
     t.integer "old_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["old_id"], name: "index_genres_on_old_id", unique: true
   end
 
   create_table "group_authors", force: :cascade do |t|
@@ -188,9 +193,11 @@ ActiveRecord::Schema[7.1].define(version: 2024_02_20_154330) do
     t.integer "translation_year"
     t.integer "original_language", default: 0, null: false
     t.integer "status", default: 0, null: false
+    t.integer "old_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.bigint "supergroup_id", null: false
+    t.index ["old_id"], name: "index_groups_on_old_id", unique: true
     t.index ["supergroup_id"], name: "index_groups_on_supergroup_id"
   end
 
@@ -202,6 +209,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_02_20_154330) do
     t.integer "old_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["old_id"], name: "index_publishings_on_old_id", unique: true
   end
 
   create_table "supergroups", force: :cascade do |t|
@@ -220,6 +228,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_02_20_154330) do
     t.bigint "text_block_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["old_id"], name: "index_terms_on_old_id", unique: true
     t.index ["text_block_id"], name: "index_terms_on_text_block_id"
   end
 
@@ -228,10 +237,12 @@ ActiveRecord::Schema[7.1].define(version: 2024_02_20_154330) do
     t.text "contents"
     t.integer "order_number", null: false
     t.integer "language", default: 0, null: false
+    t.integer "old_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["collection_id", "order_number", "language"], name: "idx_on_collection_id_order_number_language_42425d13fb", unique: true
     t.index ["collection_id"], name: "index_text_blocks_on_collection_id"
+    t.index ["old_id", "language"], name: "index_text_blocks_on_old_id_and_language", unique: true
   end
 
   create_table "translators", force: :cascade do |t|
@@ -242,6 +253,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_02_20_154330) do
     t.integer "old_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["old_id"], name: "index_translators_on_old_id", unique: true
   end
 
   create_table "types", force: :cascade do |t|
@@ -252,6 +264,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_02_20_154330) do
     t.integer "old_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["old_id"], name: "index_types_on_old_id", unique: true
   end
 
   create_table "users", force: :cascade do |t|

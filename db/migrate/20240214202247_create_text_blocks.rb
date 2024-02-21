@@ -5,7 +5,9 @@ class CreateTextBlocks < ActiveRecord::Migration[7.1]
       t.text :contents
       t.integer :order_number, null: false
       t.integer :language, null: false, default: 0
+      t.integer :old_id
       t.index [:collection_id, :order_number, :language], unique: true
+      t.index [:old_id, :language], unique: true
 
       t.timestamps
     end

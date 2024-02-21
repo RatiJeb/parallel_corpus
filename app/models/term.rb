@@ -1,3 +1,3 @@
 class Term < ApplicationRecord
-  belongs_to :collection
+  belongs_to :text_block
 end

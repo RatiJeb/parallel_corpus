@@ -9,6 +9,8 @@ class CreateGroups < ActiveRecord::Migration[7.1]
       t.integer :translation_year
       t.integer :original_language, null: false, default: 0
       t.integer :status, null: false, default: 0
+      t.integer :old_id
+      t.index :old_id, unique: true
 
       t.timestamps
     end

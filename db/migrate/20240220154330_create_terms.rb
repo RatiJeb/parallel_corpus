@@ -5,6 +5,7 @@ class CreateTerms < ActiveRecord::Migration[7.1]
       t.integer :old_text_id
       t.text :term
       t.references :text_block, null: false, foreign_key: true
+      t.index :old_id, unique: true
 
       t.timestamps
     end
