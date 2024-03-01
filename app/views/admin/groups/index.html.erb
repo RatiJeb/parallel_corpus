@@ -2,9 +2,9 @@
 
 <h1>
   <% if @supergroup %>
-    <%= @supergroup.name_ka %> >
+    <%= link_to @supergroup.name_ka, admin_groups_path(supergroup_id: @supergroup.id) %> >
   <% end %>
-  ჯგუფები
+  <%= link_to 'ჯგუფები', admin_groups_path(supergroup_id: @supergroup.id) %>
 </h1>
 <p>
   <%= link_to 'ახალი ჯგუფის დამატება', new_admin_group_path %>
@@ -21,9 +21,10 @@
   <tbody>
     <% @groups.each do |group| %>
       <tr>
-        <td> <%= link_to group.name_ka, admin_collections_path(:group_id => group.id) %> </td>
-        <td> <%= link_to group.name_en, admin_collections_path(:group_id => group.id) %> </td>
+        <td> <%= link_to group.name_ka, admin_collections_path(group_id: group.id) %> </td>
+        <td> <%= link_to group.name_en, admin_collections_path(group_id: group.id) %> </td>
         <td> <%= group.status %> </td>
+        <td> <%= link_to 'edit', edit_admin_group_path(id: group.id) %> </td>
       </tr>
     <% end %>
   </tbody>

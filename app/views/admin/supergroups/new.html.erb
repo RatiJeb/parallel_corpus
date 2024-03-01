@@ -1,0 +1,18 @@
+<%= render partial: "admin/shared/header" %>
+
+<h1>
+  <%= link_to 'ქვეკორპუსები', admin_supergroups_path %> > ქვეკორპუსის დამატება
+</h1>
+
+<%= form_with model: [:admin, @supergroup] do |form| %>
+  <%= form.label :name_ka, 'სახელი (ka)' %>
+  <%= form.text_field :name_ka %>
+  <%= form.label :name_en, 'სახელი (en)' %>
+  <%= form.text_field :name_en %>
+  <%= form.label :comment, 'კომენტარი' %>
+  <%= form.text_area :comment, size: "60x10" %>
+  <%= form.label :status, 'სტატუსი' %>
+  <%= form.select :status, Supergroup.statuses.keys.map { |status| [status.titleize, status] } %>
+  <%= link_to 'უკან დაბრუნება', admin_supergroups_path %>
+  <%= form.submit %>
+<% end %>

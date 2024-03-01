@@ -2,9 +2,10 @@
 
 <h1>
   <% if @group %>
-    <%= link_to @group.supergroup.name_ka, admin_groups_path(:supergroup_id => @group.supergroup.id) %> > <%= @group.name_ka %> >
+    <%= link_to @group.supergroup.name_ka, admin_groups_path(:supergroup_id => @group.supergroup.id) %> >
+    <%= link_to @group.name_ka, admin_collections_path(group_id: @group.id) %> >
   <% end %>
-  კრებულები
+  <%= link_to 'კრებულები', admin_collections_path(group_id: @group.id) %>
 </h1>
 <p>
   <%= link_to 'ახალი კრებულის დამატება', new_admin_collection_path %>
@@ -21,9 +22,10 @@
   <tbody>
     <% @collections.each do |collection| %>
       <tr>
-        <td> <%= link_to collection.name_ka, admin_text_blocks_path(:collection_id => collection.id) %> </td>
-        <td> <%= link_to collection.name_en, admin_text_blocks_path(:collection_id => collection.id) %> </td>
+        <td> <%= link_to collection.name_ka, admin_text_blocks_path(collection_id: collection.id) %> </td>
+        <td> <%= link_to collection.name_en, admin_text_blocks_path(collection_id: collection.id) %> </td>
         <td> <%= collection.status %> </td>
+        <td> <%= link_to 'edit', edit_admin_collection_path(id: collection.id) %> </td>
       </tr>
     <% end %>
   </tbody>
