@@ -5,7 +5,7 @@ class Admin::CollectionsController < Admin::BaseController
       @group = Group.find(collections_params[:group_id])
       @collections = Collection.where(group: @group)
     else
-      @collections = collections_params.all
+      @collections = Collection.all
     end
   end
 

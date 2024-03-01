@@ -1,6 +1,6 @@
 <% if @group %>
   <h1>
-    <%= @group.name_ka %>
+    <%= link_to @group.supergroup.name_ka, admin_groups_path(:supergroup_id => @group.supergroup.id) %> > <%= @group.name_ka %>
   </h1>
 <% end %>
 
