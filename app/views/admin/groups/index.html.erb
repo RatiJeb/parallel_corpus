@@ -1,8 +1,17 @@
-<% if @supergroup %>
-  <h1>
-    <%= @supergroup.name_ka %>
-  </h1>
-<% end %>
+<%= render partial: "admin/shared/header" %>
+
+<h1>
+  <% if @supergroup %>
+    <%= @supergroup.name_ka %> >
+  <% end %>
+  ჯგუფები
+</h1>
+<p>
+  <%= link_to 'ახალი ჯგუფის დამატება', new_admin_group_path %>
+</p>
+<p>
+  მონაცემთა ბაზაში <%= @groups.count %> ჩანაწერია
+</p>
 
 <table>
   <thead>

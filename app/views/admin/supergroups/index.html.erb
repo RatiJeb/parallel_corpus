@@ -1,3 +1,15 @@
+<%= render partial: "admin/shared/header" %>
+
+<h1>
+  ქვეკორპუსები
+</h1>
+<p>
+  <%= link_to 'ახალი ქვეკორპუსის დამატება', new_admin_supergroup_path %>
+</p>
+<p>
+  მონაცემთა ბაზაში <%= @supergroups.count %> ჩანაწერია
+</p>
+
 <table>
   <thead>
     <th>
