@@ -1,0 +1,7 @@
+<%= render 'shared/search_bar' %>
+
+<h1>Search Results</h1>
+<% @text_blocks.each do |text_block| %>
+  <!-- Display your record information here -->
+  <p><%= text_block.contents %></p>
+<% end %>

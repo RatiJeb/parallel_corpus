@@ -1,0 +1,15 @@
+<table>
+  <thead>
+    <th>
+    </th>
+  </thead>
+  <tbody>
+    <% @supergroups.each do |supergroup| %>
+      <tr>
+        <td> <%= link_to supergroup.name_ka, admin_groups_path(:supergroup_id => supergroup.id) %> </td>
+        <td> <%= link_to supergroup.name_en, admin_groups_path(:supergroup_id => supergroup.id) %> </td>
+        <td> <%= supergroup.status %> </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

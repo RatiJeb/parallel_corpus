@@ -21,7 +21,7 @@ end
 puts 'Create subcorpus'
 
 subcorpus = Supergroup.find_or_create_by(name_en: 'Subcorpus 1') do |supergroup|
-  supergroup.name_ka = 'ქვეკორპუსი 1',
+  supergroup.name_ka = 'ქვეკორპუსი 1'
   supergroup.status = :active
 end
 

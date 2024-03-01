@@ -1,0 +1,21 @@
+<% if @supergroup %>
+  <h1>
+    <%= @supergroup.name_ka %>
+  </h1>
+<% end %>
+
+<table>
+  <thead>
+    <th>
+    </th>
+  </thead>
+  <tbody>
+    <% @groups.each do |group| %>
+      <tr>
+        <td> <%= link_to group.name_ka, admin_collections_path(:group_id => group.id) %> </td>
+        <td> <%= link_to group.name_en, admin_collections_path(:group_id => group.id) %> </td>
+        <td> <%= group.status %> </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

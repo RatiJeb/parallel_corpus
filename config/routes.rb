@@ -1,6 +1,15 @@
 Rails.application.routes.draw do
-  root 'pages#home'
+
+  resources :text_blocks, only: [:index]
+  get '/search', to: 'text_blocks#search'
+  root 'text_blocks#index'
   devise_for :users
+
+  namespace :admin do
+    resources :supergroups, :groups, :collections, :text_blocks
+  end
+
+
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
   # Reveal health status on /up that returns 200 if the app boots with no exceptions, otherwise 500.
