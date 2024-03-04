@@ -1,0 +1,8 @@
+<%= render partial: "admin/shared/header" %>
+
+<h1>
+  <%= link_to @group.supergroup.name_ka, admin_groups_path(supergroup_id: @group.supergroup.id) %> >
+  <%= link_to 'ჯგუფები', admin_groups_path(supergroup_id: @group.supergroup&.id) %> > ჯგუფის რედაქტირება
+</h1>
+
+<%= render partial: "admin/groups/shared/form" %>

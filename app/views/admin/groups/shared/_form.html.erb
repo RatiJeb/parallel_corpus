@@ -1,0 +1,33 @@
+<%= form_with model: [:admin, @group] do |form| %>
+  <%= form.label :supergroup_id, 'ქვეკორპუსი' %>
+  <%= form.select :supergroup_id, options_for_select(Supergroup.all.collect{ |supergroup| [supergroup.name_ka, supergroup.id] }, form.object.supergroup&.id) %>
+  <%= form.label :name_ka, 'სახელი (ka)' %>
+  <%= form.text_field :name_ka %>
+  <%= form.label :name_en, 'სახელი (en)' %>
+  <%= form.text_field :name_en %>
+  <%= form.label :type_ids, 'ტიპი' %>
+  <%= form.select :type_ids, options_for_select(Type.all.collect{ |type| [type.name_ka, type.id] }, form.object.type_ids), { multiple: true } %>
+  <%= form.label :genre_ids, 'ჟანრი' %>
+  <%= form.select :genre_ids, options_for_select(Genre.all.collect{ |genre| [genre.name_ka, genre.id] }, form.object.genre_ids), { multiple: true } %>
+  <%= form.label :field_ids, 'დარგი' %>
+  <%= form.select :field_ids, options_for_select(Field.all.collect{ |field| [field.name_ka, field.id] }, form.object.field_ids), { multiple: true } %>
+  <%= form.label :original_language, 'ორიგინალის ენა' %>
+  <%= form.select :original_language, Group.original_languages.keys.map { |language| [language.titleize, language] } %>
+  <%= form.label :author_ids, 'ავტორი' %>
+  <%= form.select :author_ids, options_for_select(Author.all.collect{ |author| [author.name_ka, author.id] }, form.object.author_ids), { multiple: true } %>
+  <%= form.label :year, 'გამოცემის წელი' %>
+  <%= form.text_field :year %>
+  <%= form.label :translator_ids, 'მთარგმენლი' %>
+  <%= form.select :translator_ids, options_for_select(Translator.all.collect{ |translator| [translator.name_ka, translator.id] }, form.object.translator_ids), { multiple: true } %>
+  <%= form.label :translation_year, 'თარგმნის წელი' %>
+  <%= form.text_field :translation_year %>
+  <%= form.label :publishing_ids, 'გამოცემა' %>
+  <%= form.select :publishing_ids, options_for_select(Publishing.all.collect{ |publishing| [publishing.name_ka, publishing.id] }, form.object.publishing_ids), { multiple: true } %>
+  <%= form.label :comment, 'კომენტარი' %>
+  <%= form.text_area :comment, size: "60x10" %>
+  <%= form.label :status, 'სტატუსი' %>
+  <%= form.select :status, Group.statuses.keys.map { |status| [status.titleize, status] } %>
+
+  <%= link_to 'უკან დაბრუნება', admin_groups_path(supergroup_id: @group.supergroup&.id) %>
+  <%= form.submit %>
+<% end %>

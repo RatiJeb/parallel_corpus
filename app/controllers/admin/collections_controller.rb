@@ -3,9 +3,9 @@ class Admin::CollectionsController < Admin::BaseController
   def index
     if params[:group_id]
       @group = Group.find(params[:group_id])
-      @collections = Collection.where(group: @group)
+      @collections = Collection.where(group: @group).order(created_at: :asc)
     else
-      @collections = Collection.all
+      @collections = Collection.all.order(created_at: :desc)
     end
   end
 
@@ -29,11 +29,11 @@ class Admin::CollectionsController < Admin::BaseController
   end
 
   def update
-    @collection = Collection.update(collection_params)
+    @collection = Collection.find(params[:id])
+    @collection.update(collection_params)
     @collection.save!
     redirect_to admin_collections_path(group_id: @collection.group.id)
   end
-
 
   private
 

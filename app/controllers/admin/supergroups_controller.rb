@@ -1,7 +1,7 @@
 class Admin::SupergroupsController < Admin::BaseController
 
   def index
-    @supergroups = Supergroup.all
+    @supergroups = Supergroup.all.order(created_at: :asc)
   end
 
   def new
@@ -19,7 +19,8 @@ class Admin::SupergroupsController < Admin::BaseController
   end
 
   def update
-    @supergroup = Supergroup.update(supergroup_params)
+    @supergroup = Supergroup.find(params[:id])
+    @supergroup.update(supergroup_params)
     @supergroup.save!
     redirect_to admin_supergroups_path
   end

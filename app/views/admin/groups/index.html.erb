@@ -4,10 +4,10 @@
   <% if @supergroup %>
     <%= link_to @supergroup.name_ka, admin_groups_path(supergroup_id: @supergroup.id) %> >
   <% end %>
-  <%= link_to 'ჯგუფები', admin_groups_path(supergroup_id: @supergroup.id) %>
+  <%= link_to 'ჯგუფები', admin_groups_path(supergroup_id: @supergroup&.id) %>
 </h1>
 <p>
-  <%= link_to 'ახალი ჯგუფის დამატება', new_admin_group_path(supergroup_id: @supergroup.id) %>
+  <%= link_to 'ახალი ჯგუფის დამატება', new_admin_group_path(supergroup_id: @supergroup&.id) %>
 </p>
 <p>
   მონაცემთა ბაზაში <%= @groups.count %> ჩანაწერია

@@ -3,9 +3,9 @@ class Admin::GroupsController < Admin::BaseController
   def index
     if params[:supergroup_id]
       @supergroup = Supergroup.find(params[:supergroup_id])
-      @groups = Group.where(supergroup: @supergroup)
+      @groups = Group.where(supergroup: @supergroup).order(created_at: :asc)
     else
-      @groups = Group.all
+      @groups = Group.all.order(created_at: :asc)
     end
   end
 
@@ -29,7 +29,8 @@ class Admin::GroupsController < Admin::BaseController
   end
 
   def update
-    @group = Group.update(group_params)
+    @group = Group.find(params[:id])
+    @group.update(group_params)
     @group.save!
     redirect_to admin_groups_path(supergroup_id: @group.supergroup.id)
   end
