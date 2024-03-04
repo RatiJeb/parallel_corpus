@@ -8,7 +8,7 @@
   <%= link_to 'კრებულები', admin_collections_path(group_id: @group.id) %>
 </h1>
 <p>
-  <%= link_to 'ახალი კრებულის დამატება', new_admin_collection_path %>
+  <%= link_to 'ახალი კრებულის დამატება', new_admin_collection_path(group_id: @group.id) %>
 </p>
 <p>
   მონაცემთა ბაზაში <%= @collections.count %> ჩანაწერია
