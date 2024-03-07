@@ -3,9 +3,9 @@ class Admin::GroupsController < Admin::BaseController
   def index
     if params[:supergroup_id]
       @supergroup = Supergroup.find(params[:supergroup_id])
-      @groups = Group.where(supergroup: @supergroup).order(created_at: :asc)
+      @groups = Group.where(supergroup: @supergroup).order(:id).page(params[:page]).per(20)
     else
-      @groups = Group.all.order(created_at: :asc)
+      @groups = Group.all.order(:id).page(params[:page]).per(20)
     end
   end
 

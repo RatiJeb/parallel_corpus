@@ -12,7 +12,7 @@ class Admin::CollectionsController < Admin::BaseController
   def new
     if params[:group_id]
       @group = Group.find(params[:group_id])
-      @collection = Collection.new(group: @group)
+      @collection = Collection.new(group: @group, author_ids: @group.author_ids)
     else
       @collection = Collection.new
     end
@@ -30,6 +30,8 @@ class Admin::CollectionsController < Admin::BaseController
 
   def update
     @collection = Collection.find(params[:id])
+
+    collection_params.delete(:author_ids) if @collection.pwichka?
     @collection.update(collection_params)
     @collection.save!
     redirect_to admin_collections_path(group_id: @collection.group.id)

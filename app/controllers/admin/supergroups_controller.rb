@@ -1,7 +1,7 @@
 class Admin::SupergroupsController < Admin::BaseController
 
   def index
-    @supergroups = Supergroup.all.order(created_at: :asc)
+    @supergroups = Supergroup.all.order(:id).page(params[:page]).per(20)
   end
 
   def new

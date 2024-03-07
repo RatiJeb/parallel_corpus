@@ -14,7 +14,7 @@
   <%= form.label :original_language, 'ორიგინალის ენა' %>
   <%= form.select :original_language, Group.original_languages.keys.map { |language| [language.titleize, language] } %>
   <%= form.label :author_ids, 'ავტორი' %>
-  <%= form.select :author_ids, options_for_select(Author.all.collect{ |author| [author.name_ka, author.id] }, form.object.author_ids), { multiple: true } %>
+  <%= form.select :author_ids, options_for_select(Author.all.collect{ |author| [author.name_ka, author.id] }), { multiple: true } %>
   <%= form.label :year, 'გამოცემის წელი' %>
   <%= form.text_field :year %>
   <%= form.label :translator_ids, 'მთარგმენლი' %>

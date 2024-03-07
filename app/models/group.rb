@@ -4,22 +4,18 @@ class Group < ApplicationRecord
   has_many :collections
   has_many :text_blocks, through: :collections
 
-  has_many :group_authors
-  has_many :group_fields
-  has_many :group_genres
-  has_many :group_publishings
-  has_many :group_translators
-  has_many :group_types
+  has_many :synced_collections, -> { syncable }, class_name: 'Collection'
 
-  has_many :authors, through: :group_authors
-  has_many :fields, through: :group_fields
-  has_many :genres, through: :group_genres
-  has_many :publishings, through: :group_publishings
-  has_many :translators, through: :group_translators
-  has_many :types, through: :group_types
+  has_many :authors, -> { distinct }, through: :synced_collections
+  has_many :fields, -> { distinct }, through: :synced_collections
+  has_many :genres, -> { distinct }, through: :synced_collections
+  has_many :publishings, -> { distinct }, through: :synced_collections
+  has_many :translators, -> { distinct }, through: :synced_collections
+  has_many :types, -> { distinct }, through: :synced_collections
 
-  enum original_language: [:ka, :en]
   enum status: [:active, :inactive, :hidden, :deleted]
+
+  scope :syncable, -> { where(should_sync: true) }
 
   after_initialize :set_default_status, if: :new_record?
 

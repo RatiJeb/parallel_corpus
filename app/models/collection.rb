@@ -20,6 +20,8 @@ class Collection < ApplicationRecord
   enum original_language: [:ka, :en]
   enum status: [:active, :inactive, :hidden, :deleted]
 
+  scope :syncable, -> { where(should_unsync: false) }
+
   after_initialize :set_default_status, if: :new_record?
 
   def set_default_status

@@ -44,6 +44,8 @@ gem "bootsnap", require: false
 # Use Active Storage variants [https://guides.rubyonrails.org/active_storage_overview.html#transforming-images]
 # gem "image_processing", "~> 1.2"
 
+gem "scenic"
+
 group :development, :test do
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem
   gem "debug", platforms: %i[ mri windows ]
@@ -53,6 +55,14 @@ group :development do
   # Use console on exceptions pages [https://github.com/rails/web-console]
   gem "web-console"
 
+  gem 'letter_opener'
+  gem 'rubocop', '~> 1.24', require: false
+  gem 'rubocop-performance', require: false
+  gem 'rubocop-rails', require: false
+  gem 'rubocop-rspec', require: false
+
+  gem 'listen', '~> 3.3'
+  gem 'rack-mini-profiler', '~> 2.0'
   # Add speed badges [https://github.com/MiniProfiler/rack-mini-profiler]
   # gem "rack-mini-profiler"
 
@@ -71,3 +81,9 @@ gem "devise", "~> 4.9"
 gem 'pry', '~> 0.14.2'
 gem 'pry-remote'
 gem 'pry-nav'
+
+gem "tailwindcss-rails", "~> 2.3"
+
+gem 'active_link_to'
+
+gem 'kaminari'

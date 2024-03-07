@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_02_20_154330) do
+ActiveRecord::Schema[7.1].define(version: 2024_03_07_125644) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -98,6 +98,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_02_20_154330) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.bigint "group_id", null: false
+    t.boolean "should_unsync", default: false, null: false
     t.index ["group_id"], name: "index_collections_on_group_id"
     t.index ["old_id"], name: "index_collections_on_old_id", unique: true
   end
@@ -124,79 +125,17 @@ ActiveRecord::Schema[7.1].define(version: 2024_02_20_154330) do
     t.index ["old_id"], name: "index_genres_on_old_id", unique: true
   end
 
-  create_table "group_authors", force: :cascade do |t|
-    t.bigint "group_id", null: false
-    t.bigint "author_id", null: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["author_id"], name: "index_group_authors_on_author_id"
-    t.index ["group_id", "author_id"], name: "index_group_authors_on_group_id_and_author_id", unique: true
-    t.index ["group_id"], name: "index_group_authors_on_group_id"
-  end
-
-  create_table "group_fields", force: :cascade do |t|
-    t.bigint "group_id", null: false
-    t.bigint "field_id", null: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["field_id"], name: "index_group_fields_on_field_id"
-    t.index ["group_id", "field_id"], name: "index_group_fields_on_group_id_and_field_id", unique: true
-    t.index ["group_id"], name: "index_group_fields_on_group_id"
-  end
-
-  create_table "group_genres", force: :cascade do |t|
-    t.bigint "group_id", null: false
-    t.bigint "genre_id", null: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["genre_id"], name: "index_group_genres_on_genre_id"
-    t.index ["group_id", "genre_id"], name: "index_group_genres_on_group_id_and_genre_id", unique: true
-    t.index ["group_id"], name: "index_group_genres_on_group_id"
-  end
-
-  create_table "group_publishings", force: :cascade do |t|
-    t.bigint "group_id", null: false
-    t.bigint "publishing_id", null: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["group_id", "publishing_id"], name: "index_group_publishings_on_group_id_and_publishing_id", unique: true
-    t.index ["group_id"], name: "index_group_publishings_on_group_id"
-    t.index ["publishing_id"], name: "index_group_publishings_on_publishing_id"
-  end
-
-  create_table "group_translators", force: :cascade do |t|
-    t.bigint "group_id", null: false
-    t.bigint "translator_id", null: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["group_id", "translator_id"], name: "index_group_translators_on_group_id_and_translator_id", unique: true
-    t.index ["group_id"], name: "index_group_translators_on_group_id"
-    t.index ["translator_id"], name: "index_group_translators_on_translator_id"
-  end
-
-  create_table "group_types", force: :cascade do |t|
-    t.bigint "group_id", null: false
-    t.bigint "type_id", null: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["group_id", "type_id"], name: "index_group_types_on_group_id_and_type_id", unique: true
-    t.index ["group_id"], name: "index_group_types_on_group_id"
-    t.index ["type_id"], name: "index_group_types_on_type_id"
-  end
-
   create_table "groups", force: :cascade do |t|
     t.string "name_ka", null: false
     t.string "name_en", null: false
     t.text "comment"
     t.text "additional_info"
-    t.integer "year"
-    t.integer "translation_year"
-    t.integer "original_language", default: 0, null: false
     t.integer "status", default: 0, null: false
     t.integer "old_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.bigint "supergroup_id", null: false
+    t.boolean "should_sync", default: false, null: false
     t.index ["old_id"], name: "index_groups_on_old_id", unique: true
     t.index ["supergroup_id"], name: "index_groups_on_supergroup_id"
   end
@@ -293,19 +232,21 @@ ActiveRecord::Schema[7.1].define(version: 2024_02_20_154330) do
   add_foreign_key "collection_types", "collections"
   add_foreign_key "collection_types", "types"
   add_foreign_key "collections", "groups"
-  add_foreign_key "group_authors", "authors"
-  add_foreign_key "group_authors", "groups"
-  add_foreign_key "group_fields", "fields"
-  add_foreign_key "group_fields", "groups"
-  add_foreign_key "group_genres", "genres"
-  add_foreign_key "group_genres", "groups"
-  add_foreign_key "group_publishings", "groups"
-  add_foreign_key "group_publishings", "publishings"
-  add_foreign_key "group_translators", "groups"
-  add_foreign_key "group_translators", "translators"
-  add_foreign_key "group_types", "groups"
-  add_foreign_key "group_types", "types"
   add_foreign_key "groups", "supergroups"
   add_foreign_key "terms", "text_blocks"
   add_foreign_key "text_blocks", "collections"
+
+  create_view "text_block_pairs", sql_definition: <<-SQL
+      SELECT concat((tb_left.id)::text, '-', (tb_right.id)::text) AS id,
+      tb_left.id AS original_id,
+      tb_left.order_number,
+      tb_left.collection_id,
+      tb_left.contents AS original_contents,
+      tb_left.language AS original_language,
+      tb_right.id AS translation_id,
+      tb_right.contents AS translation_contents,
+      tb_right.language AS translation_language
+     FROM (text_blocks tb_left
+       LEFT JOIN text_blocks tb_right ON (((tb_left.collection_id = tb_right.collection_id) AND (tb_left.order_number = tb_right.order_number) AND (tb_left.language <> tb_right.language))));
+  SQL
 end

@@ -1,28 +1,70 @@
-<%= render partial: "admin/shared/header" %>
+<header>
+  <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+    <h1 class="text-3xl font-bold leading-tight tracking-tight text-gray-900">ქვეკორპუსები</h1>
+  </div>
+</header>
+<main>
+  <div class="mx-auto max-w-7xl sm:px-6 lg:px-8">
+    <% crumbs = [] %>
+    <% crumbs << { name: 'ქვეკორპუსები', url: admin_supergroups_path } %>
+    <%= render 'admin/shared/breadcrumbs', crumbs: crumbs %>
 
-<h1>
-  <%= link_to 'ქვეკორპუსები', admin_supergroups_path %>
-</h1>
-<p>
-  <%= link_to 'ახალი ქვეკორპუსის დამატება', new_admin_supergroup_path %>
-</p>
-<p>
-  მონაცემთა ბაზაში <%= @supergroups.count %> ჩანაწერია
-</p>
+    <div class="mt-8 px-4 sm:px-6 lg:px-8">
+      <div class="sm:flex sm:items-center">
+        <div class="sm:flex-auto">
+          <!-- <h1 class="text-base font-semibold leading-6 text-gray-900">ქვეკორპუსები</h1> -->
+          <p class="mt-2 text-sm text-gray-700">მონაცემთა ბაზაში <%= @supergroups.count %> ჩანაწერია</p>
+        </div>
+        <div class="mt-4 sm:ml-16 sm:mt-0 sm:flex-none">
+          <%= link_to 'ახალი ქვეკორპუსის დამატება', new_admin_supergroup_path, type: "button", class: "block rounded-md bg-indigo-600 px-3 py-2 text-center text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600" %>
+          <!-- <button type="button" class="block rounded-md bg-indigo-600 px-3 py-2 text-center text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">Add user</button> -->
+        </div>
+      </div>
+      <div class="mt-8 flow-root">
+        <div class="-mx-4 -my-2 sm:-mx-6 lg:-mx-8">
+          <div class="inline-block min-w-full py-2 align-middle">
+            <table class="w-full border-separate border-spacing-0">
+              <thead>
+                <tr>
+                  <th scope="col" class="sticky top-0 z-10 border-b border-gray-300 bg-white bg-opacity-75 py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 backdrop-blur backdrop-filter sm:pl-6 lg:pl-8">UID</th>
+                  <th scope="col" class="max-w-[240px] sticky top-0 z-10 border-b border-gray-300 bg-white bg-opacity-75 px-3 py-3.5 text-left text-sm font-semibold text-gray-900 backdrop-blur backdrop-filter sm:table-cell">დასახელება ქართულად</th>
+                  <th scope="col" class="max-w-[240px] sticky top-0 z-10 border-b border-gray-300 bg-white bg-opacity-75 px-3 py-3.5 text-left text-sm font-semibold text-gray-900 backdrop-blur backdrop-filter lg:table-cell">დასახელება ინგლისურად</th>
+                  <th scope="col" class="sticky top-0 z-10 border-b border-gray-300 bg-white bg-opacity-75 px-3 py-3.5 text-left text-sm font-semibold text-gray-900 backdrop-blur backdrop-filter">სტატუსი</th>
+                  <th scope="col" class="sticky top-0 z-10 border-b border-gray-300 bg-white bg-opacity-75 py-3.5 pl-3 pr-4 backdrop-blur backdrop-filter sm:pr-6 lg:pr-8">
+                    <span class="sr-only"></span>
+                  </th>
+                </tr>
+              </thead>
+              <tbody>
+                <% @supergroups.each do |supergroup| %>
+                  <tr>
+                    <td class="whitespace-nowrap border-b border-gray-200 py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-6 lg:pl-8">
+                      <%= supergroup.id %>
+                    </td>
+                    <td class="max-w-[240px] overflow-hidden whitespace-nowrap border-b border-gray-200 px-3 py-4 text-sm text-gray-500 sm:table-cell">
+                      <%= link_to supergroup.name_ka, admin_groups_path(supergroup_id: supergroup.id), class: "text-indigo-600 hover:text-indigo-900" %>
+                    </td>
+                    <td class="max-w-[240px] overflow-hidden whitespace-nowrap border-b border-gray-200 px-3 py-4 text-sm text-gray-500 lg:table-cell">
+                      <%= link_to supergroup.name_en, admin_groups_path(supergroup_id: supergroup.id), class: "text-indigo-600 hover:text-indigo-900" %>
+                    </td>
+                    <td class="whitespace-nowrap border-b border-gray-200 px-3 py-4 text-sm text-gray-500">
+                      <%= supergroup.status %>
+                    </td>
+                    <td class="relative whitespace-nowrap border-b border-gray-200 py-4 pr-4 pl-3 text-right text-sm font-medium sm:pr-8 lg:pr-8">
+                      <%= link_to edit_admin_supergroup_path(id: supergroup.id), class: "text-indigo-600 hover:text-indigo-900" do %>
+                        edit<span class="sr-only">, supergroup.name_ka</span>
+                      <% end %>
+                    </td>
+                  </tr>
+                <% end %>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
 
-<table>
-  <thead>
-    <th>
-    </th>
-  </thead>
-  <tbody>
-    <% @supergroups.each do |supergroup| %>
-      <tr>
-        <td> <%= link_to supergroup.name_ka, admin_groups_path(supergroup_id: supergroup.id) %> </td>
-        <td> <%= link_to supergroup.name_en, admin_groups_path(supergroup_id: supergroup.id) %> </td>
-        <td> <%= supergroup.status %> </td>
-        <td> <%= link_to 'edit', edit_admin_supergroup_path(id: supergroup.id) %> </td>
-      </tr>
-    <% end %>
-  </tbody>
-</table>
+    <%= paginate @supergroups %>
+
+  </div>
+</main>
