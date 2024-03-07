@@ -64,7 +64,7 @@
       </div>
     </div>
 
-    <%= paginate @supergroups %>
+    <%= render 'admin/shared/paging', records: @supergroups, url_method: -> (**params){ admin_supergroups_path(**params) }, paging_params: {} %>
 
   </div>
 </main>
