@@ -25,7 +25,7 @@ module ApplicationHelper
       html += page_ellipsis
     end
 
-    if current_page > 3
+    if current_page > 2
       html += other_page(current_page - 1, url_method, paging_params, records)
     end
 

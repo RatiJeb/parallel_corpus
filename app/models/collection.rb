@@ -1,6 +1,7 @@
 class Collection < ApplicationRecord
 
   belongs_to :group
+  has_one :supergroup, through: :group
   has_many :text_blocks
 
   has_many :collection_authors

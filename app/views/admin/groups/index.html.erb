@@ -27,7 +27,7 @@
           <p class="mt-2 text-sm text-gray-700">მონაცემთა ბაზაში <%= @groups.total_count %> ჩანაწერია</p>
         </div>
         <div class="mt-4 sm:ml-16 sm:mt-0 sm:flex-none">
-          <%= link_to 'ახალი ჯგუფის დამატება', new_admin_supergroup_path, type: "button", class: "block rounded-md bg-indigo-600 px-3 py-2 text-center text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600" %>
+          <%= link_to 'ახალი ჯგუფის დამატება', new_admin_group_path, type: "button", class: "block rounded-md bg-indigo-600 px-3 py-2 text-center text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600" %>
           <!-- <button type="button" class="block rounded-md bg-indigo-600 px-3 py-2 text-center text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">Add user</button> -->
         </div>
       </div>
@@ -38,8 +38,11 @@
               <thead>
                 <tr>
                   <th scope="col" class="sticky top-0 z-10 border-b border-gray-300 bg-white bg-opacity-75 py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 backdrop-blur backdrop-filter sm:pl-6 lg:pl-8">UID</th>
+                  <th scope="col" class="max-w-[240px] sticky top-0 z-10 border-b border-gray-300 bg-white bg-opacity-75 px-3 py-3.5 text-left text-sm font-semibold text-gray-900 backdrop-blur backdrop-filter sm:table-cell">ქვეკორპუსი</th>
                   <th scope="col" class="max-w-[240px] sticky top-0 z-10 border-b border-gray-300 bg-white bg-opacity-75 px-3 py-3.5 text-left text-sm font-semibold text-gray-900 backdrop-blur backdrop-filter sm:table-cell">დასახელება ქართულად</th>
                   <th scope="col" class="max-w-[240px] sticky top-0 z-10 border-b border-gray-300 bg-white bg-opacity-75 px-3 py-3.5 text-left text-sm font-semibold text-gray-900 backdrop-blur backdrop-filter lg:table-cell">დასახელება ინგლისურად</th>
+                  <th scope="col" class="sticky top-0 z-10 border-b border-gray-300 bg-white bg-opacity-75 px-3 py-3.5 text-left text-sm font-semibold text-gray-900 backdrop-blur backdrop-filter">კრებულები</th>
+                  <th scope="col" class="sticky top-0 z-10 border-b border-gray-300 bg-white bg-opacity-75 px-3 py-3.5 text-left text-sm font-semibold text-gray-900 backdrop-blur backdrop-filter">წყვილები</th>
                   <th scope="col" class="sticky top-0 z-10 border-b border-gray-300 bg-white bg-opacity-75 px-3 py-3.5 text-left text-sm font-semibold text-gray-900 backdrop-blur backdrop-filter">სტატუსი</th>
                   <th scope="col" class="sticky top-0 z-10 border-b border-gray-300 bg-white bg-opacity-75 py-3.5 pl-3 pr-4 backdrop-blur backdrop-filter sm:pr-6 lg:pr-8">
                     <span class="sr-only"></span>
@@ -53,10 +56,19 @@
                       <%= group.id %>
                     </td>
                     <td class="max-w-[240px] overflow-hidden whitespace-nowrap border-b border-gray-200 px-3 py-4 text-sm text-gray-500 sm:table-cell">
+                      <%= link_to group.supergroup.name_ka, admin_groups_path(supergroup_id: group.supergroup.id), class: "text-indigo-600 hover:text-indigo-900" %>
+                    </td>
+                    <td class="max-w-[240px] overflow-hidden whitespace-nowrap border-b border-gray-200 px-3 py-4 text-sm text-gray-500 sm:table-cell">
                       <%= link_to group.name_ka, admin_collections_path(group_id: group.id), class: "text-indigo-600 hover:text-indigo-900" %>
                     </td>
                     <td class="max-w-[240px] overflow-hidden whitespace-nowrap border-b border-gray-200 px-3 py-4 text-sm text-gray-500 lg:table-cell">
                       <%= link_to group.name_en, admin_collections_path(group_id: group.id), class: "text-indigo-600 hover:text-indigo-900" %>
+                    </td>
+                    <td class="whitespace-nowrap border-b border-gray-200 px-3 py-4 text-sm text-gray-500">
+                      <%= group.collections.count %>
+                    </td>
+                    <td class="whitespace-nowrap border-b border-gray-200 px-3 py-4 text-sm text-gray-500">
+                      <%= group.text_blocks.count %>
                     </td>
                     <td class="whitespace-nowrap border-b border-gray-200 px-3 py-4 text-sm text-gray-500">
                       <%= group.status %>

@@ -3,9 +3,9 @@ class Admin::CollectionsController < Admin::BaseController
   def index
     if params[:group_id]
       @group = Group.find(params[:group_id])
-      @collections = Collection.where(group: @group).order(created_at: :asc)
+      @collections = Collection.where(group: @group).order(:id).page(params[:page]).per(20)
     else
-      @collections = Collection.all.order(created_at: :desc)
+      @collections = Collection.all.order(:id).page(params[:page]).per(20)
     end
   end
 

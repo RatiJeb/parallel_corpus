@@ -30,6 +30,9 @@
                   <th scope="col" class="max-w-[240px] sticky top-0 z-10 border-b border-gray-300 bg-white bg-opacity-75 px-3 py-3.5 text-left text-sm font-semibold text-gray-900 backdrop-blur backdrop-filter sm:table-cell">დასახელება ქართულად</th>
                   <th scope="col" class="max-w-[240px] sticky top-0 z-10 border-b border-gray-300 bg-white bg-opacity-75 px-3 py-3.5 text-left text-sm font-semibold text-gray-900 backdrop-blur backdrop-filter lg:table-cell">დასახელება ინგლისურად</th>
                   <th scope="col" class="sticky top-0 z-10 border-b border-gray-300 bg-white bg-opacity-75 px-3 py-3.5 text-left text-sm font-semibold text-gray-900 backdrop-blur backdrop-filter">სტატუსი</th>
+                  <th scope="col" class="sticky top-0 z-10 border-b border-gray-300 bg-white bg-opacity-75 px-3 py-3.5 text-left text-sm font-semibold text-gray-900 backdrop-blur backdrop-filter">ჯგუფები</th>
+                  <th scope="col" class="sticky top-0 z-10 border-b border-gray-300 bg-white bg-opacity-75 px-3 py-3.5 text-left text-sm font-semibold text-gray-900 backdrop-blur backdrop-filter">კრებულები</th>
+                  <th scope="col" class="sticky top-0 z-10 border-b border-gray-300 bg-white bg-opacity-75 px-3 py-3.5 text-left text-sm font-semibold text-gray-900 backdrop-blur backdrop-filter">წყვილები</th>
                   <th scope="col" class="sticky top-0 z-10 border-b border-gray-300 bg-white bg-opacity-75 py-3.5 pl-3 pr-4 backdrop-blur backdrop-filter sm:pr-6 lg:pr-8">
                     <span class="sr-only"></span>
                   </th>
@@ -49,6 +52,15 @@
                     </td>
                     <td class="whitespace-nowrap border-b border-gray-200 px-3 py-4 text-sm text-gray-500">
                       <%= supergroup.status %>
+                    </td>
+                    <td class="whitespace-nowrap border-b border-gray-200 px-3 py-4 text-sm text-gray-500">
+                      <%= supergroup.groups.count %>
+                    </td>
+                    <td class="whitespace-nowrap border-b border-gray-200 px-3 py-4 text-sm text-gray-500">
+                      <%= supergroup.collections.count %>
+                    </td>
+                    <td class="whitespace-nowrap border-b border-gray-200 px-3 py-4 text-sm text-gray-500">
+                      <%= supergroup.text_blocks.count %>
                     </td>
                     <td class="relative whitespace-nowrap border-b border-gray-200 py-4 pr-4 pl-3 text-right text-sm font-medium sm:pr-8 lg:pr-8">
                       <%= link_to edit_admin_supergroup_path(id: supergroup.id), class: "text-indigo-600 hover:text-indigo-900" do %>
