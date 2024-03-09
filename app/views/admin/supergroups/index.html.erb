@@ -37,6 +37,40 @@
                     <span class="sr-only"></span>
                   </th>
                 </tr>
+                <tr>
+                  <%= form_with scope: :search, url: search_admin_supergroups_path, method: :get do |form| %>
+                    <th scope="col" class="sticky top-12 z-11 border-b border-gray-300 bg-white bg-opacity-75 py-3.5 pl-4 pr-3 text-left text-sm text-gray-500 backdrop-blur backdrop-filter sm:pl-6 lg:pl-8">
+
+                    </th>
+                    <th scope="col" class="max-w-[240px] sticky top-12 z-11 border-b border-gray-300 bg-white bg-opacity-75 px-3 text-left text-sm text-gray-500 backdrop-blur backdrop-filter sm:table-cell">
+                      <%= form.select :name_ka, Supergroup.order(:name_ka).map { |supergroup| [supergroup.name_ka, supergroup.name_ka] }, { include_blank: true }, { class: "bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" } %>
+                    </th>
+                    <th scope="col" class="max-w-[240px] sticky top-12 z-11 border-b border-gray-300 bg-white bg-opacity-75 px-3 text-left text-sm text-gray-500 backdrop-blur backdrop-filter sm:table-cell">
+                      <%= form.select :name_en, Supergroup.order(:name_en).map { |supergroup| [supergroup.name_en, supergroup.name_en] }, { include_blank: true }, { class: "bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" } %>
+                    </th>
+                    <th scope="col" class="sticky top-12 z-11 border-b border-gray-300 bg-white bg-opacity-75 px-3 text-left text-sm text-gray-500 backdrop-blur backdrop-filter">
+                      <%= form.select :status, Supergroup.statuses.keys.map { |status| [status.titleize, status] }, { include_blank: true }, { class: "bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" } %>
+                    </th>
+                    <th scope="col" class="sticky top-12 z-11 border-b border-gray-300 bg-white bg-opacity-75 px-3 py-3.5 text-left text-sm text-gray-500 backdrop-blur backdrop-filter">
+                      <%= @supergroups.sum{ |supergroup| supergroup.groups.count } %>
+                    </th>
+                    <th scope="col" class="sticky top-12 z-11 border-b border-gray-300 bg-white bg-opacity-75 px-3 py-3.5 text-left text-sm text-gray-500 backdrop-blur backdrop-filter">
+                      <%= @supergroups.sum{ |supergroup| supergroup.collections.count } %>
+                    </th>
+                    <th scope="col" class="sticky top-12 z-11 border-b border-gray-300 bg-white bg-opacity-75 px-3 py-3.5 text-left text-sm text-gray-500 backdrop-blur backdrop-filter">
+                      <%= @supergroups.sum{ |supergroup| supergroup.text_blocks.count } %>
+                    </th>
+                    <th scope="col" class="sticky top-12 z-11 border-b border-gray-300 bg-white bg-opacity-75 py-1 pl-3 pr-4 backdrop-blur backdrop-filter sm:pr-6 lg:pr-8">
+                      <%= form.button type: :submit, class: "inline-flex block rounded-md bg-indigo-600 px-3 py-2 text-center text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600" do %>
+                        <svg class="w-4 h-4 me-2" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
+                          <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z"/>
+                        </svg>
+                        ძიება
+                        <span class="sr-only">Search</span>
+                      <% end %>
+                    </th>
+                  <% end %>
+                </tr>
               </thead>
               <tbody>
                 <% @supergroups.each do |supergroup| %>

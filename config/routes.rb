@@ -6,7 +6,12 @@ Rails.application.routes.draw do
   devise_for :users
 
   namespace :admin do
-    resources :supergroups, :groups, :collections, :text_blocks
+    resources :supergroups do
+      collection do
+        get 'search'
+      end
+    end
+    resources :groups, :collections, :text_blocks
   end
 
 
