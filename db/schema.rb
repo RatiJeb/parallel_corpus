@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_03_07_125644) do
+ActiveRecord::Schema[7.1].define(version: 2024_03_10_220736) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -248,5 +248,35 @@ ActiveRecord::Schema[7.1].define(version: 2024_03_07_125644) do
       tb_right.language AS translation_language
      FROM (text_blocks tb_left
        LEFT JOIN text_blocks tb_right ON (((tb_left.collection_id = tb_right.collection_id) AND (tb_left.order_number = tb_right.order_number) AND (tb_left.language <> tb_right.language))));
+  SQL
+  create_view "super_group_details", sql_definition: <<-SQL
+      SELECT supergroups.id,
+      supergroups.name_ka,
+      supergroups.name_en,
+      supergroups.status,
+      count(DISTINCT groups.id) AS groups_count,
+      count(DISTINCT collections.id) AS collections_count,
+      count(text_blocks.id) AS text_blocks_count
+     FROM (((supergroups
+       LEFT JOIN groups ON ((supergroups.id = groups.supergroup_id)))
+       LEFT JOIN collections ON ((groups.id = collections.group_id)))
+       LEFT JOIN text_blocks ON ((collections.id = text_blocks.collection_id)))
+    GROUP BY supergroups.id, supergroups.name_ka, supergroups.name_en, supergroups.status;
+  SQL
+  create_view "group_details", sql_definition: <<-SQL
+      SELECT groups.id,
+      groups.name_ka,
+      groups.name_en,
+      groups.status,
+      supergroups.id AS supergroup_id,
+      supergroups.name_ka AS supergroup_name_ka,
+      supergroups.name_en AS supergroup_name_en,
+      count(DISTINCT collections.id) AS collections_count,
+      count(text_blocks.id) AS text_blocks_count
+     FROM (((groups
+       JOIN supergroups ON ((groups.supergroup_id = supergroups.id)))
+       LEFT JOIN collections ON ((groups.id = collections.group_id)))
+       LEFT JOIN text_blocks ON ((collections.id = text_blocks.collection_id)))
+    GROUP BY groups.id, groups.name_ka, groups.name_en, groups.status, supergroups.id, supergroups.name_ka, supergroups.name_en;
   SQL
 end

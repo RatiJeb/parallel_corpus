@@ -1,5 +1,7 @@
 class TextBlock < ApplicationRecord
   belongs_to :collection
+  has_one :group, through: :collection
+  has_one :supergroup, through: :group
 
   enum language: [:ka, :en]
 

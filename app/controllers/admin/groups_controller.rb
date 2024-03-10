@@ -3,10 +3,12 @@ class Admin::GroupsController < Admin::BaseController
   def index
     if params[:supergroup_id]
       @supergroup = Supergroup.find(params[:supergroup_id])
-      @groups = Group.where(supergroup: @supergroup).order(:id).page(params[:page]).per(20)
+      @groups = Views::GroupDetail.where(supergroup_id: params[:supergroup_id]).order(:id).page(params[:page]).per(20)
     else
-      @groups = Group.all.order(:id).page(params[:page]).per(20)
+      @groups = Views::GroupDetail.order(:id).page(params[:page]).per(20)
     end
+    @collections_count = @groups.sum(&:collections_count)
+    @text_blocks_count = @groups.sum(&:text_blocks_count)
   end
 
   def new

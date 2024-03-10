@@ -1,4 +1,5 @@
 class Group < ApplicationRecord
+  include Statusable
 
   belongs_to :supergroup
   has_many :collections
@@ -12,8 +13,6 @@ class Group < ApplicationRecord
   has_many :publishings, -> { distinct }, through: :synced_collections
   has_many :translators, -> { distinct }, through: :synced_collections
   has_many :types, -> { distinct }, through: :synced_collections
-
-  enum status: [:active, :inactive, :hidden, :deleted]
 
   scope :syncable, -> { where(should_sync: true) }
 

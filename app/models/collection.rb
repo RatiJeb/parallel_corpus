@@ -1,4 +1,5 @@
 class Collection < ApplicationRecord
+  include Statusable
 
   belongs_to :group
   has_one :supergroup, through: :group
@@ -19,7 +20,6 @@ class Collection < ApplicationRecord
   has_many :types, through: :collection_types
 
   enum original_language: [:ka, :en]
-  enum status: [:active, :inactive, :hidden, :deleted]
 
   scope :syncable, -> { where(should_unsync: false) }
 

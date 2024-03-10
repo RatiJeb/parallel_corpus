@@ -1,10 +1,9 @@
 class Supergroup < ApplicationRecord
+  include Statusable
 
   has_many :groups
   has_many :collections, through: :groups
   has_many :text_blocks, through: :collections
-
-  enum status: [:active, :inactive, :hidden, :deleted]
 
   after_initialize :set_default_status, if: :new_record?
 

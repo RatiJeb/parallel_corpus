@@ -56,7 +56,7 @@
                       <%= group.id %>
                     </td>
                     <td class="max-w-[240px] overflow-hidden whitespace-nowrap border-b border-gray-200 px-3 py-4 text-sm text-gray-500 sm:table-cell">
-                      <%= link_to group.supergroup.name_ka, admin_groups_path(supergroup_id: group.supergroup.id), class: "text-indigo-600 hover:text-indigo-900" %>
+                      <%= link_to group.supergroup_name_ka, admin_groups_path(supergroup_id: group.supergroup_id), class: "text-indigo-600 hover:text-indigo-900" %>
                     </td>
                     <td class="max-w-[240px] overflow-hidden whitespace-nowrap border-b border-gray-200 px-3 py-4 text-sm text-gray-500 sm:table-cell">
                       <%= link_to group.name_ka, admin_collections_path(group_id: group.id), class: "text-indigo-600 hover:text-indigo-900" %>
@@ -65,10 +65,10 @@
                       <%= link_to group.name_en, admin_collections_path(group_id: group.id), class: "text-indigo-600 hover:text-indigo-900" %>
                     </td>
                     <td class="whitespace-nowrap border-b border-gray-200 px-3 py-4 text-sm text-gray-500">
-                      <%= group.collections.count %>
+                      <%= group.collections_count %>
                     </td>
                     <td class="whitespace-nowrap border-b border-gray-200 px-3 py-4 text-sm text-gray-500">
-                      <%= group.text_blocks.count %>
+                      <%= group.text_blocks_count %>
                     </td>
                     <td class="whitespace-nowrap border-b border-gray-200 px-3 py-4 text-sm text-gray-500">
                       <%= group.status %>

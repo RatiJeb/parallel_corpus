@@ -1,21 +1,19 @@
 class Admin::SupergroupsController < Admin::BaseController
+  before_action :set_search_params, only: :index
 
   def index
-    @supergroups = Supergroup.all.order(:id).page(params[:page]).per(20)
-  end
-
-  def search
-    @supergroups = Supergroup.all
-    [:name_ka, :name_en].each do |field|
-      if search_params.include?(field)
-        @supergroups = @supergroups.where("#{field} LIKE ?", "%#{search_params[field]}%")
+    @supergroups = Views::SuperGroupDetail.all
+    %i[name_en name_ka].each do |field|
+      unless params[field].blank?
+        @supergroups = @supergroups.where(Views::SuperGroupDetail.arel_table[field].matches("%#{params[field]}%"))
       end
     end
-    if search_params.include?(:status)
-      @supergroups = @supergroups.where(status: search_params[:status])
-    end
+    @supergroups = @supergroups.where(status: params[:status]) unless params[:status].blank?
     @supergroups = @supergroups.order(:id).page(params[:page]).per(20)
-    render 'index'
+
+    @groups_count = @supergroups.sum(&:groups_count)
+    @collections_count = @supergroups.sum(&:collections_count)
+    @text_blocks_count = @supergroups.sum(&:text_blocks_count)
   end
 
   def new
@@ -41,8 +39,8 @@ class Admin::SupergroupsController < Admin::BaseController
 
   private
 
-  def search_params
-    params.require(:search).permit(:name_ka, :name_en, :status).compact_blank
+  def set_search_params
+    @search = Search::Supergroup.new(params.permit(:name_ka, :name_en, :status))
   end
 
   def supergroup_params
