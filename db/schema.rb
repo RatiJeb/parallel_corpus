@@ -249,7 +249,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_03_10_220736) do
      FROM (text_blocks tb_left
        LEFT JOIN text_blocks tb_right ON (((tb_left.collection_id = tb_right.collection_id) AND (tb_left.order_number = tb_right.order_number) AND (tb_left.language <> tb_right.language))));
   SQL
-  create_view "super_group_details", sql_definition: <<-SQL
+  create_view "supergroup_details", sql_definition: <<-SQL
       SELECT supergroups.id,
       supergroups.name_ka,
       supergroups.name_en,

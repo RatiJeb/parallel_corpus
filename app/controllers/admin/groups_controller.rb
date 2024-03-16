@@ -1,12 +1,23 @@
 class Admin::GroupsController < Admin::BaseController
+  before_action :set_search_params, only: :index
 
   def index
     if params[:supergroup_id]
       @supergroup = Supergroup.find(params[:supergroup_id])
-      @groups = Views::GroupDetail.where(supergroup_id: params[:supergroup_id]).order(:id).page(params[:page]).per(20)
+      @groups = Views::GroupDetail.where(supergroup_id: params[:supergroup_id])
     else
-      @groups = Views::GroupDetail.order(:id).page(params[:page]).per(20)
+      @groups = Views::GroupDetail.all
     end
+
+    %i[name_en name_ka supergroup_name_ka].each do |field|
+      unless params[field].blank?
+        @groups = @groups.where(Views::GroupDetail.arel_table[field].matches("%#{params[field]}%"))
+      end
+    end
+    @groups = @groups.where(id: params[:id]) unless params[:id].blank?
+    @groups = @groups.where(status: params[:status]) unless params[:status].blank?
+    @groups = @groups.order(:id).page(params[:page]).per(20)
+
     @collections_count = @groups.sum(&:collections_count)
     @text_blocks_count = @groups.sum(&:text_blocks_count)
   end
@@ -38,6 +49,10 @@ class Admin::GroupsController < Admin::BaseController
   end
 
   private
+
+  def set_search_params
+    @search = Search::Group.new(params.permit(:id, :supergroup_name_ka, :name_ka, :name_en, :status))
+  end
 
   def group_params
     params.require(:group).permit(

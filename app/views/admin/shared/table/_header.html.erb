@@ -1,0 +1,7 @@
+<tr>
+  <% columns.each_with_index do |column, index| %>
+    <th scope="col" class="<%= table_header_cell_classes(column, index, columns.size) %>">
+      <%= column[:name] %>
+    </th>
+  <% end %>
+</tr>

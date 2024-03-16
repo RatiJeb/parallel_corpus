@@ -2,12 +2,13 @@ class Admin::SupergroupsController < Admin::BaseController
   before_action :set_search_params, only: :index
 
   def index
-    @supergroups = Views::SuperGroupDetail.all
+    @supergroups = Views::SupergroupDetail.all
     %i[name_en name_ka].each do |field|
       unless params[field].blank?
-        @supergroups = @supergroups.where(Views::SuperGroupDetail.arel_table[field].matches("%#{params[field]}%"))
+        @supergroups = @supergroups.where(Views::SupergroupDetail.arel_table[field].matches("%#{params[field]}%"))
       end
     end
+    @supergroups = @supergroups.where(id: params[:id]) unless params[:id].blank?
     @supergroups = @supergroups.where(status: params[:status]) unless params[:status].blank?
     @supergroups = @supergroups.order(:id).page(params[:page]).per(20)
 
@@ -40,7 +41,7 @@ class Admin::SupergroupsController < Admin::BaseController
   private
 
   def set_search_params
-    @search = Search::Supergroup.new(params.permit(:name_ka, :name_en, :status))
+    @search = Search::Supergroup.new(params.permit(:id, :name_ka, :name_en, :status))
   end
 
   def supergroup_params

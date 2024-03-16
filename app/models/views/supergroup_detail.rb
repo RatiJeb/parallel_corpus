@@ -1,7 +1,7 @@
 module Views
-  class SuperGroupDetail < ApplicationRecord
+  class SupergroupDetail < ApplicationRecord
     include Statusable
-    
+
     def readonly?
       true
     end

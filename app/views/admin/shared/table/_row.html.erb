@@ -1,0 +1,7 @@
+<tr>
+  <% columns.each_with_index do |column, index| %>
+    <td class="<%= table_body_cell_classes(column, index, columns.size) %>">
+      <%= table_body_cell_contents(record, column) %>
+    </td>
+  <% end %>
+</tr>
