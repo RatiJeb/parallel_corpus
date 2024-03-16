@@ -1,12 +1,24 @@
 class Admin::CollectionsController < Admin::BaseController
+  before_action :set_search_params, only: :index
 
   def index
     if params[:group_id]
       @group = Group.find(params[:group_id])
-      @collections = Collection.where(group: @group).order(:id).page(params[:page]).per(20)
+      @collections = Views::CollectionDetail.where(group_id: params[:group_id])
     else
-      @collections = Collection.all.order(:id).page(params[:page]).per(20)
+      @collections = Views::CollectionDetail.all
     end
+
+    %i[name_en name_ka group_name_ka supergroup_name_ka].each do |field|
+      unless params[field].blank?
+        @collections = @collections.where(Views::CollectionDetail.arel_table[field].matches("%#{params[field]}%"))
+      end
+    end
+    @collections = @collections.where(id: params[:id]) unless params[:id].blank?
+    @collections = @collections.where(status: params[:status]) unless params[:status].blank?
+    @collections = @collections.order(:id).page(params[:page]).per(20)
+
+    @text_blocks_count = @collections.sum(&:text_blocks_count)
   end
 
   def new
@@ -38,6 +50,10 @@ class Admin::CollectionsController < Admin::BaseController
   end
 
   private
+
+  def set_search_params
+    @search = Search::Collection.new(params.permit(:id, :supergroup_name_ka, :group_name_ka, :name_ka, :name_en, :status))
+  end
 
   def collection_params
     params.require(:collection).permit(

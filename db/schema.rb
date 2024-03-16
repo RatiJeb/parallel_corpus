@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_03_10_220736) do
+ActiveRecord::Schema[7.1].define(version: 2024_03_16_212412) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -278,5 +278,23 @@ ActiveRecord::Schema[7.1].define(version: 2024_03_10_220736) do
        LEFT JOIN collections ON ((groups.id = collections.group_id)))
        LEFT JOIN text_blocks ON ((collections.id = text_blocks.collection_id)))
     GROUP BY groups.id, groups.name_ka, groups.name_en, groups.status, supergroups.id, supergroups.name_ka, supergroups.name_en;
+  SQL
+  create_view "collection_details", sql_definition: <<-SQL
+      SELECT collections.id,
+      collections.name_ka,
+      collections.name_en,
+      collections.status,
+      groups.id AS group_id,
+      groups.name_ka AS group_name_ka,
+      groups.name_en AS group_name_en,
+      supergroups.id AS supergroup_id,
+      supergroups.name_ka AS supergroup_name_ka,
+      supergroups.name_en AS supergroup_name_en,
+      count(text_blocks.id) AS text_blocks_count
+     FROM (((collections
+       JOIN groups ON ((collections.group_id = groups.id)))
+       JOIN supergroups ON ((groups.supergroup_id = supergroups.id)))
+       LEFT JOIN text_blocks ON ((collections.id = text_blocks.collection_id)))
+    GROUP BY collections.id, collections.name_ka, collections.name_en, collections.status, groups.id, groups.name_ka, groups.name_en, supergroups.id, supergroups.name_ka, supergroups.name_en;
   SQL
 end
