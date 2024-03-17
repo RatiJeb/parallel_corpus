@@ -1,6 +1,6 @@
 <tr>
-  <% columns.each_with_index do |column, index| %>
-    <td class="<%= table_body_cell_classes(column, index, columns.size) %>">
+  <% columns.each_with_index do |column, col_index| %>
+    <td class="<%= table_body_cell_classes(column, col_index, columns.size, index) %>">
       <%= table_body_cell_contents(record, column) %>
     </td>
   <% end %>

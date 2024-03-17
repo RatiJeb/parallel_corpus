@@ -19,7 +19,7 @@
     <div class="mt-8 px-4 sm:px-6 lg:px-8">
       <%= render 'admin/shared/paging', records: @groups, url_method: -> (**params){ admin_groups_path(**params) }, paging_params: { supergroup_id: @supergroup&.id } %>
 
-      <div class="mt-8 flow-root">
+      <div class="flow-root">
         <div class="-mx-4 -my-2 sm:-mx-6 lg:-mx-8">
           <div class="inline-block min-w-full py-2 align-middle">
             <%= form_for @search, url: admin_groups_path, method: :get do |form| %>
@@ -52,9 +52,10 @@
 
                 </thead>
                 <tbody>
-                  <% @groups.each do |group| %>
+                  <% @groups.each_with_index do |group, index| %>
                     <%= render 'admin/shared/table/row',
                                record: group,
+                               index: index,
                                columns: [{ type: :text, name: :id, classes: 'font-medium text-gray-900' },
                                          { type: :link, name: :supergroup_name_ka, url_method: -> (**params){ admin_groups_path }, url_params: { supergroup_id: group.supergroup_id }, classes: "max-w-[240px] overflow-hidden text-gray-500" },
                                          { type: :link, name: :name_ka, url_method: -> (**params){ admin_collections_path(**params) }, url_params: { group_id: group.id }, classes: "max-w-[240px] overflow-hidden text-gray-500" },

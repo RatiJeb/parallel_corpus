@@ -20,7 +20,7 @@
         <div class="-mx-4 -my-2 sm:-mx-6 lg:-mx-8">
           <div class="inline-block min-w-full py-2 align-middle">
             <%= form_for @search, url: admin_supergroups_path, method: :get do |form| %>
-              <table class="w-full border-separate border-spacing-0">
+              <table class="w-full border-separate border-spacing-0 border-gray-300">
                 <thead>
 
                   <%= render 'admin/shared/table/header',
@@ -47,9 +47,10 @@
 
                 </thead>
                 <tbody>
-                  <% @supergroups.each do |supergroup| %>
+                  <% @supergroups.each_with_index do |supergroup, index| %>
                     <%= render 'admin/shared/table/row',
                                record: supergroup,
+                               index: index,
                                columns: [{ type: :text, name: :id, classes: 'font-medium text-gray-900' },
                                          { type: :link, name: :name_ka, url_method: -> (**params){ admin_groups_path(**params) }, url_params: { supergroup_id: supergroup.id }, classes: "max-w-[240px] overflow-hidden text-gray-500" },
                                          { type: :link, name: :name_en, url_method: -> (**params){ admin_groups_path(**params) }, url_params: { supergroup_id: supergroup.id }, classes: "max-w-[240px] overflow-hidden text-gray-500" },
