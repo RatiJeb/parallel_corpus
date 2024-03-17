@@ -95,7 +95,7 @@ module ApplicationHelper
 
   def table_body_cell_contents(record, column)
     if column[:type] == :link
-      link_to((record.respond_to?(column[:name]) ? record.send(column[:name]) : column[:name]), column[:url_method].call(**column[:url_params]), class: "text-indigo-600 hover:text-indigo-900")
+      link_to((record.respond_to?(column[:name]) ? record.send(column[:name]) : column[:name]), column[:url_method].call(**column[:url_params]), class: "text-skyblue-700 hover:text-skyblue-900")
     else
       record.send(column[:name])
     end
