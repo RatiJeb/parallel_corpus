@@ -1,8 +1,5 @@
 module ApplicationHelper
 
-  @@main_color = 'sky'
-  @@secondary_color = 'slate'
-
   def header_link(name, url, mobile = false)
     if mobile
       if is_active_link?(url, :inclusive)
@@ -67,7 +64,7 @@ module ApplicationHelper
   end
 
   def table_filter_cell_classes(column, index, size)
-    classes = "sticky top-12 z-11 border-b border-r border-gray-400 bg-neutral-200 bg-opacity-75 px-3 text-left text-sm text-gray-500 backdrop-blur backdrop-filter"
+    classes = "sticky top-12 z-11 border-b border-r border-gray-400 bg-neutral-200 bg-opacity-75 px-2 text-left text-sm text-gray-500 backdrop-blur backdrop-filter"
     classes += ' border-l' if index == 0
     classes += " #{column[:classes]}" if column[:classes]
     classes
@@ -75,11 +72,13 @@ module ApplicationHelper
 
   def table_filter_input(form, column)
     if column[:input_type] == :text_field
-      classes = "bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+      classes = "bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-3xl focus:ring-blue-500 focus:border-blue-500 block w-full dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
       classes += " #{column[:input_classes]}" if column[:input_classes]
       form.text_field column[:name], name: column[:name], class: classes
     elsif column[:input_type] == :status_select
-      form.select :status, column[:model].statuses.keys.map { |status| [status.humanize, status] }, { include_blank: true }, { name: :status, class: "bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" }
+      form.select :status, column[:model].statuses.keys.map { |status| [status.humanize, status] }, { include_blank: true }, { name: :status, class: "bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-3xl focus:ring-blue-500 focus:border-blue-500 block w-full dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" }
+    elsif column[:input_type] == :hidden
+      form.hidden_field column[:name], name: column[:name]
     else
       column[:content]
     end
