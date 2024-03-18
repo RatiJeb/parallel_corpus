@@ -1,10 +1,7 @@
-<header>
-  <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-    <h1 class="text-3xl font-bold leading-tight tracking-tight text-gray-900">ჯგუფები</h1>
-  </div>
-</header>
+<%= render 'admin/shared/heading', name: 'ჯგუფები' %>
+
 <main>
-  <div class="mx-auto max-w-7xl sm:px-6 lg:px-8">
+  <div class="mx-auto max-w-screen-2xl sm:px-6 lg:px-8">
     <% crumbs = [] %>
     <% if @supergroup %>
       <% crumbs << { name: 'ქვეკორპუსები', url: admin_supergroups_path } %>
@@ -16,9 +13,9 @@
 
     <%= render 'admin/shared/new_button', name: 'ახალი ჯგუფის დამატება', url: new_admin_group_path %>
 
-    <div class="mt-8 px-4 sm:px-6 lg:px-8">
-      <%= render 'admin/shared/paging', records: @groups, url_method: -> (**params){ admin_groups_path(**params) }, paging_params: { supergroup_id: @supergroup&.id } %>
+    <%= render 'admin/shared/paging', records: @groups, url_method: -> (**params){ admin_groups_path(**params) }, paging_params: { supergroup_id: @supergroup&.id } %>
 
+    <div class="px-4 sm:px-6 lg:px-8">
       <div class="flow-root">
         <div class="-mx-4 -my-2 sm:-mx-6 lg:-mx-8">
           <div class="inline-block min-w-full py-2 align-middle">
@@ -74,11 +71,7 @@
           </div>
         </div>
       </div>
-      <%= render 'admin/shared/paging', records: @groups, url_method: -> (**params){ admin_groups_path(**params) }, paging_params: { supergroup_id: @supergroup&.id } %>
-
-
     </div>
-
-
+    <%= render 'admin/shared/paging', records: @groups, url_method: -> (**params){ admin_groups_path(**params) }, paging_params: { supergroup_id: @supergroup&.id } %>
   </div>
 </main>

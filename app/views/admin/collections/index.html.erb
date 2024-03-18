@@ -1,10 +1,7 @@
-<header>
-  <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-    <h1 class="text-3xl font-bold leading-tight tracking-tight text-gray-900">კრებულები</h1>
-  </div>
-</header>
+<%= render 'admin/shared/heading', name: 'კრებულები' %>
+
 <main>
-  <div class="mx-auto max-w-7xl sm:px-6 lg:px-8">
+  <div class="mx-auto max-w-screen-2xl sm:px-6 lg:px-8">
     <% crumbs = [] %>
     <% if @group %>
       <% crumbs << { name: 'ქვეკორპუსები', url: admin_supergroups_path } %>
@@ -17,9 +14,8 @@
 
     <%= render 'admin/shared/new_button', name: 'ახალი კრებულის დამატება', url: new_admin_collection_path %>
 
-    <div class="mt-8 px-4 sm:px-6 lg:px-8">
-      <%= render 'admin/shared/paging', records: @collections, url_method: -> (**params){ admin_collections_path(**params) }, paging_params: { group_id: @group&.id } %>
-
+    <%= render 'admin/shared/paging', records: @collections, url_method: -> (**params){ admin_collections_path(**params) }, paging_params: { group_id: @group&.id } %>
+    <div class="px-4 sm:px-6 lg:px-8">
       <div class="flow-root">
         <div class="-mx-4 -my-2 sm:-mx-6 lg:-mx-8">
           <div class="inline-block min-w-full py-2 align-middle">
@@ -68,7 +64,7 @@
           </div>
         </div>
       </div>
-      <%= render 'admin/shared/paging', records: @collections, url_method: -> (**params){ admin_collections_path(**params) }, paging_params: { group_id: @group&.id } %>
     </div>
+    <%= render 'admin/shared/paging', records: @collections, url_method: -> (**params){ admin_collections_path(**params) }, paging_params: { group_id: @group&.id } %>
   </div>
 </main>
