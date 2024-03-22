@@ -3,7 +3,7 @@ class Admin::GroupsController < Admin::BaseController
 
   def index
     @supergroup = Supergroup.find(params[:supergroup_id]) if params[:supergroup_id]
-    
+
     @groups = Views::GroupDetail.all
 
     %i[name_en name_ka supergroup_name_ka].each do |field|
@@ -17,7 +17,7 @@ class Admin::GroupsController < Admin::BaseController
     @groups = @groups.order(:id).page(params[:page]).per(20)
 
     @collections_count = @groups.sum(&:collections_count)
-    @text_blocks_count = @groups.sum(&:text_blocks_count)
+    @text_blocks_count = @groups.sum(&:text_blocks_count)/2
   end
 
   def new

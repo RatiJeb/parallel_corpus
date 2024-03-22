@@ -16,7 +16,7 @@ class Admin::CollectionsController < Admin::BaseController
     @collections = @collections.where(status: params[:status]) unless params[:status].blank?
     @collections = @collections.order(:id).page(params[:page]).per(20)
 
-    @text_blocks_count = @collections.sum(&:text_blocks_count)
+    @text_blocks_count = @collections.sum(&:text_blocks_count)/2
   end
 
   def new
