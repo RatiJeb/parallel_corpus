@@ -45,7 +45,7 @@ class Admin::SupergroupsController < Admin::BaseController
   end
 
   def supergroup_params
-    params.require(:supergroup).permit(:name_ka, :name_en, :comment, :status)
+    params.permit(:name_ka, :name_en, :comment, :status)
   end
 
 end
