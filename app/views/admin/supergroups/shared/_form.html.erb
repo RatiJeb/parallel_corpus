@@ -91,8 +91,15 @@
     <%= link_to 'უკან დაბრუნება', admin_supergroups_path, type: "button", class: "inline-flex justify-center rounded-md bg-gray-200 ring-2 ring-gray-500 px-3 py-2 text-sm font-semibold text-gray-700 shadow-sm hover:bg-gray-100 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gray-200" %>
     <!-- <button type="button" class="inline-flex justify-center rounded-md bg-gray-200 ring-2 ring-gray-500 px-3 py-2 text-sm font-semibold text-gray-700 shadow-sm hover:bg-gray-100 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gray-200">უარყოფა</button> -->
     <button type="submit" class="inline-flex justify-center rounded-md bg-mountbatten-500 ring-2 ring-mountbatten-500 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-mountbatten-400 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-mountbatten-500">შენახვა</button>
-    <% if method == :put %>
-      <%= link_to 'წაშლა', admin_supergroup_path(@supergroup), method: :delete, data: { confirm: 'Are you sure?' }, type: "button", class: "inline-flex justify-center rounded-md bg-gray-500 ring-2 ring-gray-500 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-gray-400 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gray-500" %>
+    <% if @supergroup.persisted? %>
+      <button type="button"
+              data-controller="delete-record"
+              data-delete-record-url-value="<%= admin_supergroup_path(@supergroup) %>"
+              data-delete-record-redirect-url-value="<%= admin_supergroups_path %>"
+              data-action="click->delete-record#submit"
+              class="inline-flex justify-center rounded-md bg-gray-500 ring-2 ring-gray-500 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-gray-400 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gray-500">
+        წაშლა
+      </button>
     <% end %>
   </div>
 <% end %>

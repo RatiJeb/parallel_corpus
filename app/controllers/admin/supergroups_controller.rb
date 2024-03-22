@@ -40,8 +40,11 @@ class Admin::SupergroupsController < Admin::BaseController
 
   def destroy
     @supergroup = Supergroup.find(params[:id])
-    @supergroup.destroy!
-    redirect_to admin_supergroups_path
+    if @supergroup.destroy!
+      head(:ok)
+    else
+      render(json: {}, status: :unprocessable_entity)
+    end
   end
 
   private
