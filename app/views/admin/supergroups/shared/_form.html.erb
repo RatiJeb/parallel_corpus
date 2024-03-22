@@ -26,7 +26,7 @@
   }
 
 -->
-<%= form_with model: [:admin, @supergroup], url: admin_supergroup_path, method: :put do |form| %>
+<%= form_with model: [:admin, @supergroup], url: url, method: method do |form| %>
   <div class="flex justify-stretch grid grid-cols-3 grid-flow-col max-w-3xl">
     <div class="mt-8 bg-mountbatten-100 px-3 col-span-1 rounded-tl-md ring-2 ring-mountbatten-500 space-y-12 sm:space-y-16 inline-flex">
       <div class="sm:py-3">
@@ -91,6 +91,8 @@
     <%= link_to 'უკან დაბრუნება', admin_supergroups_path, type: "button", class: "inline-flex justify-center rounded-md bg-gray-200 ring-2 ring-gray-500 px-3 py-2 text-sm font-semibold text-gray-700 shadow-sm hover:bg-gray-100 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gray-200" %>
     <!-- <button type="button" class="inline-flex justify-center rounded-md bg-gray-200 ring-2 ring-gray-500 px-3 py-2 text-sm font-semibold text-gray-700 shadow-sm hover:bg-gray-100 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gray-200">უარყოფა</button> -->
     <button type="submit" class="inline-flex justify-center rounded-md bg-mountbatten-500 ring-2 ring-mountbatten-500 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-mountbatten-400 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-mountbatten-500">შენახვა</button>
-    <button type="button" class="inline-flex justify-center rounded-md bg-gray-500 ring-2 ring-gray-500 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-gray-400 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gray-500">წაშლა</button>
+    <% if method == :put %>
+      <%= link_to 'წაშლა', admin_supergroup_path(@supergroup), method: :delete, data: { confirm: 'Are you sure?' }, type: "button", class: "inline-flex justify-center rounded-md bg-gray-500 ring-2 ring-gray-500 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-gray-400 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gray-500" %>
+    <% end %>
   </div>
 <% end %>

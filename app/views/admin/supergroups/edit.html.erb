@@ -10,6 +10,6 @@
 
     <%= render 'admin/shared/breadcrumbs', crumbs: crumbs %>
 
-    <%= render partial: "admin/supergroups/shared/form" %>
+    <%= render 'admin/supergroups/shared/form', url: admin_supergroup_path, method: :put %>
   </div>
 <main>

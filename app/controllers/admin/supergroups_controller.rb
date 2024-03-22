@@ -38,6 +38,12 @@ class Admin::SupergroupsController < Admin::BaseController
     redirect_to admin_supergroups_path
   end
 
+  def destroy
+    @supergroup = Supergroup.find(params[:id])
+    @supergroup.destroy!
+    redirect_to admin_supergroups_path
+  end
+
   private
 
   def set_search_params

@@ -1,7 +1,14 @@
-<%= render partial: "admin/shared/header" %>
+<%= render 'admin/shared/heading', name: 'ქვეკორპუსის რედაქტირება' %>
 
-<h1>
-  <%= link_to 'ქვეკორპუსები', admin_supergroups_path %> > ქვეკორპუსის დამატება
-</h1>
+<main>
+  <div class="mx-auto max-w-screen-2xl sm:px-6 lg:px-8">
 
-<%= render partial: "admin/supergroups/shared/form" %>
+    <% crumbs = [] %>
+    <% crumbs << { name: 'ქვეკორპუსები', url: admin_supergroups_path } %>
+    <% crumbs << { name: 'ახალი ქვეკორპუსის დამატება', url: new_admin_supergroup_path() } %>
+
+    <%= render 'admin/shared/breadcrumbs', crumbs: crumbs %>
+
+    <%= render 'admin/supergroups/shared/form', url: admin_supergroups_path, method: :post %>
+  </div>
+<main>
