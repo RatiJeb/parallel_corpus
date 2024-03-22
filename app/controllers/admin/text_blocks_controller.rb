@@ -2,7 +2,7 @@ class Admin::TextBlocksController < Admin::BaseController
   before_action :set_search_params, only: :index
 
   def index
-    @collection = Collection.find(params[:collection_id]) if params[:collection_id]
+    @collection = Collection.find(params[:collection_id]) unless params[:collection_id].blank?
 
     @text_blocks = Views::TextBlockPair.where(original_language: 0)
 

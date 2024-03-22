@@ -2,7 +2,7 @@ class Admin::CollectionsController < Admin::BaseController
   before_action :set_search_params, only: :index
 
   def index
-    @group = Group.find(params[:group_id]) if params[:group_id]
+    @group = Group.find(params[:group_id]) unless params[:group_id].blank?
 
     @collections = Views::CollectionDetail.all
 

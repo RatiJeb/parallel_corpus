@@ -2,7 +2,8 @@ class Admin::GroupsController < Admin::BaseController
   before_action :set_search_params, only: :index
 
   def index
-    @supergroup = Supergroup.find(params[:supergroup_id]) if params[:supergroup_id]
+
+    @supergroup = Supergroup.find(params[:supergroup_id]) unless params[:supergroup_id].blank?
 
     @groups = Views::GroupDetail.all
 
