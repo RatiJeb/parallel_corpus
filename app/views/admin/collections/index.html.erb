@@ -12,7 +12,7 @@
 
     <%= render 'admin/shared/breadcrumbs', crumbs: crumbs %>
 
-    <%= render 'admin/shared/new_button', name: 'ახალი კრებულის დამატება', url: new_admin_collection_path %>
+    <%= render 'admin/shared/new_button', name: 'ახალი კრებულის დამატება', url: new_admin_collection_path(group_id: @group&.id) %>
 
     <%= render 'admin/shared/paging', records: @collections, url_method: -> (**params){ admin_collections_path(**params) }, paging_params: { group_id: @group&.id } %>
     <div class="px-4 sm:px-6 lg:px-8">

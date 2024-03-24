@@ -1,5 +1,3 @@
-
-
 <%= form_with model: [:admin, @group], url: url, method: method do |form| %>
 
   <div class="mt-8 flex justify-stretch grid grid-cols-3 grid-flow-col max-w-3xl rounded-t-md ring-2 ring-mountbatten-500">
@@ -71,7 +69,7 @@
     <div class="bg-gray-100 px-3 rounded-br-md col-span-2 ring-2 ring-gray-500 space-y-12 sm:space-y-16 inline-flex">
       <div class="sm:items-start sm:divide-x sm:gap-4 sm:py-3 w-full">
         <div class="mt-2 sm:mt-0 w-full">
-          <%= form.select :status, Supergroup.statuses.keys.map { |status| [status.humanize, status] }, {}, { name: :status, class: "bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-md focus:ring-oceanside-500 focus:border-oceanside-500 block w-full dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-oceanside-500 dark:focus:border-oceanside-500" } %>
+          <%= form.select :status, Group.statuses.keys.map { |status| [status.humanize, status] }, {}, { name: :status, class: "bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-md focus:ring-oceanside-500 focus:border-oceanside-500 block w-full dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-oceanside-500 dark:focus:border-oceanside-500" } %>
         </div>
       </div>
     </div>

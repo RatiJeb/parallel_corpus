@@ -1,11 +1,7 @@
-<%= render 'admin/shared/heading', name: 'ჯგუფის რედაქტირება' %>
+<%= render 'admin/shared/heading', name: 'ჯგუფის დამატება' %>
 
 <main>
   <div class="mx-auto max-w-screen-2xl sm:px-6 lg:px-8">
-
-    <% crumbs = [] %>
-    <% crumbs << { name: 'ქვეკორპუსები', url: admin_supergroups_path } %>
-    <% crumbs << { name: 'ახალი ქვეკორპუსის დამატება', url: new_admin_supergroup_path() } %>
 
     <% crumbs = [] %>
     <% if @supergroup %>
@@ -13,7 +9,7 @@
       <% crumbs << { name: @supergroup.name_ka, url: admin_groups_path(supergroup_id: @supergroup.id) } %>
     <% end %>
     <% crumbs << { name: 'ჯგუფები', url: admin_groups_path(supergroup_id: @supergroup&.id) } %>
-    <% crumbs << { name: 'ახალი ჯგუფის დამატება', url: new_admin_supergroup_path() } %>
+    <% crumbs << { name: 'ახალი ჯგუფის დამატება', url: new_admin_group_path(supergroup_id: @supergroup&.id) } %>
 
     <%= render 'admin/shared/breadcrumbs', crumbs: crumbs %>
 

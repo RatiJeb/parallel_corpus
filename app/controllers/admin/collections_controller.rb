@@ -47,6 +47,15 @@ class Admin::CollectionsController < Admin::BaseController
     redirect_to admin_collections_path(group_id: @collection.group.id)
   end
 
+  def destroy
+    @collection = Collection.find(params[:id])
+    if @collection.destroy!
+      head(:ok)
+    else
+      render(json: {}, status: :unprocessable_entity)
+    end
+  end
+
   private
 
   def set_search_params
@@ -54,11 +63,9 @@ class Admin::CollectionsController < Admin::BaseController
   end
 
   def collection_params
-    params.require(:collection).permit(
-      :group_id, :name_ka, :name_en, :comment, :status, :additional_info,
+    params.permit(:group_id, :name_ka, :name_en, :comment, :status, :additional_info,
       :year, :translation_year, :original_language, author_ids: [],
-      genre_ids: [], field_ids: [], type_ids: [], publishing_ids: []
-    )
+      genre_ids: [], field_ids: [], type_ids: [], publishing_ids: [])
   end
 
 end

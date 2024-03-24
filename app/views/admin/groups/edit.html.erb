@@ -5,10 +5,6 @@
 
     <% crumbs = [] %>
     <% crumbs << { name: 'ქვეკორპუსები', url: admin_supergroups_path } %>
-    <% crumbs << { name: 'ახალი ქვეკორპუსის დამატება', url: new_admin_supergroup_path() } %>
-
-    <% crumbs = [] %>
-    <% crumbs << { name: 'ქვეკორპუსები', url: admin_supergroups_path } %>
     <% crumbs << { name: @group.supergroup.name_ka, url: admin_groups_path(supergroup_id: @group.supergroup.id) } %>
     <% crumbs << { name: 'ჯგუფები', url: admin_groups_path(supergroup_id: @group.supergroup.id) } %>
     <% crumbs << { name: @group.name_ka, url: admin_collections_path(group_id: @group.id) } %>
