@@ -1,10 +1,22 @@
-<%= render partial: "admin/shared/header" %>
+<%= render 'admin/shared/heading', name: 'ჯგუფის რედაქტირება' %>
 
-<h1>
-  <% if @group.supergroup %>
-    <%= link_to @group.supergroup.name_ka, admin_groups_path(supergroup_id: @group.supergroup.id) %> >
-  <% end %>
-  <%= link_to 'ჯგუფები', admin_groups_path(supergroup_id: @group.supergroup&.id) %> > ჯგუფის დამატება
-</h1>
+<main>
+  <div class="mx-auto max-w-screen-2xl sm:px-6 lg:px-8">
 
-<%= render partial: "admin/groups/shared/form" %>
+    <% crumbs = [] %>
+    <% crumbs << { name: 'ქვეკორპუსები', url: admin_supergroups_path } %>
+    <% crumbs << { name: 'ახალი ქვეკორპუსის დამატება', url: new_admin_supergroup_path() } %>
+
+    <% crumbs = [] %>
+    <% if @supergroup %>
+      <% crumbs << { name: 'ქვეკორპუსები', url: admin_supergroups_path } %>
+      <% crumbs << { name: @supergroup.name_ka, url: admin_groups_path(supergroup_id: @supergroup.id) } %>
+    <% end %>
+    <% crumbs << { name: 'ჯგუფები', url: admin_groups_path(supergroup_id: @supergroup&.id) } %>
+    <% crumbs << { name: 'ახალი ჯგუფის დამატება', url: new_admin_supergroup_path() } %>
+
+    <%= render 'admin/shared/breadcrumbs', crumbs: crumbs %>
+
+    <%= render 'admin/groups/shared/form', url: admin_groups_path, method: :post %>
+  </div>
+<main>

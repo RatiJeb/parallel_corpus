@@ -11,7 +11,7 @@
 
     <%= render 'admin/shared/breadcrumbs', crumbs: crumbs %>
 
-    <%= render 'admin/shared/new_button', name: 'ახალი ჯგუფის დამატება', url: new_admin_group_path %>
+    <%= render 'admin/shared/new_button', name: 'ახალი ჯგუფის დამატება', url: new_admin_group_path(supergroup_id: @supergroup&.id) %>
 
     <%= render 'admin/shared/paging', records: @groups, url_method: -> (**params){ admin_groups_path(**params) }, paging_params: { supergroup_id: @supergroup&.id } %>
 

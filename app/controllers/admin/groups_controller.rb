@@ -47,6 +47,15 @@ class Admin::GroupsController < Admin::BaseController
     redirect_to admin_groups_path(supergroup_id: @group.supergroup.id)
   end
 
+  def destroy
+    @group = Group.find(params[:id])
+    if @group.destroy!
+      head(:ok)
+    else
+      render(json: {}, status: :unprocessable_entity)
+    end
+  end
+
   private
 
   def set_search_params
@@ -54,11 +63,7 @@ class Admin::GroupsController < Admin::BaseController
   end
 
   def group_params
-    params.require(:group).permit(
-      :supergroup_id, :name_ka, :name_en, :comment, :status, :additional_info,
-      :year, :translation_year, :original_language, author_ids: [],
-      genre_ids: [], field_ids: [], type_ids: [], publishing_ids: []
-    )
+    params.permit(:supergroup_id, :name_ka, :name_en, :comment, :status, :should_sync)
   end
 
 end

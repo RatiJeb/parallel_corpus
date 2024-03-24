@@ -1,33 +1,110 @@
-<%= form_with model: [:admin, @group] do |form| %>
-  <%= form.label :supergroup_id, 'ქვეკორპუსი' %>
-  <%= form.select :supergroup_id, options_for_select(Supergroup.all.collect{ |supergroup| [supergroup.name_ka, supergroup.id] }, form.object.supergroup&.id) %>
-  <%= form.label :name_ka, 'სახელი (ka)' %>
-  <%= form.text_field :name_ka %>
-  <%= form.label :name_en, 'სახელი (en)' %>
-  <%= form.text_field :name_en %>
-  <%= form.label :type_ids, 'ტიპი' %>
-  <%= form.select :type_ids, options_for_select(Type.all.collect{ |type| [type.name_ka, type.id] }, form.object.type_ids), { multiple: true } %>
-  <%= form.label :genre_ids, 'ჟანრი' %>
-  <%= form.select :genre_ids, options_for_select(Genre.all.collect{ |genre| [genre.name_ka, genre.id] }, form.object.genre_ids), { multiple: true } %>
-  <%= form.label :field_ids, 'დარგი' %>
-  <%= form.select :field_ids, options_for_select(Field.all.collect{ |field| [field.name_ka, field.id] }, form.object.field_ids), { multiple: true } %>
-  <%= form.label :original_language, 'ორიგინალის ენა' %>
-  <%= form.select :original_language, Group.original_languages.keys.map { |language| [language.titleize, language] } %>
-  <%= form.label :author_ids, 'ავტორი' %>
-  <%= form.select :author_ids, options_for_select(Author.all.collect{ |author| [author.name_ka, author.id] }), { multiple: true } %>
-  <%= form.label :year, 'გამოცემის წელი' %>
-  <%= form.text_field :year %>
-  <%= form.label :translator_ids, 'მთარგმენლი' %>
-  <%= form.select :translator_ids, options_for_select(Translator.all.collect{ |translator| [translator.name_ka, translator.id] }, form.object.translator_ids), { multiple: true } %>
-  <%= form.label :translation_year, 'თარგმნის წელი' %>
-  <%= form.text_field :translation_year %>
-  <%= form.label :publishing_ids, 'გამოცემა' %>
-  <%= form.select :publishing_ids, options_for_select(Publishing.all.collect{ |publishing| [publishing.name_ka, publishing.id] }, form.object.publishing_ids), { multiple: true } %>
-  <%= form.label :comment, 'კომენტარი' %>
-  <%= form.text_area :comment, size: "60x10" %>
-  <%= form.label :status, 'სტატუსი' %>
-  <%= form.select :status, Group.statuses.keys.map { |status| [status.titleize, status] } %>
 
-  <%= link_to 'უკან დაბრუნება', admin_groups_path(supergroup_id: @group.supergroup&.id) %>
-  <%= form.submit %>
+
+<%= form_with model: [:admin, @group], url: url, method: method do |form| %>
+
+  <div class="mt-8 flex justify-stretch grid grid-cols-3 grid-flow-col max-w-3xl rounded-t-md ring-2 ring-mountbatten-500">
+    <div class="bg-mountbatten-100 px-3 col-span-1 rounded-tl-md space-y-12 sm:space-y-16 inline-flex">
+      <div class="sm:py-3">
+        <%= form.label :supergroup_id, 'ქვეკორპუსი', class: "block text-sm font-medium leading-6 text-gray-900 sm:py-1.5" %>
+      </div>
+    </div>
+    <div class="bg-mountbatten-100 px-3 rounded-tr-md col-span-2 space-y-12 sm:space-y-16 inline-flex">
+      <div class="sm:items-start sm:divide-x sm:gap-4 sm:py-3 w-full">
+        <div class="mt-2 sm:mt-0 w-full">
+          <%= form.collection_select :supergroup_id, Supergroup.all, :id, :name_ka, { selected: @group.supergroup_id, inlcude_blank: true }, { required: true, name: :supergroup_id, class: "bg-gray-50 border border-mountbatten-300 text-gray-900 text-sm rounded-md focus:ring-oceanside-500 focus:border-oceanside-500 block w-full dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-oceanside-500 dark:focus:border-oceanside-500" } %>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="flex justify-stretch grid grid-cols-3 grid-flow-col max-w-3xl">
+    <div class="bg-mountbatten-100 px-3 col-span-1 ring-2 ring-mountbatten-500 space-y-12 sm:space-y-16 inline-flex">
+      <div class="sm:py-3">
+        <%= form.label :name_ka, 'სახელი (ka)', class: "block text-sm font-medium leading-6 text-gray-900 sm:py-1.5" %>
+      </div>
+    </div>
+    <div class="bg-gray-100 px-3 col-span-2 ring-2 ring-gray-500 space-y-12 sm:space-y-16 inline-flex">
+      <div class="sm:items-start sm:divide-x sm:gap-4 sm:py-3 w-full">
+        <div class="mt-2 sm:mt-0 w-full">
+          <%= form.text_field :name_ka, name: :name_ka, required: true, class: "bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-md focus:ring-oceanside-500 focus:border-oceanside-500 block w-full dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-oceanside-500 dark:focus:border-oceanside-500" %>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="flex justify-stretch grid grid-cols-3 grid-flow-col max-w-3xl">
+    <div class="bg-mountbatten-100 px-3 col-span-1 ring-2 ring-mountbatten-500 space-y-12 sm:space-y-16 inline-flex">
+      <div class="sm:py-3">
+        <%= form.label :name_en, 'სახელი (en)', class: "block text-sm font-medium leading-6 text-gray-900 sm:py-1.5" %>
+      </div>
+    </div>
+    <div class="bg-gray-100 px-3 col-span-2 ring-2 ring-gray-500 space-y-12 sm:space-y-16 inline-flex">
+      <div class="sm:items-start sm:divide-x sm:gap-4 sm:py-3 w-full">
+        <div class="mt-2 sm:mt-0 w-full">
+          <%= form.text_field :name_en, name: :name_en, required: true, class: "bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-md focus:ring-oceanside-500 focus:border-oceanside-500 block w-full dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-oceanside-500 dark:focus:border-oceanside-500" %>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="flex justify-stretch grid grid-cols-3 grid-flow-col max-w-3xl">
+    <div class="bg-mountbatten-100 px-3 col-span-1 ring-2 ring-mountbatten-500 space-y-12 sm:space-y-16 inline-flex">
+      <div class="sm:py-3">
+        <%= form.label :comment, 'კომენტარი', class: "block text-sm font-medium leading-6 text-gray-900 sm:py-1.5" %>
+      </div>
+    </div>
+    <div class="bg-gray-100 px-3 col-span-2 ring-2 ring-gray-500 space-y-12 sm:space-y-16 inline-flex">
+      <div class="sm:items-start sm:divide-x sm:gap-4 sm:py-3 w-full">
+        <div class="mt-2 sm:mt-0 w-full">
+          <%= form.text_area :comment, name: :comment, rows: 4, class: "bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-md focus:ring-oceanside-500 focus:border-oceanside-500 block w-full dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-oceanside-500 dark:focus:border-oceanside-500" %>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="flex justify-stretch grid grid-cols-3 grid-flow-col max-w-3xl">
+    <div class="bg-mountbatten-100 px-3 col-span-1 rounded-bl-md ring-2 ring-mountbatten-500 space-y-12 sm:space-y-16 inline-flex">
+      <div class="sm:py-3">
+        <%= form.label :status, 'სტატუსი', class: "block text-sm font-medium leading-6 text-gray-900 sm:py-1.5" %>
+      </div>
+    </div>
+    <div class="bg-gray-100 px-3 rounded-br-md col-span-2 ring-2 ring-gray-500 space-y-12 sm:space-y-16 inline-flex">
+      <div class="sm:items-start sm:divide-x sm:gap-4 sm:py-3 w-full">
+        <div class="mt-2 sm:mt-0 w-full">
+          <%= form.select :status, Supergroup.statuses.keys.map { |status| [status.humanize, status] }, {}, { name: :status, class: "bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-md focus:ring-oceanside-500 focus:border-oceanside-500 block w-full dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-oceanside-500 dark:focus:border-oceanside-500" } %>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="flex justify-stretch grid grid-cols-3 grid-flow-col max-w-3xl">
+    <div class="bg-mountbatten-100 px-3 col-span-1 rounded-bl-md ring-2 ring-mountbatten-500 space-y-12 sm:space-y-16 inline-flex">
+      <div class="sm:py-3">
+        <%= form.label :should_sync, 'სინქრონიზებული კრებულები', class: "block text-sm font-medium leading-6 text-gray-900 sm:py-1.5" %>
+      </div>
+    </div>
+    <div class="bg-gray-100 px-3 rounded-br-md col-span-2 ring-2 ring-gray-500 space-y-12 sm:space-y-16 inline-flex">
+      <div class="sm:items-start sm:divide-x sm:gap-4 sm:py-3">
+        <div class="mt-2 sm:mt-0">
+          <%= form.check_box :should_sync, name: :should_sync, class: "bg-gray-50 border border-gray-300 w-8 h-8 text-gray-900 text-sm text-mountbatten-500 rounded-md focus:ring-offset-0 focus:ring-1 focus:ring-oceanside-500 focus:border-oceanside-500 block dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:border-oceanside-500" %>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="mt-6 flex justify-stretch grid grid-flow-col gap-x-6 max-w-3xl">
+    <%= link_to 'უკან დაბრუნება', admin_groups_path(supergroup_id: (@group.persisted? ? @group.supergroup.id : @supergroup&.id)), type: "button", class: "inline-flex justify-center rounded-md bg-gray-200 ring-2 ring-gray-500 px-3 py-2 text-sm font-semibold text-gray-700 shadow-sm hover:bg-gray-100 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gray-200" %>
+    <!-- <button type="button" class="inline-flex justify-center rounded-md bg-gray-200 ring-2 ring-gray-500 px-3 py-2 text-sm font-semibold text-gray-700 shadow-sm hover:bg-gray-100 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gray-200">უარყოფა</button> -->
+    <button type="submit" class="inline-flex justify-center rounded-md bg-mountbatten-500 ring-2 ring-mountbatten-500 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-mountbatten-400 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-mountbatten-500">შენახვა</button>
+    <% if @group.persisted? %>
+      <button type="button"
+              data-controller="delete-record"
+              data-delete-record-url-value="<%= admin_group_path(@group) %>"
+              data-delete-record-redirect-url-value="<%= admin_groups_path(supergroup_id: @group.supergroup.id) %>"
+              data-action="click->delete-record#submit"
+              class="inline-flex justify-center rounded-md bg-gray-500 ring-2 ring-gray-500 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-gray-400 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gray-500">
+        წაშლა
+      </button>
+    <% end %>
+  </div>
 <% end %>
