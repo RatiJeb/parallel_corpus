@@ -1,0 +1,56 @@
+<%= render 'admin/shared/heading', name: 'ავტორები' %>
+
+<main>
+  <div class="mx-auto max-w-screen-2xl sm:px-6 lg:px-8">
+    <% crumbs = [] %>
+    <% crumbs << { name: 'ავტორები', url: admin_authors_path } %>
+
+    <%= render 'admin/shared/breadcrumbs', crumbs: crumbs %>
+
+    <%= render 'admin/shared/new_button', name: 'ახალი ავტორის დამატება', url: new_admin_author_path %>
+
+    <%= render 'admin/shared/paging', records: @authors, url_method: -> (**params){ admin_authors_path(**params) }, paging_params: {} %>
+    <div class="px-4 sm:px-6 lg:px-8">
+      <div class="flow-root">
+        <div class="-mx-4 -my-2 sm:-mx-6 lg:-mx-8">
+          <div class="inline-block min-w-full py-2 align-middle">
+            <%= form_for @search, url: admin_authors_path, method: :get do |form| %>
+              <table class="w-full border-separate border-spacing-0 border-gray-300">
+                <thead>
+
+                  <%= render 'admin/shared/table/header',
+                             columns: [{ name: 'UID' },
+                                       { name: 'სახელი და გვარი ქართულად', classes: 'max-w-[240px]' },
+                                       { name: 'სახელი და გვარი ინგლისურად', classes: 'max-w-[240px]' },
+                                       { name: '' }] %>
+
+                  <%= render 'admin/shared/table/filter',
+                             form: form,
+                             columns: [{ name: :id, classes: 'max-w-[60px]', input_type: :text_field, input_classes: 'px-2' },
+                                       { name: :name_ka, classes: 'max-w-[240px]', input_type: :text_field },
+                                       { name: :name_en, classes: 'max-w-[240px]', input_type: :text_field },
+                                       { input_type: :submit, classes: 'py-2 text-left text-sm text-gray-500' }] %>
+
+
+                </thead>
+                <tbody>
+                  <% @authors.each_with_index do |author, index| %>
+                    <%= render 'admin/shared/table/row',
+                               record: author,
+                               index: index,
+                               columns: [{ type: :text, name: :id, classes: 'font-medium text-gray-900' },
+                                         { type: :text, name: :name_ka, classes: "max-w-[240px] overflow-hidden text-gray-500" },
+                                         { type: :text, name: :name_en, classes: "max-w-[240px] overflow-hidden text-gray-500" },
+                                         { type: :link, name: :edit, url_method: -> (**params){ edit_admin_author_path(**params) }, url_params: { id: author.id }, classes: "font-medium text-gray-500" }] %>
+
+                  <% end %>
+                </tbody>
+              </table>
+            <% end %>
+          </div>
+        </div>
+      </div>
+    </div>
+    <%= render 'admin/shared/paging', records: @authors, url_method: -> (**params){ admin_authors_path(**params) }, paging_params: {} %>
+  </div>
+</main>

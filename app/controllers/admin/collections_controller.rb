@@ -41,7 +41,7 @@ class Admin::CollectionsController < Admin::BaseController
   def update
     @collection = Collection.find(params[:id])
 
-    collection_params.delete(:author_ids) if @collection.pwichka?
+    collection_params.delete(:author_ids) if @collection.pwichka? # TODO
     @collection.update(collection_params)
     @collection.save!
     redirect_to admin_collections_path(group_id: @collection.group.id)
