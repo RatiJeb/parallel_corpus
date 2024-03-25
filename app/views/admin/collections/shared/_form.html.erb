@@ -9,7 +9,7 @@
     <div class="bg-mountbatten-100 px-3 rounded-tr-md col-span-2 space-y-12 sm:space-y-16 inline-flex">
       <div class="sm:items-start sm:divide-x sm:gap-4 sm:py-3 w-full">
         <div class="mt-2 sm:mt-0 w-full">
-          <%= form.collection_select :supergroup_id, Supergroup.all, :id, :name_ka, { selected: @collection.group&.supergroup_id, inlcude_blank: true }, { disabled: true, name: :supergroup_id, class: "bg-gray-50 border border-mountbatten-300 text-gray-900 text-sm rounded-md focus:ring-oceanside-500 focus:border-oceanside-500 block w-full dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-oceanside-500 dark:focus:border-oceanside-500" } %>
+          <%= form.collection_select :supergroup_id, Supergroup.all, :id, :name_ka, { selected: @collection.group&.supergroup_id, inlcude_blank: true }, { disabled: true, class: "bg-gray-50 border border-mountbatten-300 text-gray-900 text-sm rounded-md focus:ring-oceanside-500 focus:border-oceanside-500 block w-full dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-oceanside-500 dark:focus:border-oceanside-500" } %>
         </div>
       </div>
     </div>
@@ -24,7 +24,7 @@
     <div class="bg-mountbatten-100 px-3 col-span-2 space-y-12 sm:space-y-16 inline-flex">
       <div class="sm:items-start sm:divide-x sm:gap-4 sm:py-3 w-full">
         <div class="mt-2 sm:mt-0 w-full">
-          <%= form.collection_select :group_id, Group.all, :id, :name_ka, { selected: @collection.group&.id, inlcude_blank: true }, { required: true, name: :group_id, class: "bg-gray-50 border border-mountbatten-300 text-gray-900 text-sm rounded-md focus:ring-oceanside-500 focus:border-oceanside-500 block w-full dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-oceanside-500 dark:focus:border-oceanside-500" } %>
+          <%= form.collection_select :group_id, Group.all, :id, :name_ka, { selected: @collection.group&.id, inlcude_blank: true }, { required: true, class: "bg-gray-50 border border-mountbatten-300 text-gray-900 text-sm rounded-md focus:ring-oceanside-500 focus:border-oceanside-500 block w-full dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-oceanside-500 dark:focus:border-oceanside-500" } %>
         </div>
       </div>
     </div>
@@ -39,7 +39,7 @@
     <div class="bg-gray-100 px-3 col-span-2 ring-2 ring-gray-500 space-y-12 sm:space-y-16 inline-flex">
       <div class="sm:items-start sm:divide-x sm:gap-4 sm:py-3 w-full">
         <div class="mt-2 sm:mt-0 w-full">
-          <%= form.text_field :name_ka, name: :name_ka, required: true, class: "bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-md focus:ring-oceanside-500 focus:border-oceanside-500 block w-full dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-oceanside-500 dark:focus:border-oceanside-500" %>
+          <%= form.text_field :name_ka, required: true, class: "bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-md focus:ring-oceanside-500 focus:border-oceanside-500 block w-full dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-oceanside-500 dark:focus:border-oceanside-500" %>
         </div>
       </div>
     </div>
@@ -54,7 +54,28 @@
     <div class="bg-gray-100 px-3 col-span-2 ring-2 ring-gray-500 space-y-12 sm:space-y-16 inline-flex">
       <div class="sm:items-start sm:divide-x sm:gap-4 sm:py-3 w-full">
         <div class="mt-2 sm:mt-0 w-full">
-          <%= form.text_field :name_en, name: :name_en, required: true, class: "bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-md focus:ring-oceanside-500 focus:border-oceanside-500 block w-full dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-oceanside-500 dark:focus:border-oceanside-500" %>
+          <%= form.text_field :name_en, required: true, class: "bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-md focus:ring-oceanside-500 focus:border-oceanside-500 block w-full dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-oceanside-500 dark:focus:border-oceanside-500" %>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="flex justify-stretch grid grid-cols-3 grid-flow-col max-w-3xl">
+    <div class="bg-mountbatten-100 px-3 col-span-1 ring-2 ring-mountbatten-500 space-y-12 sm:space-y-16 inline-flex">
+      <div class="sm:py-3">
+        <%= form.label :author_ids, 'Avuthors', class: "block text-sm font-medium leading-6 text-gray-900 sm:py-1.5" %>
+      </div>
+    </div>
+    <div class="bg-gray-100 px-3 col-span-2 ring-2 ring-gray-500 space-y-12 sm:space-y-16 inline-flex">
+      <div class="sm:items-start sm:divide-x sm:gap-4 sm:py-3 w-full">
+        <div class="mt-2 sm:mt-0 w-full">
+          <%= form.collection_select
+                :author_ids,
+                Author.ordered,
+                :id,
+                :name_ka,
+                { selected: @collection.author_ids, inlcude_blank: true },
+                { required: true, multiple: true, data: { controller: 'multi-select' } } %>
         </div>
       </div>
     </div>
@@ -69,7 +90,7 @@
     <div class="bg-gray-100 px-3 col-span-2 ring-2 ring-gray-500 space-y-12 sm:space-y-16 inline-flex">
       <div class="sm:items-start sm:divide-x sm:gap-4 sm:py-3 w-full">
         <div class="mt-2 sm:mt-0 w-full">
-          <%= form.text_field :year, name: :year, class: "bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-md focus:ring-oceanside-500 focus:border-oceanside-500 block w-full dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-oceanside-500 dark:focus:border-oceanside-500" %>
+          <%= form.text_field :year, class: "bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-md focus:ring-oceanside-500 focus:border-oceanside-500 block w-full dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-oceanside-500 dark:focus:border-oceanside-500" %>
         </div>
       </div>
     </div>
@@ -84,7 +105,7 @@
     <div class="bg-gray-100 px-3 col-span-2 ring-2 ring-gray-500 space-y-12 sm:space-y-16 inline-flex">
       <div class="sm:items-start sm:divide-x sm:gap-4 sm:py-3 w-full">
         <div class="mt-2 sm:mt-0 w-full">
-          <%= form.text_field :translation_year, name: :translation_year, class: "bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-md focus:ring-oceanside-500 focus:border-oceanside-500 block w-full dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-oceanside-500 dark:focus:border-oceanside-500" %>
+          <%= form.text_field :translation_year, class: "bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-md focus:ring-oceanside-500 focus:border-oceanside-500 block w-full dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-oceanside-500 dark:focus:border-oceanside-500" %>
         </div>
       </div>
     </div>
@@ -99,7 +120,7 @@
     <div class="bg-gray-100 px-3 rounded-br-md col-span-2 ring-2 ring-gray-500 space-y-12 sm:space-y-16 inline-flex">
       <div class="sm:items-start sm:divide-x sm:gap-4 sm:py-3 w-full">
         <div class="mt-2 sm:mt-0 w-full">
-          <%= form.select :original_language, Collection.original_languages.keys.map { |original_language| [original_language.humanize, original_language] }, {}, { name: :original_language, class: "bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-md focus:ring-oceanside-500 focus:border-oceanside-500 block w-full dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-oceanside-500 dark:focus:border-oceanside-500" } %>
+          <%= form.select :original_language, Collection.original_languages.keys.map { |original_language| [original_language.humanize, original_language] }, {}, { class: "bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-md focus:ring-oceanside-500 focus:border-oceanside-500 block w-full dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-oceanside-500 dark:focus:border-oceanside-500" } %>
         </div>
       </div>
     </div>
@@ -114,7 +135,7 @@
     <div class="bg-gray-100 px-3 col-span-2 ring-2 ring-gray-500 space-y-12 sm:space-y-16 inline-flex">
       <div class="sm:items-start sm:divide-x sm:gap-4 sm:py-3 w-full">
         <div class="mt-2 sm:mt-0 w-full">
-          <%= form.text_area :comment, name: :comment, rows: 4, class: "bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-md focus:ring-oceanside-500 focus:border-oceanside-500 block w-full dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-oceanside-500 dark:focus:border-oceanside-500" %>
+          <%= form.text_area :comment, rows: 4, class: "bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-md focus:ring-oceanside-500 focus:border-oceanside-500 block w-full dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-oceanside-500 dark:focus:border-oceanside-500" %>
         </div>
       </div>
     </div>
@@ -129,7 +150,7 @@
     <div class="bg-gray-100 px-3 rounded-br-md col-span-2 ring-2 ring-gray-500 space-y-12 sm:space-y-16 inline-flex">
       <div class="sm:items-start sm:divide-x sm:gap-4 sm:py-3 w-full">
         <div class="mt-2 sm:mt-0 w-full">
-          <%= form.select :status, Collection.statuses.keys.map { |status| [status.humanize, status] }, {}, { name: :status, class: "bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-md focus:ring-oceanside-500 focus:border-oceanside-500 block w-full dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-oceanside-500 dark:focus:border-oceanside-500" } %>
+          <%= form.select :status, Collection.statuses.keys.map { |status| [status.humanize, status] }, {}, { class: "bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-md focus:ring-oceanside-500 focus:border-oceanside-500 block w-full dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-oceanside-500 dark:focus:border-oceanside-500" } %>
         </div>
       </div>
     </div>
@@ -144,7 +165,7 @@
     <div class="bg-gray-100 px-3 rounded-br-md col-span-2 ring-2 ring-gray-500 space-y-12 sm:space-y-16 inline-flex">
       <div class="sm:items-start sm:divide-x sm:gap-4 sm:py-3">
         <div class="mt-2 sm:mt-0">
-          <%= form.check_box :should_unsync, name: :should_unsync, class: "bg-gray-50 border border-gray-300 w-8 h-8 text-gray-900 text-sm text-mountbatten-500 rounded-md focus:ring-offset-0 focus:ring-1 focus:ring-oceanside-500 focus:border-oceanside-500 block dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:border-oceanside-500" %>
+          <%= form.check_box :should_unsync, class: "bg-gray-50 border border-gray-300 w-8 h-8 text-gray-900 text-sm text-mountbatten-500 rounded-md focus:ring-offset-0 focus:ring-1 focus:ring-oceanside-500 focus:border-oceanside-500 block dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:border-oceanside-500" %>
         </div>
       </div>
     </div>

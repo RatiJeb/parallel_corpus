@@ -41,7 +41,7 @@ class Admin::CollectionsController < Admin::BaseController
   def update
     @collection = Collection.find(params[:id])
 
-    collection_params.delete(:author_ids) if @collection.pwichka? # TODO
+    # collection_params.delete(:author_ids) if @collection.pwichka? # TODO
     @collection.update(collection_params)
     @collection.save!
     redirect_to admin_collections_path(group_id: @collection.group.id)
@@ -63,9 +63,8 @@ class Admin::CollectionsController < Admin::BaseController
   end
 
   def collection_params
-    params.permit(:group_id, :name_ka, :name_en, :comment, :status, :additional_info,
+    params.require(:collection).permit(:group_id, :name_ka, :name_en, :comment, :status, :additional_info,
       :year, :translation_year, :original_language, author_ids: [],
       genre_ids: [], field_ids: [], type_ids: [], publishing_ids: [])
   end
-
 end
