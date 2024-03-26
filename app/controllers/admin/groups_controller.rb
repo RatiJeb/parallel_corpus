@@ -63,7 +63,7 @@ class Admin::GroupsController < Admin::BaseController
   end
 
   def group_params
-    params.permit(:supergroup_id, :name_ka, :name_en, :comment, :status, :should_sync)
+    params.require(:group).permit(:supergroup_id, :name_ka, :name_en, :comment, :status, :should_sync)
   end
 
 end

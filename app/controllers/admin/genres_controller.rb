@@ -50,7 +50,7 @@ class Admin::GenresController < Admin::BaseController
   end
 
   def genre_params
-    params.permit(:name_ka, :name_en)
+    params.require(:genre).permit(:name_ka, :name_en)
   end
 
 end

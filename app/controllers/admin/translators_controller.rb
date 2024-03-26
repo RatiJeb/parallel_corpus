@@ -50,7 +50,7 @@ class Admin::TranslatorsController < Admin::BaseController
   end
 
   def translator_params
-    params.permit(:name_ka, :name_en)
+    params.require(:translator).permit(:name_ka, :name_en)
   end
 
 end

@@ -50,7 +50,7 @@ class Admin::PublishingsController < Admin::BaseController
   end
 
   def publishing_params
-    params.permit(:name_ka, :name_en)
+    params.require(:publishing).permit(:name_ka, :name_en)
   end
 
 end

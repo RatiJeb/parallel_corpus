@@ -50,7 +50,7 @@ class Admin::FieldsController < Admin::BaseController
   end
 
   def field_params
-    params.permit(:name_ka, :name_en)
+    params.require(:field).permit(:name_ka, :name_en)
   end
 
 end

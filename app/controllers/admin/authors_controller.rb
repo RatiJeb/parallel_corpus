@@ -50,7 +50,7 @@ class Admin::AuthorsController < Admin::BaseController
   end
 
   def author_params
-    params.permit(:name_ka, :name_en)
+    params.require(:author).permit(:name_ka, :name_en)
   end
 
 end

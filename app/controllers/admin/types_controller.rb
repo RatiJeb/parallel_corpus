@@ -50,7 +50,7 @@ class Admin::TypesController < Admin::BaseController
   end
 
   def type_params
-    params.permit(:name_ka, :name_en)
+    params.require(:type).permit(:name_ka, :name_en)
   end
 
 end
