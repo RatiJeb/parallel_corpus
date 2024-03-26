@@ -88,3 +88,5 @@ gem "tailwindcss-rails", "~> 2.3"
 gem 'active_link_to'
 
 gem 'kaminari'
+
+gem "localtunnel", "~> 1.0"

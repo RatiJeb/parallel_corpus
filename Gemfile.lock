@@ -151,6 +151,7 @@ GEM
     listen (3.9.0)
       rb-fsevent (~> 0.10, >= 0.10.3)
       rb-inotify (~> 0.9, >= 0.9.10)
+    localtunnel (1.0.3)
     loofah (2.22.0)
       crass (~> 1.0.2)
       nokogiri (>= 1.12.0)
@@ -370,6 +371,7 @@ DEPENDENCIES
   kaminari
   letter_opener
   listen (~> 3.3)
+  localtunnel (~> 1.0)
   pg (~> 1.1)
   pry (~> 0.14.2)
   pry-nav

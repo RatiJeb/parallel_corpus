@@ -2,7 +2,7 @@ Rails.application.routes.draw do
 
   resources :text_blocks, only: [:index]
   get '/search', to: 'text_blocks#search'
-  root 'text_blocks#index'
+  root 'admin/supergroups#index'
   devise_for :users
 
   namespace :admin do
