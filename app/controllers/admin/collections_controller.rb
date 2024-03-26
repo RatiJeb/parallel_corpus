@@ -22,7 +22,15 @@ class Admin::CollectionsController < Admin::BaseController
   def new
     if params[:group_id]
       @group = Group.find(params[:group_id])
-      @collection = Collection.new(group: @group, author_ids: @group.author_ids)
+      @collection = Collection.new(group: @group)
+      if @group.should_sync?
+        @collection.assign_attributes({ author_ids: @group.author_ids,
+                                        field_ids: @group.field_ids,
+                                        genre_ids: @group.genre_ids,
+                                        publishing_ids: @group.publishing_ids,
+                                        translator_ids: @group.translator_ids,
+                                        type_ids: @group.type_ids })
+      end
     else
       @collection = Collection.new
     end
@@ -63,7 +71,7 @@ class Admin::CollectionsController < Admin::BaseController
   end
 
   def collection_params
-    params.require(:collection).permit(:group_id, :name_ka, :name_en, :comment, :status, :additional_info,
+    params.require(:collection).permit(:group_id, :name_ka, :name_en, :comment, :status, :additional_info, :should_unsync,
       :year, :translation_year, :original_language, author_ids: [], translator_ids: [],
       genre_ids: [], field_ids: [], type_ids: [], publishing_ids: [])
   end
