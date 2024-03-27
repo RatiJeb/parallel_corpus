@@ -4,12 +4,10 @@
   <div class="mx-auto max-w-screen-2xl sm:px-6 lg:px-8">
     <% crumbs = [] %>
     <% if @supergroup %>
-      <% crumbs << { name: 'ქვეკორპუსები', url: admin_supergroups_path } %>
       <% crumbs << { name: @supergroup.name_ka, url: admin_groups_path(supergroup_id: @supergroup.id) } %>
     <% end %>
-    <% crumbs << { name: 'ჯგუფები', url: admin_groups_path(supergroup_id: @supergroup&.id) } %>
 
-    <%= render 'admin/shared/breadcrumbs', crumbs: crumbs %>
+    <%= render 'admin/shared/breadcrumbs', crumbs: crumbs unless crumbs.empty? %>
 
     <%= render 'admin/shared/new_button', name: 'ახალი ჯგუფის დამატება', url: new_admin_group_path(supergroup_id: @supergroup&.id) %>
 

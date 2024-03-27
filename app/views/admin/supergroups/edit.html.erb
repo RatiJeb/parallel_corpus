@@ -4,7 +4,6 @@
   <div class="mx-auto max-w-screen-2xl sm:px-6 lg:px-8">
 
     <% crumbs = [] %>
-    <% crumbs << { name: 'ქვეკორპუსები', url: admin_supergroups_path } %>
     <% crumbs << { name: @supergroup.name_ka, url: admin_groups_path(supergroup_id: @supergroup.id) } %>
     <% crumbs << { name: 'რედაქტირება', url: edit_admin_supergroup_path(supergroup_id: @supergroup.id) } %>
 
