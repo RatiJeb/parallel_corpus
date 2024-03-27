@@ -41,9 +41,9 @@
                     <%= render 'admin/shared/table/row',
                                record: text_block,
                                index: index,
-                               columns: [{ type: :text, name: :original_id, classes: 'font-medium text-gray-900' },
-                                         { type: :text, name: :original_contents, classes: "max-w-[240px] overflow-hidden text-gray-500" },
-                                         { type: :text, name: :translation_contents, classes: "max-w-[240px] overflow-hidden text-gray-500" },
+                               columns: [{ type: :text, name: :original_id, classes: 'font-medium text-gray-900 px-3' },
+                                         { type: :text, name: :original_contents, classes: "max-w-[240px] hover:!overflow-auto scrollbar-hide text-gray-500 px-3" },
+                                         { type: :text, name: :translation_contents, classes: "max-w-[240px] hover:!overflow-auto scrollbar-hide text-gray-500 px-3" },
                                          { type: :link, name: :edit, url_method: -> (**params){ edit_admin_text_block_path(**params) }, url_params: { id: text_block.original_id }, classes: "font-medium text-gray-500" }] %>
                   <% end %>
                 </tbody>
