@@ -1,17 +1,25 @@
 module ApplicationHelper
 
-  def header_link(name, url, mobile = false)
+  def header_link(name, url, mobile = false, options = {})
+    if is_active_link?(url, :inclusive)
+      link_to(name, url, class: header_link_classes(url, mobile = false), 'aria-current': "page", **options)
+    else
+      link_to(name, url, class: header_link_classes(url, mobile = false), **options)
+    end
+  end
+
+  def header_link_classes(url, mobile = false)
     if mobile
       if is_active_link?(url, :inclusive)
-        link_to(name, url, class: "border-mountbatten-500 bg-mountbatten-50 text-mountbatten-700 block border-l-4 py-2 pl-3 pr-4 text-base font-medium", 'aria-current': "page")
+        "border-mountbatten-500 bg-mountbatten-50 text-mountbatten-700 block border-l-4 py-2 pl-3 pr-4 text-base font-medium"
       else
-        link_to(name, url, class: "border-transparent text-gray-600 hover:border-gray-300 hover:bg-gray-50 hover:text-gray-800 block border-l-4 py-2 pl-3 pr-4 text-base font-medium")
+        "border-transparent text-gray-600 hover:border-gray-300 hover:bg-gray-50 hover:text-gray-800 block border-l-4 py-2 pl-3 pr-4 text-base font-medium"
       end
     else
       if is_active_link?(url, :inclusive)
-        link_to(name, url, class: "border-mountbatten-500 text-gray-900 inline-flex items-center border-b-2 px-1 pt-1 text-sm font-medium", 'aria-current': "page")
+        "border-mountbatten-500 text-gray-900 inline-flex items-center border-b-2 px-1 pt-1 text-sm font-medium"
       else
-        link_to(name, url, class: "border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700 inline-flex items-center border-b-2 px-1 pt-1 text-sm font-medium")
+        "border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700 inline-flex items-center border-b-2 px-1 pt-1 text-sm font-medium"
       end
     end
   end
