@@ -53,7 +53,8 @@
                                          { type: :text, name: :groups_count, classes: "text-gray-500 px-3" },
                                          { type: :text, name: :collections_count, classes: "text-gray-500 px-3" },
                                          { type: :text, name: :text_blocks_count, classes: "text-gray-500 px-3" },
-                                         { type: :link, name: :edit, url_method: -> (**params){ edit_admin_supergroup_path(**params) }, url_params: { id: supergroup.id }, classes: "font-medium text-gray-500" }] %>
+                                         { type: :links, classes: "font-medium text-gray-500 max-w-[60px]", elements: [{ name: :edit, url_method: -> (**params){ edit_admin_supergroup_path(**params) }, url_params: { id: supergroup.id } },
+                                                                                                          { name: :enter, url_method: -> (**params){ admin_groups_path(**params) }, url_params: { supergroup_id: supergroup.id } }] }] %>
 
                   <% end %>
                 </tbody>
