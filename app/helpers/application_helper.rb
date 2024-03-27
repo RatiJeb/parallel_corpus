@@ -73,7 +73,7 @@ module ApplicationHelper
 
   def table_filter_input(form, column)
     if column[:input_type] == :text_field
-      classes = "bg-gray-50 bg-opacity-50 border border-gray-300 text-gray-900 text-sm rounded-3xl focus:ring-oceanside-500 focus:border-oceanside-500 block w-full dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-oceanside-500 dark:focus:border-oceanside-500"
+      classes = "bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-3xl focus:ring-oceanside-500 focus:border-oceanside-500 block w-full dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-oceanside-500 dark:focus:border-oceanside-500"
       classes += " #{column[:input_classes]}" if column[:input_classes]
       form.text_field column[:name], name: column[:name], class: classes
     elsif column[:input_type] == :status_select
@@ -105,7 +105,7 @@ module ApplicationHelper
   end
 
   def table_body_cell_link(record, element)
-    link_to((record.respond_to?(element[:name]) ? record.send(element[:name]) : element[:name]), element[:url_method].call(**element[:url_params]), class: "text-gray-700 border-transparent border-b-2 hover:text-gray-900 hover:border-mountbatten-500 py-4 px-3 hover:bg-white hover:shadow-lg")
+    link_to((record.respond_to?(element[:name]) ? record.send(element[:name]) : element[:name]), element[:url_method].call(**element[:url_params]), class: "text-gray-700 border-transparent border-b-2 hover:text-gray-900 hover:border-oceanside-500 py-4 px-3 hover:bg-white hover:shadow-lg")
   end
 
 end
