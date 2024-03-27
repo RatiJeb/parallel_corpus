@@ -260,7 +260,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_03_16_212412) do
      FROM (((supergroups
        LEFT JOIN groups ON ((supergroups.id = groups.supergroup_id)))
        LEFT JOIN collections ON ((groups.id = collections.group_id)))
-       LEFT JOIN text_blocks ON ((collections.id = text_blocks.collection_id)))
+       LEFT JOIN text_blocks ON (((collections.id = text_blocks.collection_id) AND (text_blocks.language = 0))))
     GROUP BY supergroups.id, supergroups.name_ka, supergroups.name_en, supergroups.status;
   SQL
   create_view "group_details", sql_definition: <<-SQL
@@ -276,7 +276,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_03_16_212412) do
      FROM (((groups
        JOIN supergroups ON ((groups.supergroup_id = supergroups.id)))
        LEFT JOIN collections ON ((groups.id = collections.group_id)))
-       LEFT JOIN text_blocks ON ((collections.id = text_blocks.collection_id)))
+       LEFT JOIN text_blocks ON (((collections.id = text_blocks.collection_id) AND (text_blocks.language = 0))))
     GROUP BY groups.id, groups.name_ka, groups.name_en, groups.status, supergroups.id, supergroups.name_ka, supergroups.name_en;
   SQL
   create_view "collection_details", sql_definition: <<-SQL
@@ -294,7 +294,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_03_16_212412) do
      FROM (((collections
        JOIN groups ON ((collections.group_id = groups.id)))
        JOIN supergroups ON ((groups.supergroup_id = supergroups.id)))
-       LEFT JOIN text_blocks ON ((collections.id = text_blocks.collection_id)))
+       LEFT JOIN text_blocks ON (((collections.id = text_blocks.collection_id) AND (text_blocks.language = 0))))
     GROUP BY collections.id, collections.name_ka, collections.name_en, collections.status, groups.id, groups.name_ka, groups.name_en, supergroups.id, supergroups.name_ka, supergroups.name_en;
   SQL
 end

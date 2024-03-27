@@ -13,5 +13,6 @@ FROM groups
 INNER JOIN supergroups ON groups.supergroup_id = supergroups.id
 LEFT OUTER JOIN collections ON groups.id = collections.group_id
 LEFT OUTER JOIN text_blocks ON collections.id = text_blocks.collection_id
+  AND text_blocks.language = 0
 
 GROUP BY groups.id, groups.name_ka, groups.name_en, groups.status, supergroups.id, supergroups.name_ka, supergroups.name_en

@@ -14,7 +14,7 @@ class Admin::SupergroupsController < Admin::BaseController
 
     @groups_count = @supergroups.sum(&:groups_count)
     @collections_count = @supergroups.sum(&:collections_count)
-    @text_blocks_count = @supergroups.sum(&:text_blocks_count)/2
+    @text_blocks_count = @supergroups.sum(&:text_blocks_count)
   end
 
   def new

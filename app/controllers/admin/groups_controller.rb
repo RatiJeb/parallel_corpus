@@ -18,7 +18,7 @@ class Admin::GroupsController < Admin::BaseController
     @groups = @groups.order(:id).page(params[:page]).per(20)
 
     @collections_count = @groups.sum(&:collections_count)
-    @text_blocks_count = @groups.sum(&:text_blocks_count)/2
+    @text_blocks_count = @groups.sum(&:text_blocks_count)
   end
 
   def new
