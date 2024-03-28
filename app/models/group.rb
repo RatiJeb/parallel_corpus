@@ -16,6 +16,8 @@ class Group < ApplicationRecord
 
   scope :syncable, -> { where(should_sync: true) }
 
+  scope :ordered, -> { order(:name_ka) }
+
   after_initialize :set_default_status, if: :new_record?
 
   def set_default_status
