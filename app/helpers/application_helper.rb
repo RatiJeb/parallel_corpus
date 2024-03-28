@@ -94,7 +94,7 @@ module ApplicationHelper
   end
 
   def table_body_cell_classes(column, index, size, row_index)
-    classes = "relative whitespace-nowrap overflow-hidden z-0 border-b border-r py-4 text-sm hover:overflow-visible hover:z-10"
+    classes = "relative whitespace-nowrap overflow-hidden z-0 border-b border-r text-sm hover:overflow-visible hover:z-10"
     classes += ' border-l' if index == 0
     classes += " bg-slate-50" if row_index % 2 == 0
     classes += " #{column[:classes]}" if column[:classes]
@@ -113,7 +113,24 @@ module ApplicationHelper
   end
 
   def table_body_cell_link(record, element)
-    link_to((record.respond_to?(element[:name]) ? record.send(element[:name]) : element[:name]), element[:url_method].call(**element[:url_params]), class: "text-gray-700 border-transparent border-b-2 hover:text-gray-900 hover:border-oceanside-500 py-4 px-3 hover:bg-white hover:shadow-lg")
+    if element[:name] == :edit
+      name = edit_svg
+    elsif element[:name] == :enter
+      name = enter_svg
+    elsif record.respond_to?(element[:name])
+      name = record.send(element[:name])
+    else
+      name = element[:name]
+    end
+    link_to(name, element[:url_method].call(**element[:url_params]), class: "text-gray-700 border-transparent border-b-2 hover:text-gray-900 hover:border-oceanside-500 hover:bg-white hover:shadow-lg py-4 px-3")
+  end
+
+  def edit_svg
+    '<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="inline w-6 h-6"><path stroke-linecap="round" stroke-linejoin="round" d="m16.862 4.487 1.687-1.688a1.875 1.875 0 1 1 2.652 2.652L6.832 19.82a4.5 4.5 0 0 1-1.897 1.13l-2.685.8.8-2.685a4.5 4.5 0 0 1 1.13-1.897L16.863 4.487Zm0 0L19.5 7.125" /></svg>'.html_safe
+  end
+
+  def enter_svg
+    '<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="inline w-6 h-6"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 9V5.25A2.25 2.25 0 0 1 10.5 3h6a2.25 2.25 0 0 1 2.25 2.25v13.5A2.25 2.25 0 0 1 16.5 21h-6a2.25 2.25 0 0 1-2.25-2.25V15M12 9l3 3m0 0-3 3m3-3H2.25" /></svg>'.html_safe
   end
 
 end
