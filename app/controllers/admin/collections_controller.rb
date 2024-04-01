@@ -71,8 +71,10 @@ class Admin::CollectionsController < Admin::BaseController
   end
 
   def collection_params
-    params.require(:collection).permit(:group_id, :name_ka, :name_en, :comment, :status, :additional_info, :should_unsync,
+    params.require(:collection).permit(
+      :group_id, :name_ka, :name_en, :comment, :status, :additional_info, :should_unsync,
       :year, :translation_year, :original_language, author_ids: [], translator_ids: [],
-      genre_ids: [], field_ids: [], type_ids: [], publishing_ids: [])
+      genre_ids: [], field_ids: [], type_ids: [], publishing_ids: []
+    )
   end
 end

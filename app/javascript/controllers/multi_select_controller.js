@@ -6,8 +6,7 @@ export default class extends Controller {
     options: Object,
   }
 
-  connect() {
-    console.log(this.optionsValue)
+  initialize() {
     new Choices(
       this.element,
       {
