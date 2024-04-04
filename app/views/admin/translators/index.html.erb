@@ -38,9 +38,9 @@
                     <%= render 'admin/shared/table/row',
                                record: translator,
                                index: index,
-                               columns: [{ type: :text, name: :id, classes: 'font-medium text-gray-900' },
-                                         { type: :text, name: :name_ka, classes: "max-w-[240px] overflow-hidden text-gray-500" },
-                                         { type: :text, name: :name_en, classes: "max-w-[240px] overflow-hidden text-gray-500" },
+                               columns: [{ type: :text, name: :id, classes: 'font-medium text-gray-900 py-4 px-3' },
+                                         { type: :text, name: :name_ka, classes: "max-w-[240px] overflow-hidden text-gray-500 py-4 px-3" },
+                                         { type: :text, name: :name_en, classes: "max-w-[240px] overflow-hidden text-gray-500 py-4 px-3" },
                                          { type: :link, name: :edit, url_method: -> (**params){ edit_admin_translator_path(**params) }, url_params: { id: translator.id }, classes: "font-medium text-gray-500" }] %>
 
                   <% end %>
