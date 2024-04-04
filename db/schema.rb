@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_03_16_212412) do
+ActiveRecord::Schema[7.1].define(version: 2024_04_04_163154) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -22,6 +22,8 @@ ActiveRecord::Schema[7.1].define(version: 2024_03_16_212412) do
     t.integer "old_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["name_en"], name: "index_authors_on_name_en", unique: true
+    t.index ["name_ka"], name: "index_authors_on_name_ka", unique: true
     t.index ["old_id"], name: "index_authors_on_old_id", unique: true
   end
 
@@ -99,6 +101,8 @@ ActiveRecord::Schema[7.1].define(version: 2024_03_16_212412) do
     t.datetime "updated_at", null: false
     t.bigint "group_id", null: false
     t.boolean "should_unsync", default: false, null: false
+    t.index ["group_id", "name_en"], name: "index_collections_on_group_id_and_name_en", unique: true
+    t.index ["group_id", "name_ka"], name: "index_collections_on_group_id_and_name_ka", unique: true
     t.index ["group_id"], name: "index_collections_on_group_id"
     t.index ["old_id"], name: "index_collections_on_old_id", unique: true
   end
@@ -111,6 +115,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_03_16_212412) do
     t.integer "old_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["name_ka", "name_en"], name: "index_fields_on_name_ka_and_name_en", unique: true
     t.index ["old_id"], name: "index_fields_on_old_id", unique: true
   end
 
@@ -122,6 +127,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_03_16_212412) do
     t.integer "old_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["name_ka", "name_en"], name: "index_genres_on_name_ka_and_name_en", unique: true
     t.index ["old_id"], name: "index_genres_on_old_id", unique: true
   end
 
@@ -137,6 +143,8 @@ ActiveRecord::Schema[7.1].define(version: 2024_03_16_212412) do
     t.bigint "supergroup_id", null: false
     t.boolean "should_sync", default: false, null: false
     t.index ["old_id"], name: "index_groups_on_old_id", unique: true
+    t.index ["supergroup_id", "name_en"], name: "index_groups_on_supergroup_id_and_name_en", unique: true
+    t.index ["supergroup_id", "name_ka"], name: "index_groups_on_supergroup_id_and_name_ka", unique: true
     t.index ["supergroup_id"], name: "index_groups_on_supergroup_id"
   end
 
@@ -148,6 +156,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_03_16_212412) do
     t.integer "old_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["name_ka", "name_en"], name: "index_publishings_on_name_ka_and_name_en", unique: true
     t.index ["old_id"], name: "index_publishings_on_old_id", unique: true
   end
 
@@ -158,6 +167,8 @@ ActiveRecord::Schema[7.1].define(version: 2024_03_16_212412) do
     t.integer "status", default: 0, null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["name_en"], name: "index_supergroups_on_name_en", unique: true
+    t.index ["name_ka"], name: "index_supergroups_on_name_ka", unique: true
   end
 
   create_table "terms", force: :cascade do |t|
@@ -192,6 +203,8 @@ ActiveRecord::Schema[7.1].define(version: 2024_03_16_212412) do
     t.integer "old_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["name_en"], name: "index_translators_on_name_en", unique: true
+    t.index ["name_ka"], name: "index_translators_on_name_ka", unique: true
     t.index ["old_id"], name: "index_translators_on_old_id", unique: true
   end
 
@@ -203,6 +216,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_03_16_212412) do
     t.integer "old_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["name_ka", "name_en"], name: "index_types_on_name_ka_and_name_en", unique: true
     t.index ["old_id"], name: "index_types_on_old_id", unique: true
   end
 
