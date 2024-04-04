@@ -2,7 +2,7 @@ class Group < ApplicationRecord
   include Statusable
 
   belongs_to :supergroup
-  has_many :collections
+  has_many :collections, dependent: :destroy
   has_many :text_blocks, through: :collections
 
   has_many :synced_collections, -> { syncable }, class_name: 'Collection'

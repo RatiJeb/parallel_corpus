@@ -1,5 +1,6 @@
 class Admin::SupergroupsController < Admin::BaseController
   before_action :set_search_params, only: :index
+  before_action :require_admin_or_superadmin, only: [:destroy]
 
   def index
     @supergroups = Views::SupergroupDetail.all
@@ -48,6 +49,10 @@ class Admin::SupergroupsController < Admin::BaseController
   end
 
   private
+
+  def require_admin_or_superadmin
+    redirect_to(root_url) unless current_user.admin? || current_user.superadmin?
+  end
 
   def set_search_params
     @search = Search::Supergroup.new(params.permit(:id, :name_ka, :name_en, :status))

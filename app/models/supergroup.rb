@@ -1,7 +1,7 @@
 class Supergroup < ApplicationRecord
   include Statusable
 
-  has_many :groups
+  has_many :groups, dependent: :destroy
   has_many :collections, through: :groups
   has_many :text_blocks, through: :collections
 

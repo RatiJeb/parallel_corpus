@@ -3,14 +3,14 @@ class Collection < ApplicationRecord
 
   belongs_to :group
   has_one :supergroup, through: :group
-  has_many :text_blocks
+  has_many :text_blocks, dependent: :destroy
 
-  has_many :collection_authors
-  has_many :collection_fields
-  has_many :collection_genres
-  has_many :collection_publishings
-  has_many :collection_translators
-  has_many :collection_types
+  has_many :collection_authors, dependent: :destroy
+  has_many :collection_fields, dependent: :destroy
+  has_many :collection_genres, dependent: :destroy
+  has_many :collection_publishings, dependent: :destroy
+  has_many :collection_translators, dependent: :destroy
+  has_many :collection_types, dependent: :destroy
 
   has_many :authors, through: :collection_authors
   has_many :fields, through: :collection_fields
