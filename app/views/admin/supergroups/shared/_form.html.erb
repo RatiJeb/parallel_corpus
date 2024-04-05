@@ -1,32 +1,7 @@
-<!-- <%= form_with model: [:admin, @supergroup] do |form| %> -->
-  <!-- <%= form.label :name_ka, 'სახელი (ka)' %> -->
-  <!-- <%= form.text_field :name_ka %> -->
-  <!-- <%= form.label :name_en, 'სახელი (en)' %> -->
-  <!-- <%= form.text_field :name_en %> -->
-  <!-- <%= form.label :comment, 'კომენტარი' %> -->
-  <!-- <%= form.text_area :comment, size: "60x10" %> -->
-  <!-- <%= form.label :status, 'სტატუსი' %> -->
-  <!-- <%= form.select :status, Supergroup.statuses.keys.map { |status| [status.titleize, status] } %> -->
-  <!-- <%= link_to 'უკან დაბრუნება', admin_supergroups_path %> -->
-  <!-- <%= form.submit %> -->
-<!-- <% end %> -->
-
-
-<!--
-  This example requires some changes to your config:
-
-
-  // tailwind.config.js
-  module.exports = {
-    // ...
-    plugins: [
-      // ...
-      require('@tailwindcss/forms'),
-    ],
-  }
-
--->
 <%= form_with model: [:admin, @supergroup], url: url, method: method do |form| %>
+
+  <%= render 'admin/shared/form_errors', record: @supergroup %>
+
   <div class="flex justify-stretch grid grid-cols-3 grid-flow-col max-w-3xl">
     <div class="mt-8 bg-mountbatten-100 px-3 col-span-1 rounded-tl-md ring-2 ring-mountbatten-500 space-y-12 sm:space-y-16 inline-flex">
       <div class="sm:py-3">

@@ -1,5 +1,7 @@
 <%= form_with model: [:admin, @collection], url: url, method: method do |form| %>
 
+  <%= render 'admin/shared/form_errors', record: @collection %>
+
   <div class="mt-8 flex justify-stretch grid grid-cols-3 grid-flow-col max-w-3xl rounded-t-md ring-2 ring-mountbatten-500">
     <div class="bg-mountbatten-100 px-3 col-span-1 rounded-tl-md space-y-12 sm:space-y-16 inline-flex">
       <div class="sm:py-3">

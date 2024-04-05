@@ -47,7 +47,7 @@ class Admin::TextBlocksController < Admin::BaseController
   private
 
   def set_search_params
-    @search = Search::TextBlock.new(params.permit(:original_id, :original_contents, :translation_contents))
+    @search = Search::TextBlock.new(params.permit(:collection_id, :original_id, :original_contents, :translation_contents))
   end
 
 end

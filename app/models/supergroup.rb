@@ -7,6 +7,9 @@ class Supergroup < ApplicationRecord
 
   after_initialize :set_default_status, if: :new_record?
 
+  validates :name_ka, uniqueness: { message: 'სახელი (ka) არაა უნიკალური' }
+  validates :name_en, uniqueness: { message: 'სახელი (en) არაა უნიკალური' }
+
   def set_default_status
     self.status ||= :active
   end

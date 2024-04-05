@@ -39,8 +39,12 @@ class Admin::CollectionsController < Admin::BaseController
 
   def create
     @collection = Collection.new(collection_params)
-    @collection.save!
-    redirect_to admin_collections_path(group_id: @collection.group.id)
+
+    if @collection.save
+      redirect_to admin_collections_path(group_id: @collection.group.id)
+    else
+      render :new, status: :unprocessable_entity
+    end
   end
 
   def edit
@@ -49,11 +53,12 @@ class Admin::CollectionsController < Admin::BaseController
 
   def update
     @collection = Collection.find(params[:id])
-
-    # collection_params.delete(:author_ids) if @collection.pwichka? # TODO
-    @collection.update(collection_params)
-    @collection.save!
-    redirect_to admin_collections_path(group_id: @collection.group.id)
+    
+    if @collection.update(collection_params)
+      redirect_to admin_collections_path(group_id: @collection.group.id)
+    else
+      render :edit, status: :unprocessable_entity
+    end
   end
 
   def destroy

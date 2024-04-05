@@ -4,11 +4,11 @@
   <div class="mx-auto max-w-screen-2xl sm:px-6 lg:px-8">
 
     <% crumbs = [] %>
-    <% if @group %>
+    <% if @collection.group %>
       <% crumbs << { name: 'ქვეკორპუსები', url: admin_supergroups_path } %>
-      <% crumbs << { name: @group.supergroup.name_ka, url: admin_groups_path(supergroup_id: @group.supergroup.id) } %>
-      <% crumbs << { name: @group.name_ka, url: admin_collections_path(group_id: @group.id) } %>
-      <% crumbs << { name: 'ახალი კრებულის დამატება', url: new_admin_collection_path(group_id: @group&.id) } %>
+      <% crumbs << { name: @collection.group.supergroup.name_ka, url: admin_groups_path(supergroup_id: @collection.group.supergroup.id) } %>
+      <% crumbs << { name: @collection.group.name_ka, url: admin_collections_path(group_id: @collection.group.id) } %>
+      <% crumbs << { name: 'ახალი კრებულის დამატება', url: new_admin_collection_path(group_id: @collection.group&.id) } %>
     <% end %>
 
     <%= render 'admin/shared/breadcrumbs', crumbs: crumbs unless crumbs.empty? %>

@@ -24,8 +24,11 @@ class Admin::SupergroupsController < Admin::BaseController
 
   def create
     @supergroup = Supergroup.new(supergroup_params)
-    @supergroup.save!
-    redirect_to admin_supergroups_path
+    if @supergroup.save
+      redirect_to admin_supergroups_path
+    else
+      render :new, status: :unprocessable_entity
+    end
   end
 
   def edit
@@ -34,9 +37,11 @@ class Admin::SupergroupsController < Admin::BaseController
 
   def update
     @supergroup = Supergroup.find(params[:id])
-    @supergroup.update(supergroup_params)
-    @supergroup.save!
-    redirect_to admin_supergroups_path
+    if @supergroup.update(supergroup_params)
+      redirect_to admin_supergroups_path
+    else
+      render :edit, status: :unprocessable_entity
+    end
   end
 
   def destroy

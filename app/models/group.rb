@@ -20,6 +20,9 @@ class Group < ApplicationRecord
 
   after_initialize :set_default_status, if: :new_record?
 
+  validates :name_ka, uniqueness: { scope: :supergroup_id, message: 'სახელი (ka) არაა უნიკალური ამავე ქვეკორპუსში' }
+  validates :name_en, uniqueness: { scope: :supergroup_id, message: 'სახელი (en) არაა უნიკალური ამავე ქვეკორპუსში' }
+
   def set_default_status
     self.status ||= :active
   end
