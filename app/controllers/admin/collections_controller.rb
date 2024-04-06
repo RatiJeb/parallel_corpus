@@ -30,7 +30,12 @@ class Admin::CollectionsController < Admin::BaseController
                                         genre_ids: @group.genre_ids,
                                         publishing_ids: @group.publishing_ids,
                                         translator_ids: @group.translator_ids,
-                                        type_ids: @group.type_ids })
+                                        type_ids: @group.type_ids,
+
+                                        year: @group.synced_collections.first.year,
+                                        translation_year: @group.synced_collections.first.translation_year,
+                                        original_language: @group.synced_collections.first.original_language
+                                      })
       end
     else
       @collection = Collection.new
@@ -38,11 +43,19 @@ class Admin::CollectionsController < Admin::BaseController
   end
 
   def create
-    @collection = Collection.new(collection_params)
+    begin
+      ActiveRecord::Base.transaction do
+        @collection = Collection.new(collection_params)
+        validations_passed = @collection.save
 
-    if @collection.save
-      redirect_to admin_collections_path(group_id: @collection.group.id)
-    else
+        if validations_passed
+          sync_other_collections
+          redirect_to admin_collections_path(group_id: @collection.group.id)
+        else
+          render :new, status: :unprocessable_entity
+        end
+      end
+    rescue => e
       render :new, status: :unprocessable_entity
     end
   end
@@ -52,11 +65,19 @@ class Admin::CollectionsController < Admin::BaseController
   end
 
   def update
-    @collection = Collection.find(params[:id])
-    
-    if @collection.update(collection_params)
-      redirect_to admin_collections_path(group_id: @collection.group.id)
-    else
+    begin
+      ActiveRecord::Base.transaction do
+        @collection = Collection.find(params[:id])
+        validations_passed = @collection.update(collection_params)
+
+        if validations_passed
+          sync_other_collections
+          redirect_to admin_collections_path(group_id: @collection.group.id)
+        else
+          render :edit, status: :unprocessable_entity
+        end
+      end
+    rescue => e
       render :edit, status: :unprocessable_entity
     end
   end
@@ -71,6 +92,27 @@ class Admin::CollectionsController < Admin::BaseController
   end
 
   private
+
+  def sync_other_collections
+    if !@collection.should_unsync? && @collection.group.should_sync?
+      @collection.group.synced_collections.each do |collection|
+        validation_passed_inner = collection.update(author_ids: @collection.author_ids,
+                                                    field_ids: @collection.field_ids,
+                                                    genre_ids: @collection.genre_ids,
+                                                    publishing_ids: @collection.publishing_ids,
+                                                    translator_ids: @collection.translator_ids,
+                                                    type_ids: @collection.type_ids,
+
+                                                    year: @collection.year,
+                                                    translation_year: @collection.translation_year,
+                                                    original_language: @collection.original_language
+                                                  )
+        unless validation_passed_inner
+          raise ActiveRecord::Rollback
+        end
+      end
+    end
+  end
 
   def require_admin_or_superadmin
     redirect_to(root_url) unless current_user.admin? || current_user.superadmin?

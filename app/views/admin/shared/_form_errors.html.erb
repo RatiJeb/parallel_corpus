@@ -1,5 +1,5 @@
 <% if record.errors.any? %>
-  <div id='errors' class="mt-8 text-red-500 ring-2 rounded-md ring-red-300 p-2">
+  <div id='errors' class="mt-8 max-w-3xl text-red-500 ring-2 rounded-md ring-red-300 p-2">
     <ul>
       <% record.errors.full_messages.each do |message| %>
         <li>
