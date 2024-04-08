@@ -19,8 +19,11 @@ class Admin::PublishingsController < Admin::BaseController
 
   def create
     @publishing = Publishing.new(publishing_params)
-    @publishing.save!
-    redirect_to admin_publishings_path
+    if @publishing.save
+      redirect_to admin_publishings_path
+    else
+      render :new, status: :unprocessable_entity
+    end
   end
 
   def edit
@@ -29,9 +32,11 @@ class Admin::PublishingsController < Admin::BaseController
 
   def update
     @publishing = Publishing.find(params[:id])
-    @publishing.update(publishing_params)
-    @publishing.save!
-    redirect_to admin_publishings_path
+    if @publishing.update(publishing_params)
+      redirect_to admin_publishings_path
+    else
+      render :edit, status: :unprocessable_entity
+    end
   end
 
   def destroy

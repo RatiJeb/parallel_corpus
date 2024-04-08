@@ -1,0 +1,13 @@
+<%= render 'admin/shared/heading', name: 'მთარგმნელის რედაქტირება' %>
+
+<main>
+  <div class="mx-auto max-w-screen-2xl sm:px-6 lg:px-8">
+    <%= render('admin/shared/form',
+               url: admin_translator_path,
+               method: :put,
+               record: @translator,
+               back_url: admin_translators_path,
+               delete_url: ->(record){ admin_translator_path(record) }
+              ) %>
+  </div>
+<main>

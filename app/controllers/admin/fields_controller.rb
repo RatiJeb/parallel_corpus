@@ -19,8 +19,11 @@ class Admin::FieldsController < Admin::BaseController
 
   def create
     @field = Field.new(field_params)
-    @field.save!
-    redirect_to admin_fields_path
+    if @field.save
+      redirect_to admin_fields_path
+    else
+      render :new, status: :unprocessable_entity
+    end
   end
 
   def edit
@@ -29,9 +32,11 @@ class Admin::FieldsController < Admin::BaseController
 
   def update
     @field = Field.find(params[:id])
-    @field.update(field_params)
-    @field.save!
-    redirect_to admin_fields_path
+    if @field.update(field_params)
+      redirect_to admin_fields_path
+    else
+      render :edit, status: :unprocessable_entity
+    end
   end
 
   def destroy

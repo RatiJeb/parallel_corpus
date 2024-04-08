@@ -1,0 +1,12 @@
+<%= render 'admin/shared/heading', name: 'ავტორის დამატება' %>
+
+<main>
+  <div class="mx-auto max-w-screen-2xl sm:px-6 lg:px-8">
+    <%= render('admin/shared/form',
+               url: admin_authors_path,
+               method: :post,
+               record: @author,
+               back_url: admin_authors_path
+              ) %>
+  </div>
+<main>

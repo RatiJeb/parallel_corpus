@@ -1,0 +1,13 @@
+<%= render 'admin/shared/heading', name: 'დარგის რედაქტირება' %>
+
+<main>
+  <div class="mx-auto max-w-screen-2xl sm:px-6 lg:px-8">
+    <%= render('admin/shared/form',
+               url: admin_field_path,
+               method: :put,
+               record: @field,
+               back_url: admin_fields_path,
+               delete_url: ->(record){ admin_field_path(record) }
+              ) %>
+  </div>
+<main>

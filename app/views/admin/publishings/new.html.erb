@@ -1,0 +1,12 @@
+<%= render 'admin/shared/heading', name: 'გამომცემლობის დამატება' %>
+
+<main>
+  <div class="mx-auto max-w-screen-2xl sm:px-6 lg:px-8">
+    <%= render('admin/shared/form',
+               url: admin_publishings_path,
+               method: :post,
+               record: @publishing,
+               back_url: admin_publishings_path
+              ) %>
+  </div>
+<main>

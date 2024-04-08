@@ -1,0 +1,13 @@
+<%= render 'admin/shared/heading', name: 'ტიპის რედაქტირება' %>
+
+<main>
+  <div class="mx-auto max-w-screen-2xl sm:px-6 lg:px-8">
+    <%= render('admin/shared/form',
+               url: admin_type_path,
+               method: :put,
+               record: @type,
+               back_url: admin_types_path,
+               delete_url: ->(record){ admin_type_path(record) }
+              ) %>
+  </div>
+<main>

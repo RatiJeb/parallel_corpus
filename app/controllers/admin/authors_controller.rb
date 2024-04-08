@@ -19,8 +19,11 @@ class Admin::AuthorsController < Admin::BaseController
 
   def create
     @author = Author.new(author_params)
-    @author.save!
-    redirect_to admin_authors_path
+    if @author.save
+      redirect_to admin_authors_path
+    else
+      render :new, status: :unprocessable_entity
+    end
   end
 
   def edit
@@ -29,9 +32,11 @@ class Admin::AuthorsController < Admin::BaseController
 
   def update
     @author = Author.find(params[:id])
-    @author.update(author_params)
-    @author.save!
-    redirect_to admin_authors_path
+    if @author.update(author_params)
+      redirect_to admin_authors_path
+    else
+      render :edit, status: :unprocessable_entity
+    end
   end
 
   def destroy

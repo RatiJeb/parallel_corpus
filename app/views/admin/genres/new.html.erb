@@ -1,0 +1,12 @@
+<%= render 'admin/shared/heading', name: 'ჟანრის დამატება' %>
+
+<main>
+  <div class="mx-auto max-w-screen-2xl sm:px-6 lg:px-8">
+    <%= render('admin/shared/form',
+               url: admin_genres_path,
+               method: :post,
+               record: @genre,
+               back_url: admin_genres_path
+              ) %>
+  </div>
+<main>

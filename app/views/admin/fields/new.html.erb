@@ -1,0 +1,12 @@
+<%= render 'admin/shared/heading', name: 'დარგის დამატება' %>
+
+<main>
+  <div class="mx-auto max-w-screen-2xl sm:px-6 lg:px-8">
+    <%= render('admin/shared/form',
+               url: admin_fields_path,
+               method: :post,
+               record: @field,
+               back_url: admin_fields_path
+              ) %>
+  </div>
+<main>

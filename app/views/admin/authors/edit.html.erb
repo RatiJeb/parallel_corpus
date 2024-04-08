@@ -1,0 +1,13 @@
+<%= render 'admin/shared/heading', name: 'ავტორის რედაქტირება' %>
+
+<main>
+  <div class="mx-auto max-w-screen-2xl sm:px-6 lg:px-8">
+    <%= render('admin/shared/form',
+               url: admin_author_path,
+               method: :put,
+               record: @author,
+               back_url: admin_authors_path,
+               delete_url: ->(record){ admin_author_path(record) }
+              ) %>
+  </div>
+<main>

@@ -19,8 +19,11 @@ class Admin::TypesController < Admin::BaseController
 
   def create
     @type = Type.new(type_params)
-    @type.save!
-    redirect_to admin_types_path
+    if @type.save
+      redirect_to admin_types_path
+    else
+      render :new, status: :unprocessable_entity
+    end
   end
 
   def edit
@@ -29,9 +32,11 @@ class Admin::TypesController < Admin::BaseController
 
   def update
     @type = Type.find(params[:id])
-    @type.update(type_params)
-    @type.save!
-    redirect_to admin_types_path
+    if @type.update(type_params)
+      redirect_to admin_types_path
+    else
+      render :edit, status: :unprocessable_entity
+    end
   end
 
   def destroy

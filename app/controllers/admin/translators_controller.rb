@@ -19,8 +19,11 @@ class Admin::TranslatorsController < Admin::BaseController
 
   def create
     @translator = Translator.new(translator_params)
-    @translator.save!
-    redirect_to admin_translators_path
+    if @translator.save
+      redirect_to admin_translators_path
+    else
+      render :new, status: :unprocessable_entity
+    end
   end
 
   def edit
@@ -29,9 +32,11 @@ class Admin::TranslatorsController < Admin::BaseController
 
   def update
     @translator = Translator.find(params[:id])
-    @translator.update(translator_params)
-    @translator.save!
-    redirect_to admin_translators_path
+    if @translator.update(translator_params)
+      redirect_to admin_translators_path
+    else
+      render :edit, status: :unprocessable_entity
+    end
   end
 
   def destroy

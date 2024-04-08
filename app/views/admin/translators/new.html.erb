@@ -1,0 +1,12 @@
+<%= render 'admin/shared/heading', name: 'მთარგმნელის დამატება' %>
+
+<main>
+  <div class="mx-auto max-w-screen-2xl sm:px-6 lg:px-8">
+    <%= render('admin/shared/form',
+               url: admin_translators_path,
+               method: :post,
+               record: @translator,
+               back_url: admin_translators_path
+              ) %>
+  </div>
+<main>
