@@ -91,6 +91,27 @@ class Admin::CollectionsController < Admin::BaseController
     end
   end
 
+  def new_text_blocks
+    @collection = Collection.find(params[:id])
+  end
+
+  def create_text_blocks
+    @collection = Collection.find(params[:id])
+
+    [:ka, :en].each do |language|
+      sentences = text_blocks_params[language].scan(/[^\.!?]+[\.!?]+|[^\.!?]+.\z/).map(&:strip)
+      sentences.each_with_index do |sentence, index|
+        TextBlock.create(collection: @collection,
+                         contents: sentence,
+                         order_number: index,
+                         language: language
+                        )
+      end
+    end
+
+    redirect_to admin_text_blocks_path(collection_id: @collection.id)
+  end
+
   private
 
   def sync_other_collections
@@ -128,5 +149,9 @@ class Admin::CollectionsController < Admin::BaseController
       :year, :translation_year, :original_language, author_ids: [], translator_ids: [],
       genre_ids: [], field_ids: [], type_ids: [], publishing_ids: []
     )
+  end
+
+  def text_blocks_params
+    params.require(:collection).permit(:ka, :en)
   end
 end

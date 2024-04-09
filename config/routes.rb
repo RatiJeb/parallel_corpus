@@ -6,7 +6,11 @@ Rails.application.routes.draw do
   devise_for :users
 
   namespace :admin do
-    resources :supergroups, :groups, :collections, :text_blocks, :authors, :fields, :genres, :publishings, :types, :translators
+    resources :supergroups, :groups, :text_blocks, :authors, :fields, :genres, :publishings, :types, :translators
+    resources :collections do
+      get 'new_text_blocks', on: :member
+      post 'create_text_blocks', on: :member
+    end
   end
 
 
