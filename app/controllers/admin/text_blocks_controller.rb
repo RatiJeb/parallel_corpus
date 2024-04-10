@@ -17,37 +17,34 @@ class Admin::TextBlocksController < Admin::BaseController
   end
 
   def new
-    if params[:group_id]
-      @group = Group.find(params[:group_id])
-      @collection = Collection.new(group: @group, author_ids: @group.author_ids)
-    else
-      @collection = Collection.new
-    end
+    @text_block = TextBlock.new
   end
 
   def create
-    @collection = Collection.new(collection_params)
-    @collection.save!
-    redirect_to admin_collections_path(group_id: @collection.group.id)
+    @text_block = TextBlock.find(params[:id])
   end
 
   def edit
-    @collection = Collection.find(params[:id])
+    @text_block = TextBlock.find(params[:id])
   end
 
   def update
-    @collection = Collection.find(params[:id])
-
-    # collection_params.delete(:author_ids) if @collection.pwichka?
-    @collection.update(collection_params)
-    @collection.save!
-    redirect_to admin_collections_path(group_id: @collection.group.id)
+    @text_block = TextBlock.find(params[:id])
+    if @text_block.update(text_blocks_params)
+      redirect_to edit_text_blocks_admin_collection_path(id: @text_block.collection_id)
+    else
+      render 'admin/collections/edit_text_blocks', status: :unprocessable_entity
+    end
   end
 
   private
 
   def set_search_params
     @search = Search::TextBlock.new(params.permit(:collection_id, :original_id, :original_contents, :translation_contents))
+  end
+
+  def text_blocks_params
+    params.require(:text_block).permit(:contents)
   end
 
 end

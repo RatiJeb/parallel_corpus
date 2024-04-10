@@ -5,6 +5,9 @@ class TextBlock < ApplicationRecord
 
   enum language: [:ka, :en]
 
+  scope :georgian, -> { where(language: :ka).order(:order_number) }
+  scope :english, -> { where(language: :en).order(:order_number) }
+
   def self.one_lang_simple_search(query)
     where("contents LIKE ?", "%#{query}%").order(:collection_id, :order_number)
   end

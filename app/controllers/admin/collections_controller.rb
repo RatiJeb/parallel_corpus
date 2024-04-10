@@ -109,7 +109,11 @@ class Admin::CollectionsController < Admin::BaseController
       end
     end
 
-    redirect_to admin_text_blocks_path(collection_id: @collection.id)
+    redirect_to edit_text_blocks_admin_collection_path(id: @collection.id)
+  end
+
+  def edit_text_blocks
+    @collection = Collection.find(params[:id])
   end
 
   private

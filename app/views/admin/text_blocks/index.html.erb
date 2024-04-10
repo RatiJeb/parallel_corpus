@@ -11,8 +11,12 @@
 
     <%= render 'admin/shared/breadcrumbs', crumbs: crumbs unless crumbs.empty? %>
 
-    <% if @collection && @text_blocks.empty? %>
-      <%= render 'admin/shared/new_button', name: 'ახალი ტექსტური წყვილების დამატება', url: new_text_blocks_admin_collection_path(id: @collection.id) %>
+    <% if @collection %>
+      <% if @text_blocks.empty? %>
+        <%= render 'admin/shared/new_button', name: 'ახალი ტექსტური წყვილების დამატება', url: new_text_blocks_admin_collection_path(id: @collection.id) %>
+      <% else %>
+        <%= render 'admin/shared/new_button', name: 'ტექსტური წყვილების რედაქტირება', url: edit_text_blocks_admin_collection_path(id: @collection.id) %>
+      <% end %>
     <% end %>
 
     <%= render 'admin/shared/paging', records: @text_blocks, url_method: -> (**params){ admin_text_blocks_path(**params) }, paging_params: { collection_id: @collection&.id } %>

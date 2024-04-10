@@ -10,6 +10,7 @@ Rails.application.routes.draw do
     resources :collections do
       get 'new_text_blocks', on: :member
       post 'create_text_blocks', on: :member
+      get 'edit_text_blocks', on: :member
     end
   end
 
