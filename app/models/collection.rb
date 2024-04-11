@@ -27,7 +27,7 @@ class Collection < ApplicationRecord
 
   validates :name_ka, uniqueness: { scope: :group_id, message: 'სახელი (ka) არაა უნიკალური ამავე ჯგუფში' }
   validates :name_en, uniqueness: { scope: :group_id, message: 'სახელი (en) არაა უნიკალური ამავე ჯგუფში' }
-  validates :year, numericality: { only_integer: true, allow_blank: true, message: 'წელი უნდა იყოს რიცვხი' }, inclusion: { in: -> (_collection) { 430..Date.current.year }, allow_blank: true, message: "წელი უნდა იყოს მეტი 430-ზე და ნაკლები ან ტოლი წლევანდელ თარიღზე" }
+  validates :year, numericality: { only_integer: true, allow_blank: true, message: 'წელი უნდა იყოს რიცვხი' }, inclusion: { in: -> (_collection) { -3000..Date.current.year }, allow_blank: true, message: "წელი უნდა იყოს მეტი -3000-ზე და ნაკლები ან ტოლი წლევანდელ თარიღზე" }
   validates :translation_year, numericality: { only_integer: true, allow_blank: true, message: 'წელი უნდა იყოს რიცვხი' }, inclusion: { in: -> (collection) { (collection.year || 430)..Date.current.year }, allow_blank: true, message: "წელი უნდა იყოს მეტი 430-ზე ან გამოცემის წელზე და ნაკლები ან ტოლი წლევანდელ თარიღზე" }
 
   def set_default_status

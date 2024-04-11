@@ -41,7 +41,6 @@ class Admin::TextBlocksController < Admin::BaseController
   end
 
   def edit_multiple
-    binding.pry
     @collection = Collection.find(params[:collection_id])
 
     @text_blocks = Views::TextBlockPair.where(original_language: 0)

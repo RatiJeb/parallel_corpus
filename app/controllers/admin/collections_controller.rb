@@ -32,9 +32,9 @@ class Admin::CollectionsController < Admin::BaseController
                                         translator_ids: @group.translator_ids,
                                         type_ids: @group.type_ids,
 
-                                        year: @group.synced_collections.first.year,
-                                        translation_year: @group.synced_collections.first.translation_year,
-                                        original_language: @group.synced_collections.first.original_language
+                                        year: @group.synced_collections.first&.year,
+                                        translation_year: @group.synced_collections.first&.translation_year,
+                                        original_language: @group.synced_collections.first&.original_language
                                       })
       end
     else
