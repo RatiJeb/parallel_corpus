@@ -79,11 +79,23 @@ class Admin::TextBlocksController < Admin::BaseController
     @text_blocks = @text_blocks.order(:order_number)
   end
 
-  def add
-
-  end
-
   def merge
+    @text_block = TextBlock.find(params[:id])
+    ActiveRecord::Base.transaction do
+      next_blocks = TextBlock.where(collection_id: @text_block.collection_id)
+                             .where(language: @text_block.language)
+                             .where("order_number > ?", @text_block.order_number)
+                             .order(order_number: :asc)
+      if next_blocks.first
+        @text_block.contents = "#{@text_block.contents} #{next_blocks.first.contents}"
+        @text_block.save!
+        next_blocks.first.destroy!
+      end
+      next_blocks.each do |block|
+        block.decrement!(:order_number, 1)
+      end
+      redirect_to edit_multiple_admin_text_blocks_path(collection_id: @text_block.collection_id)
+    end
   end
 
   def swap
