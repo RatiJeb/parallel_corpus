@@ -10,13 +10,60 @@
 
     <%= render 'admin/shared/breadcrumbs', crumbs: crumbs unless crumbs.empty? %>
 
-    <div class="mt-8 flex justify-stretch grid grid-cols-2 grid-flow-col max-w-screen-2xl">
-      <div class="col-span-1 space-y-3 sm:space-y-4">
 
-        <% @collection.text_blocks.georgian.each do |block| %>
+    <%= form_for @search, url: edit_multiple_admin_text_blocks_path(collection_id: @collection.id), method: :get do |form| %>
+      <div class="mt-8 flex justify-stretch grid grid-cols-2 grid-flow-col max-w-screen-2xl">
+        <div class="mr-3 col-span-1 space-y-3 sm:space-y-4">
 
-          <%= form_with model: [:admin, block], url: admin_text_block_path(block), method: :put do |form| %>
+          <div class="flex justify-between grid grid-flow-col w-full">
+            <div>
+              <div class="grid justify-items-start">
+                <div class="inline-flex">
+                  <%= form.text_field :order_number, placeholder: "ID-თი ძიება", class: "max-w-[120px] bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-3xl focus:ring-oceanside-500 focus:border-oceanside-500 block w-full dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-oceanside-500 dark:focus:border-oceanside-500" %>
+                </div>
+              </div>
+            </div>
+            <div>
+              <div class="grid grid-flow-col items-end">
+                <div class="ml-2 inline-flex justify-center w-8 bg-gray-50 text-gray-700 rounded-md ring-1 ring-mountbatten-500 p-1 hover:ring-2 hover:ring-oceanside-500 hover:bg-white hover:text-gray-900">
+                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M3 16.5v2.25A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75V16.5M16.5 12 12 16.5m0 0L7.5 12m4.5 4.5V3" />
+                  </svg>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-span-1 space-y-3 sm:space-y-4">
 
+          <div class="flex justify-between grid grid-flow-col w-full">
+            <div>
+              <div class="grid justify-items-start">
+                <div class="inline-flex">
+
+                </div>
+              </div>
+            </div>
+            <div>
+              <div class="grid grid-flow-col items-end">
+                <div class="ml-2 inline-flex justify-center w-8 bg-gray-50 text-gray-700 rounded-md ring-1 ring-mountbatten-500 p-1 hover:ring-2 hover:ring-oceanside-500 hover:bg-white hover:text-gray-900">
+                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M3 16.5v2.25A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75V16.5M16.5 12 12 16.5m0 0L7.5 12m4.5 4.5V3" />
+                  </svg>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    <% end %>
+
+
+    <% @text_blocks.each do |block| %>
+
+      <div class="mt-3 flex justify-stretch grid grid-cols-2 grid-flow-col max-w-screen-2xl">
+        <%= form_with model: [:admin, block], url: admin_text_block_path(id: block.original_id), method: :put do |form| %>
+          <div id="<%= block.original_id %>" class="col-span-1">
             <div class="mr-3 bg-mountbatten-100 px-3 rounded-md ring-2 ring-mountbatten-500">
               <div class="sm:items-start sm:divide-x sm:gap-4 sm:py-3 w-full">
                 <div class="mb-2 flex justify-between grid grid-flow-col w-full">
@@ -48,7 +95,7 @@
                   </div>
                 </div>
                 <div class="mt-2 sm:mt-0 w-full">
-                  <%= form.text_area :contents, rows: 8, class: "bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-md focus:ring-oceanside-500 focus:border-oceanside-500 block w-full dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-oceanside-500 dark:focus:border-oceanside-500" %>
+                  <%= form.text_area :original_contents, name: "text_block[contents]", rows: 8, class: "bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-md focus:ring-oceanside-500 focus:border-oceanside-500 block w-full dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-oceanside-500 dark:focus:border-oceanside-500" %>
                 </div>
               </div>
               <div class="pb-3 grid w-full justify-items-end">
@@ -56,8 +103,8 @@
               </div>
             </div>
 
-            <div class="mr-3 mt-4 grid grid-flow-col justify-items-end">
-              <div>
+            <div class="mr-3 mt-3 grid grid-flow-col justify-items-end">
+              <div class="flex">
                 <div class="ml-2 inline-flex justify-center bg-gray-50 text-gray-700 rounded-md ring-1 ring-gray-300 p-1 hover:ring-2 hover:ring-oceanside-500 hover:bg-white hover:text-gray-900">
                   <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
                     <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 12c0-1.232-.046-2.453-.138-3.662a4.006 4.006 0 0 0-3.7-3.7 48.678 48.678 0 0 0-7.324 0 4.006 4.006 0 0 0-3.7 3.7c-.017.22-.032.441-.046.662M19.5 12l3-3m-3 3-3-3m-12 3c0 1.232.046 2.453.138 3.662a4.006 4.006 0 0 0 3.7 3.7 48.656 48.656 0 0 0 7.324 0 4.006 4.006 0 0 0 3.7-3.7c.017-.22.032-.441.046-.662M4.5 12l3 3m-3-3-3 3" />
@@ -75,16 +122,12 @@
                 </div>
               </div>
             </div>
+          </div>
 
-          <% end %>
         <% end %>
 
-      </div>
-      <div class="col-span-1 space-y-3 sm:space-y-4">
-
-        <% @collection.text_blocks.english.each do |block| %>
-
-          <%= form_with model: [:admin, block], url: admin_text_block_path(block), method: :put do |form| %>
+        <%= form_with model: [:admin, block], url: admin_text_block_path(id: block.translation_id), method: :put do |form| %>
+          <div id="<%= block.translation_id %>" class="col-span-1">
 
             <div class="ml-3 bg-gray-100 px-3 rounded-md ring-2 ring-gray-500">
               <div class="sm:items-start sm:divide-x sm:gap-4 sm:py-3 w-full">
@@ -117,7 +160,7 @@
                   </div>
                 </div>
                 <div class="mt-2 sm:mt-0 w-full">
-                  <%= form.text_area :contents, rows: 8, class: "bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-md focus:ring-oceanside-500 focus:border-oceanside-500 block w-full dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-oceanside-500 dark:focus:border-oceanside-500" %>
+                  <%= form.text_area :translation_contents, name: "text_block[contents]", rows: 8, class: "bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-md focus:ring-oceanside-500 focus:border-oceanside-500 block w-full dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-oceanside-500 dark:focus:border-oceanside-500" %>
                 </div>
               </div>
               <div class="pb-3 grid w-full justify-items-end">
@@ -125,8 +168,8 @@
               </div>
             </div>
 
-            <div class="mt-4 grid grid-flow-col justify-items-end">
-              <div>
+            <div class="mt-3 grid grid-flow-col justify-items-end">
+              <div class="flex">
                 <div class="ml-2 inline-flex justify-center bg-gray-50 text-gray-700 rounded-md ring-1 ring-gray-300 p-1 hover:ring-2 hover:ring-oceanside-500 hover:bg-white hover:text-gray-900">
                   <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
                     <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 12c0-1.232-.046-2.453-.138-3.662a4.006 4.006 0 0 0-3.7-3.7 48.678 48.678 0 0 0-7.324 0 4.006 4.006 0 0 0-3.7 3.7c-.017.22-.032.441-.046.662M19.5 12l3-3m-3 3-3-3m-12 3c0 1.232.046 2.453.138 3.662a4.006 4.006 0 0 0 3.7 3.7 48.656 48.656 0 0 0 7.324 0 4.006 4.006 0 0 0 3.7-3.7c.017-.22.032-.441.046-.662M4.5 12l3 3m-3-3-3 3" />
@@ -145,9 +188,12 @@
               </div>
             </div>
 
-          <% end %>
-        <% end %>
-      </div>
+          </div>
+        </div>
+
+      <% end %>
+    <% end %>
+
     </div>
 
   </div>

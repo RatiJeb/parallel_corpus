@@ -15,7 +15,7 @@
       <% if @text_blocks.empty? %>
         <%= render 'admin/shared/new_button', name: 'ახალი ტექსტური წყვილების დამატება', url: new_text_blocks_admin_collection_path(id: @collection.id) %>
       <% else %>
-        <%= render 'admin/shared/new_button', name: 'ტექსტური წყვილების რედაქტირება', url: edit_text_blocks_admin_collection_path(id: @collection.id) %>
+        <%= render 'admin/shared/new_button', name: 'ტექსტური წყვილების რედაქტირება', url: edit_multiple_admin_text_blocks_path(collection_id: @collection.id) %>
       <% end %>
     <% end %>
 
