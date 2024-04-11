@@ -86,7 +86,19 @@ class Admin::TextBlocksController < Admin::BaseController
   def merge
   end
 
-  def transpose
+  def swap
+    @text_block = TextBlock.find(params[:id])
+    ActiveRecord::Base.transaction do
+      next_block = TextBlock.where(collection_id: @text_block.collection_id)
+                             .where(language: @text_block.language)
+                             .where(order_number: @text_block.order_number + 1).first
+      @text_block.order_number = -1
+      @text_block.save!
+      next_block.decrement!(:order_number, 1)
+      @text_block.order_number = next_block.order_number + 1
+      @text_block.save!
+      redirect_to edit_multiple_admin_text_blocks_path(collection_id: @text_block.collection_id)
+    end
   end
 
   private
