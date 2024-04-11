@@ -13,6 +13,9 @@ Rails.application.routes.draw do
     end
     resources :text_blocks do
       get 'edit_multiple', on: :collection
+      post 'add', on: :member
+      post 'merge', on: :member
+      post 'transpose', on: :member
     end
   end
 

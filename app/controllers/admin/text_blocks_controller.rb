@@ -24,7 +24,21 @@ class Admin::TextBlocksController < Admin::BaseController
   end
 
   def create
-    @text_block = TextBlock.find(params[:id])
+    last_block = TextBlock.find(params[:last_text_block_id])
+    ActiveRecord::Base.transaction do
+      next_blocks = TextBlock.where(collection_id: last_block.collection_id)
+                             .where(language: last_block.language)
+                             .where("order_number > ?", last_block.order_number)
+                             .order(order_number: :desc)
+      next_blocks.each do |block|
+        block.increment!(:order_number, 1)
+      end
+      TextBlock.create!(collection_id: last_block.collection_id,
+                        language: last_block.language,
+                        order_number: last_block.order_number + 1
+                       )
+    end
+    redirect_to edit_multiple_admin_text_blocks_path(collection_id: last_block.collection_id)
   end
 
   def edit
@@ -40,11 +54,39 @@ class Admin::TextBlocksController < Admin::BaseController
     end
   end
 
+  def destroy
+    @text_block = TextBlock.find(params[:id])
+    ActiveRecord::Base.transaction do
+      next_blocks = TextBlock.where(collection_id: @text_block.collection_id)
+                             .where(language: @text_block.language)
+                             .where("order_number > ?", @text_block.order_number)
+                             .order(order_number: :asc)
+      @text_block.destroy!
+      next_blocks.each do |block|
+        block.decrement!(:order_number, 1)
+      end
+      head(:ok)
+    rescue
+      render(json: {}, status: :unprocessable_entity)
+    end
+  end
+
   def edit_multiple
     @collection = Collection.find(params[:collection_id])
 
     @text_blocks = Views::TextBlockPair.where(original_language: 0)
     @text_blocks = @text_blocks.where(collection_id: params[:collection_id])
+    @text_blocks = @text_blocks.order(:order_number)
+  end
+
+  def add
+
+  end
+
+  def merge
+  end
+
+  def transpose
   end
 
   private
