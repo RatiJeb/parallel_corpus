@@ -17,6 +17,7 @@ Rails.application.routes.draw do
       post 'merge', on: :member
       post 'swap', on: :member
       post :split, on: :member
+      put 'tag_term', on: :member
     end
   end
 

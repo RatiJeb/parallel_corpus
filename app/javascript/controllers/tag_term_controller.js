@@ -1,5 +1,5 @@
 import { Controller } from '@hotwired/stimulus'
-import { post, put } from '@rails/request.js'
+import { put } from '@rails/request.js'
 
 export default class extends Controller {
   static targets = ['textarea']
@@ -11,25 +11,26 @@ export default class extends Controller {
   connect() {
   }
 
-  async split() {
+  async tag() {
 
     console.log('get here')
     const firstContents = this.textareaTarget.value.substring(0, this.textareaTarget.selectionStart)
-    const lastContents = this.textareaTarget.value.substring(this.textareaTarget.selectionStart, this.textareaTarget.value.length)
-    console.log(firstContents)
-    console.log(lastContents)
+    const term = this.textareaTarget.value.substring(this.textareaTarget.selectionStart, this.textareaTarget.selectionEnd)
+    const lastContents = this.textareaTarget.value.substring(this.textareaTarget.selectionEnd, this.textareaTarget.value.length)
 
-    const response = await post(
+    const contents = firstContents + '<t>' + term + '</t>' + lastContents
+
+    const response = await put(
       this.urlValue, {
         body: JSON.stringify(
-          { first_contents: firstContents, last_contents: lastContents }
+          { contents: contents }
         )
       }
     )
     if (response.ok) {
       window.location.href = this.redirectUrlValue
     } else {
-      alert('Error Deleting Record')
+      alert('Error Taging Term')
     }
   }
 }

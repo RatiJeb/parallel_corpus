@@ -144,6 +144,14 @@ class Admin::TextBlocksController < Admin::BaseController
     end
   end
 
+  def tag_term
+    @text_block = TextBlock.find(params[:id])
+    @text_block.update!(text_blocks_params)
+    head(:ok)
+  rescue
+    render(json: {}, status: :unprocessable_entity)
+  end
+
   def download
 
   end
