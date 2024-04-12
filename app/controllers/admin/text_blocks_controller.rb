@@ -13,7 +13,7 @@ class Admin::TextBlocksController < Admin::BaseController
     end
     @text_blocks = @text_blocks.where(original_id: params[:original_id]) unless params[:original_id].blank?
     @text_blocks = @text_blocks.where(collection_id: params[:collection_id]) unless params[:collection_id].blank?
-    @text_blocks = @text_blocks.order(:original_id).page(params[:page]).per(20)
+    @text_blocks = @text_blocks.order(:order_number).page(params[:page]).per(20)
   end
 
   def show
@@ -119,6 +119,28 @@ class Admin::TextBlocksController < Admin::BaseController
         @text_block.save!
       end
       redirect_to edit_multiple_admin_text_blocks_path(collection_id: @text_block.collection_id)
+    end
+  end
+
+  def split
+    @text_block = TextBlock.find(params[:id])
+    ActiveRecord::Base.transaction do
+      next_blocks = TextBlock.where(collection_id: @text_block.collection_id)
+                             .where(language: @text_block.language)
+                             .where("order_number > ?", @text_block.order_number)
+                             .order(order_number: :desc)
+      next_blocks.each do |block|
+        block.increment!(:order_number, 1)
+      end
+      TextBlock.create!(collection_id: @text_block.collection_id,
+                        language: @text_block.language,
+                        order_number: @text_block.order_number + 1,
+                        contents: params[:last_contents].strip
+                       )
+      @text_block.update!(contents: params[:first_contents].strip)
+      head(:ok)
+    rescue
+      render(json: {}, status: :unprocessable_entity)
     end
   end
 

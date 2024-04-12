@@ -13,10 +13,10 @@ Rails.application.routes.draw do
     end
     resources :text_blocks do
       get 'edit_multiple', on: :collection
-      get :search, on: :collection
       get 'download', on: :collection
       post 'merge', on: :member
       post 'swap', on: :member
+      post :split, on: :member
     end
   end
 
