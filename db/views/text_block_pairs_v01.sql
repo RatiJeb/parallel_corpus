@@ -12,7 +12,7 @@ SELECT
   tb_right.language AS translation_language
 
   FROM text_blocks tb_left
-  LEFT OUTER JOIN text_blocks tb_right
+  FULL OUTER JOIN text_blocks tb_right
   ON tb_left.collection_id = tb_right.collection_id AND
      tb_left.order_number = tb_right.order_number AND
      tb_left.language <> tb_right.language

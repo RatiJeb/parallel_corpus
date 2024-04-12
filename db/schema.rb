@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_04_04_163154) do
+ActiveRecord::Schema[7.1].define(version: 2024_04_12_001112) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -250,19 +250,6 @@ ActiveRecord::Schema[7.1].define(version: 2024_04_04_163154) do
   add_foreign_key "terms", "text_blocks"
   add_foreign_key "text_blocks", "collections"
 
-  create_view "text_block_pairs", sql_definition: <<-SQL
-      SELECT concat((tb_left.id)::text, '-', (tb_right.id)::text) AS id,
-      tb_left.id AS original_id,
-      tb_left.order_number,
-      tb_left.collection_id,
-      tb_left.contents AS original_contents,
-      tb_left.language AS original_language,
-      tb_right.id AS translation_id,
-      tb_right.contents AS translation_contents,
-      tb_right.language AS translation_language
-     FROM (text_blocks tb_left
-       LEFT JOIN text_blocks tb_right ON (((tb_left.collection_id = tb_right.collection_id) AND (tb_left.order_number = tb_right.order_number) AND (tb_left.language <> tb_right.language))));
-  SQL
   create_view "supergroup_details", sql_definition: <<-SQL
       SELECT supergroups.id,
       supergroups.name_ka,
@@ -310,5 +297,18 @@ ActiveRecord::Schema[7.1].define(version: 2024_04_04_163154) do
        JOIN supergroups ON ((groups.supergroup_id = supergroups.id)))
        LEFT JOIN text_blocks ON (((collections.id = text_blocks.collection_id) AND (text_blocks.language = 0))))
     GROUP BY collections.id, collections.name_ka, collections.name_en, collections.status, groups.id, groups.name_ka, groups.name_en, supergroups.id, supergroups.name_ka, supergroups.name_en;
+  SQL
+  create_view "text_block_pairs", sql_definition: <<-SQL
+      SELECT concat((tb_left.id)::text, '-', (tb_right.id)::text) AS id,
+      tb_left.id AS original_id,
+      tb_left.order_number,
+      tb_left.collection_id,
+      tb_left.contents AS original_contents,
+      tb_left.language AS original_language,
+      tb_right.id AS translation_id,
+      tb_right.contents AS translation_contents,
+      tb_right.language AS translation_language
+     FROM (text_blocks tb_left
+       FULL JOIN text_blocks tb_right ON (((tb_left.collection_id = tb_right.collection_id) AND (tb_left.order_number = tb_right.order_number) AND (tb_left.language <> tb_right.language))));
   SQL
 end

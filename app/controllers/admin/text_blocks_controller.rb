@@ -73,18 +73,15 @@ class Admin::TextBlocksController < Admin::BaseController
 
   def edit_multiple
     @collection = Collection.find(params[:collection_id])
+    @text_blocks = @collection.text_blocks.order(:order_number).to_a
 
-    @text_blocks = Views::TextBlockPair.where(original_language: 0)
-    @text_blocks = @text_blocks.where(collection_id: params[:collection_id])
-    @text_blocks = @text_blocks.order(:order_number)
-
-    @anchored_block = @text_blocks.to_a.detect do |tb|
+    @anchored_block = @text_blocks.detect do |tb|
       if params[:order_number].present?
-        tb.order_number == params[:order_number]
+        tb.order_number == params[:order_number].to_i
       elsif params[:original_contents].present?
-        tb.original_contents&.include?(params[:original_contents])
+        tb.ka? && tb.contents&.include?(params[:original_contents])
       elsif params[:translation_contents].present?
-        tb.translation_contents&.include?(params[:translation_contents])
+        tb.en? && tb.contents&.include?(params[:translation_contents])
       end
     end
   end
@@ -114,11 +111,13 @@ class Admin::TextBlocksController < Admin::BaseController
       next_block = TextBlock.where(collection_id: @text_block.collection_id)
                              .where(language: @text_block.language)
                              .where(order_number: @text_block.order_number + 1).first
-      @text_block.order_number = -1
-      @text_block.save!
-      next_block.decrement!(:order_number, 1)
-      @text_block.order_number = next_block.order_number + 1
-      @text_block.save!
+      if next_block
+        @text_block.order_number = -1
+        @text_block.save!
+        next_block.decrement!(:order_number, 1)
+        @text_block.order_number = next_block.order_number + 1
+        @text_block.save!
+      end
       redirect_to edit_multiple_admin_text_blocks_path(collection_id: @text_block.collection_id)
     end
   end
