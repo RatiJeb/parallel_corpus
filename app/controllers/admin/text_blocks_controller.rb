@@ -33,12 +33,14 @@ class Admin::TextBlocksController < Admin::BaseController
       next_blocks.each do |block|
         block.increment!(:order_number, 1)
       end
-      TextBlock.create!(collection_id: last_block.collection_id,
+      @text_block = TextBlock.create!(collection_id: last_block.collection_id,
                         language: last_block.language,
                         order_number: last_block.order_number + 1
                        )
+      head(:ok)
+    rescue
+      render(json: {}, status: :unprocessable_entity)
     end
-    redirect_to edit_multiple_admin_text_blocks_path(collection_id: last_block.collection_id)
   end
 
   def edit
@@ -48,9 +50,9 @@ class Admin::TextBlocksController < Admin::BaseController
   def update
     @text_block = TextBlock.find(params[:id])
     if @text_block.update(text_blocks_params)
-      redirect_to edit_multiple_admin_text_blocks_path(collection_id: @text_block.collection_id)
+      head(:ok)
     else
-      render :edit_multiple, status: :unprocessable_entity
+      render(json: {}, status: :unprocessable_entity)
     end
   end
 
@@ -101,7 +103,9 @@ class Admin::TextBlocksController < Admin::BaseController
       next_blocks.each do |block|
         block.decrement!(:order_number, 1)
       end
-      redirect_to edit_multiple_admin_text_blocks_path(collection_id: @text_block.collection_id)
+      head(:ok)
+    rescue
+      render(json: {}, status: :unprocessable_entity)
     end
   end
 
@@ -118,7 +122,9 @@ class Admin::TextBlocksController < Admin::BaseController
         @text_block.order_number = next_block.order_number + 1
         @text_block.save!
       end
-      redirect_to edit_multiple_admin_text_blocks_path(collection_id: @text_block.collection_id)
+      head(:ok)
+    rescue
+      render(json: {}, status: :unprocessable_entity)
     end
   end
 

@@ -7,12 +7,14 @@ export default class extends Controller {
 
   connect() {
     if (this.anchorValue) {
-      this._scrollTo(this.anchorValue)
+      console.log('here')
       window.location.hash = this.anchorValue
+      // this._scrollTo(this.anchorValue)
     }
   }
 
   _scrollTo(id){
-    document.getElementById(id).scrollIntoView({ behavior: 'smooth' })
+    console.log('there')
+    setTimeout(document.getElementById(id).scrollIntoView({ behavior: 'smooth' }, 1000))
   }
 }

@@ -6,6 +6,7 @@ export default class extends Controller {
   static values = {
     tagUrl: String,
     splitUrl: String,
+    updateUrl: String,
     redirectUrl: String,
   }
 
@@ -54,6 +55,24 @@ export default class extends Controller {
       window.location.href = this.redirectUrlValue
     } else {
       alert('Error Splitting Block')
+    }
+  }
+
+  async update() {
+
+    const contents = this.textareaTarget.value
+
+    const response = await put(
+      this.updateUrlValue, {
+        body: JSON.stringify(
+          { contents: contents }
+        )
+      }
+    )
+    if (response.ok) {
+      window.location.href = this.redirectUrlValue
+    } else {
+      alert('Error Updating Block')
     }
   }
 }
