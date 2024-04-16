@@ -90,3 +90,8 @@ gem 'active_link_to'
 gem 'kaminari'
 
 gem "localtunnel", "~> 1.0"
+
+gem 'caxlsx'
+gem 'caxlsx_rails'
+gem 'docx'
+gem 'caracal'

@@ -1,0 +1,12 @@
+wb = xlsx_package.workbook
+wb.add_worksheet(name: "ტექტსტური წყვილები") do |sheet|
+  sheet.add_row ['order_number', 'ka_contents', 'en_contents']
+  @text_blocks.group_by(&:order_number).each do |order_number, block_group|
+    ka_block = block_group.detect(&:ka?)
+    en_block = block_group.detect(&:en?)
+    row = [order_number]
+    row << (ka_block.present? ? ka_block.contents : '')
+    row << (en_block.present? ? en_block.contents : '')
+    sheet.add_row row
+  end
+end

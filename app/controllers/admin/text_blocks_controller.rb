@@ -1,3 +1,5 @@
+require 'tempfile'
+
 class Admin::TextBlocksController < Admin::BaseController
   before_action :set_search_params, only: [:index, :edit_multiple]
 
@@ -158,8 +160,29 @@ class Admin::TextBlocksController < Admin::BaseController
     render(json: {}, status: :unprocessable_entity)
   end
 
-  def download
+  def export
+    @collection = Collection.find(params[:collection_id])
+    @text_blocks = @collection.text_blocks.order(:order_number)
 
+    respond_to do |format|
+      format.xlsx {
+        @filename = "#{@collection.name_ka[..60]}.xlsx"
+        response.headers['Content-Disposition'] = "attachment; filename=\"#{@filename}\""
+      }
+      format.docx {
+        @language = params[:language]
+        @filename = "#{@collection.send("name_#{@language}")}"[..60] + ".docx"
+        response.headers["Content-Disposition"] = "attachment; filename=\"#{@filename}\""
+
+        Caracal::Document.save @filename do |docx|
+          docx.h1 @collection.send("name_#{@language}")
+          @text_blocks.each do |text_block|
+            docx.p text_block.contents if text_block.language == @language
+          end
+        end
+        send_file(File.join(Rails.root, @filename))
+      }
+    end
   end
 
   private
