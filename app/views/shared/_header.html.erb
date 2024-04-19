@@ -1,0 +1,56 @@
+<nav class="border-b border-gray-200 bg-white">
+  <div class="mx-auto max-w-screen-2xl px-4 sm:px-6 lg:px-8">
+    <div class="flex h-24 grid grid-flow-col items-center justify-between">
+      <div class="flex">
+        <div class="grid grid-flow-col grid-cols-4">
+          <div class="col-span-1 inline-flex items-center">
+            <%= link_to text_blocks_path do %>
+              <%= render 'shared/logo_md' %>
+            <% end %>
+          </div>
+          <div class="col-span-3 flex justify-center items-center">
+            <div class="ml-4">
+              <%= link_to text_blocks_path do %>
+                <h1 class="text-xl font-thin leading-tight tracking-tight text-gray-900">ინგლისურ-ქართული</h1>
+                <h1 class="text-xl font-thin leading-tight tracking-tight text-gray-900">პარალელური კორპუსი</h1>
+              <% end %>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="flex justify-center items-center">
+        <%= link_to text_blocks_path do %>
+          <div class="p-2 border-2 border-transparent hover:border-gray-50">
+            <h2 class="text-l font-thin leading-tight tracking-tight text-gray-900 hover:border-1">EN</h2>
+          </div>
+        <% end %>
+      </div>
+    </div>
+  </div>
+  <div class="w-full bg-stone-200">
+    <div class="mx-auto max-w-screen-2xl px-4 sm:px-6 lg:px-8">
+      <div class="flex grid grid-flow-col h-16 justify-items-end">
+        <div class="flex my-2">
+          <div class="flex space-x-0.5 grid grid-flow-col justify-items-center">
+            <!-- Current: "border-indigo-500 text-gray-900", Default: "border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700" -->
+            <div class="inline-flex justify-center items-center bg-stone-100 text-md hover:bg-stone-50">
+              <a href="#" class="px-8 h-full py-3">დეტალური ძიება</a>
+            </div>
+            <div class="inline-flex justify-center items-center bg-stone-100 text-md hover:bg-stone-50">
+              <a href="#" class="px-8 h-full py-3">ინსტრუმენტები</a>
+            </div>
+            <div class="inline-flex justify-center items-center bg-stone-100 text-md hover:bg-stone-50">
+              <a href="#" class="px-8 h-full py-3">გამოყენების ინსტრუქცია</a>
+            </div>
+            <div class="inline-flex justify-center items-center bg-stone-100 text-md hover:bg-stone-50">
+              <a href="#" class="px-8 h-full py-3">პროექტის შესახებ</a>
+            </div>
+            <div class="inline-flex justify-center items-center bg-stone-100 text-md hover:bg-stone-50">
+              <a href="#" class="px-8 h-full py-3">კონტაქტი</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</nav>

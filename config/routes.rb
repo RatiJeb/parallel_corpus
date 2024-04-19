@@ -1,7 +1,8 @@
 Rails.application.routes.draw do
 
-  resources :text_blocks, only: [:index]
-  get '/search', to: 'text_blocks#search'
+  resources :text_blocks do
+    get 'search', on: :collection
+  end
   root 'admin/supergroups#index'
   devise_for :users
 
