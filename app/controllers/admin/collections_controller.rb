@@ -112,6 +112,35 @@ class Admin::CollectionsController < Admin::BaseController
     redirect_to edit_multiple_admin_text_blocks_path(collection_id: @collection.id)
   end
 
+  def export
+    @group = Group.find(params[:group_id])
+    @collections = @group.collections.order(:id)
+
+    respond_to do |format|
+      format.xlsx {
+        @filename = "#{@group.name_ka[..60]}.xlsx"
+        response.headers['Content-Disposition'] = "attachment; filename=\"#{@filename}\""
+      }
+      format.docx {
+        @language = params[:language]
+        @filename = "#{@group.send("name_#{@language}")}"[..60] + ".docx"
+        response.headers["Content-Disposition"] = "attachment; filename=\"#{@filename}\""
+
+        Caracal::Document.save @filename do |docx|
+          docx.h1 @group.send("name_#{@language}")
+          @collections.each do |collection|
+            docx.h2 collection.send("name_#{@language}")
+            text_blocks = collection.text_blocks.order(:order_number)
+            text_blocks.each do |text_block|
+              docx.p text_block.contents if text_block.language == @language
+            end
+          end
+        end
+        send_file(File.join(Rails.root, @filename))
+      }
+    end
+  end
+
   private
 
   def sync_other_collections

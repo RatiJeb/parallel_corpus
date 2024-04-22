@@ -9,6 +9,7 @@ Rails.application.routes.draw do
   namespace :admin do
     resources :supergroups, :groups, :authors, :fields, :genres, :publishings, :types, :translators
     resources :collections do
+      get 'export', on: :collection
       get 'new_text_blocks', on: :member
       post 'create_text_blocks', on: :member
     end
