@@ -6,14 +6,18 @@ class Admin::TextBlocksController < Admin::BaseController
   def index
     @collection = Collection.find(params[:collection_id]) unless params[:collection_id].blank?
 
-    @text_blocks = Views::TextBlockPair.where(original_language: 0)
+    # @text_blocks = Views::TextBlockPair.where(original_language: 0)
 
-    %i[original_contents translation_contents].each do |field|
-      unless params[field].blank?
-        @text_blocks = @text_blocks.where(Views::TextBlockPair.arel_table[field].matches("%#{params[field]}%"))
-      end
-    end
-    @text_blocks = @text_blocks.where(original_id: params[:original_id]) unless params[:original_id].blank?
+    @text_blocks = TextBlock.all
+
+    # %i[original_contents translation_contents].each do |field|
+    #   unless params[field].blank?
+    #     @text_blocks = @text_blocks.where(TextBlock.arel_table[field].matches("%#{params[field]}%"))
+    #   end
+    # end
+    @text_blocks = @text_blocks.where(language: :ka).where(TextBlock.arel_table[:contents].matches("%#{params[:original_contents]}%")) unless params[:original_contents].blank?
+    @text_blocks = @text_blocks.where(language: :en).where(TextBlock.arel_table[:contents].matches("%#{params[:translation_contents]}%")) unless params[:translation_contents].blank?
+    @text_blocks = @text_blocks.where(id: params[:original_id]) unless params[:original_id].blank?
     @text_blocks = @text_blocks.where(collection_id: params[:collection_id]) unless params[:collection_id].blank?
     @text_blocks = @text_blocks.order(:order_number).page(params[:page]).per(20)
   end

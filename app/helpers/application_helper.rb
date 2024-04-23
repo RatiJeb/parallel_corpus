@@ -107,8 +107,10 @@ module ApplicationHelper
       # link_to((record.respond_to?(column[:name]) ? record.send(column[:name]) : column[:name]), column[:url_method].call(**column[:url_params]), class: "text-gray-700 border-transparent border-b-2 hover:text-gray-900 hover:border-mountbatten-500 py-4 px-3 hover:bg-white hover:shadow-lg")
     elsif column[:type] == :links
       column[:elements].map{ |element| table_body_cell_link(record, element) }.join().html_safe
+    elsif (column[:name].is_a?(String) || column[:name].is_a?(Symbol)) && record.respond_to?(column[:name])
+      name = record.send(column[:name])
     else
-      record.send(column[:name])
+      name = column[:name]
     end
   end
 

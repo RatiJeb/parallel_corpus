@@ -60,20 +60,27 @@
                   <%= render 'admin/shared/table/filter',
                             form: form,
                             columns: [{ name: :original_id, classes: 'max-w-[60px]', input_type: :text_field, input_classes: 'px-2' },
+                                      { name: :collection_id, input_type: :hidden },
                                       { name: :original_contents, classes: 'max-w-[240px]', input_type: :text_field },
                                       { name: :translation_contents, classes: 'max-w-[240px]', input_type: :text_field },
                                       { input_type: :submit, classes: 'py-2 text-left text-sm text-gray-500' }] %>
                 </thead>
                 <tbody>
-                  <% @text_blocks.each_with_index do |text_block, index| %>
+                  <% @text_blocks.group_by(&:order_number).each_with_index do |block_group, index| %>
+
+                    <% ka_block = block_group.second.detect(&:ka?) %>
+                    <% en_block = block_group.second.detect(&:en?) %>
+
+                    <% columns = [{ type: :text, name: ka_block.present? ? ka_block.id : en_block.id, classes: 'font-medium text-gray-900 py-4 px-3' },
+                                  { type: :text, name: ka_block.present? ? ka_block.contents : '', classes: "max-w-[240px] hover:!overflow-auto scrollbar-hide text-gray-500 py-4 px-3" },
+                                  { type: :text, name: en_block.present? ? en_block.contents : '', classes: "max-w-[240px] hover:!overflow-auto scrollbar-hide text-gray-500 py-4 px-3" },
+                                  { name: '' }] %>
                     <%= render 'admin/shared/table/row',
-                               record: text_block,
+                               record: ka_block,
                                index: index,
-                               columns: [{ type: :text, name: :original_id, classes: 'font-medium text-gray-900 py-4 px-3' },
-                                         { type: :text, name: :original_contents, classes: "max-w-[240px] hover:!overflow-auto scrollbar-hide text-gray-500 py-4 px-3" },
-                                         { type: :text, name: :translation_contents, classes: "max-w-[240px] hover:!overflow-auto scrollbar-hide text-gray-500 py-4 px-3" },
-                                         { type: :link, name: :edit, url_method: -> (**params){ edit_admin_text_block_path(**params) }, url_params: { id: text_block.original_id }, classes: "font-medium text-gray-500" }] %>
+                               columns: columns %>
                   <% end %>
+
                 </tbody>
               </table>
             <% end %>
