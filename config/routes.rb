@@ -15,6 +15,7 @@ Rails.application.routes.draw do
     end
     resources :text_blocks do
       get 'edit_multiple', on: :collection
+      delete 'destroy_multiple', on: :collection
       get 'export', on: :collection
       post 'merge', on: :member
       post 'swap', on: :member

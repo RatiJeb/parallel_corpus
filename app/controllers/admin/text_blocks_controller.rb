@@ -2,19 +2,13 @@ require 'tempfile'
 
 class Admin::TextBlocksController < Admin::BaseController
   before_action :set_search_params, only: [:index, :edit_multiple]
+  before_action :require_admin_or_superadmin, only: [:destroy_multiple]
 
   def index
     @collection = Collection.find(params[:collection_id]) unless params[:collection_id].blank?
 
-    # @text_blocks = Views::TextBlockPair.where(original_language: 0)
-
     @text_blocks = TextBlock.all
 
-    # %i[original_contents translation_contents].each do |field|
-    #   unless params[field].blank?
-    #     @text_blocks = @text_blocks.where(TextBlock.arel_table[field].matches("%#{params[field]}%"))
-    #   end
-    # end
     @text_blocks = @text_blocks.where(language: :ka).where(TextBlock.arel_table[:contents].matches("%#{params[:original_contents]}%")) unless params[:original_contents].blank?
     @text_blocks = @text_blocks.where(language: :en).where(TextBlock.arel_table[:contents].matches("%#{params[:translation_contents]}%")) unless params[:translation_contents].blank?
     @text_blocks = @text_blocks.where(id: params[:original_id]) unless params[:original_id].blank?
@@ -44,7 +38,7 @@ class Admin::TextBlocksController < Admin::BaseController
                         order_number: last_block.order_number + 1
                        )
       head(:ok)
-    rescue
+    rescue => e
       render(json: {}, status: :unprocessable_entity)
     end
   end
@@ -74,7 +68,7 @@ class Admin::TextBlocksController < Admin::BaseController
         block.decrement!(:order_number, 1)
       end
       head(:ok)
-    rescue
+    rescue => e
       render(json: {}, status: :unprocessable_entity)
     end
   end
@@ -94,6 +88,17 @@ class Admin::TextBlocksController < Admin::BaseController
     end
   end
 
+  def destroy_multiple
+    @collection = Collection.find(params[:collection_id])
+    @text_blocks = @collection.text_blocks
+    ActiveRecord::Base.transaction do
+      @text_blocks.each(&:destroy!)
+      head(:ok)
+    rescue => e
+      render(json: {}, status: :unprocessable_entity)
+    end
+  end
+
   def merge
     @text_block = TextBlock.find(params[:id])
     ActiveRecord::Base.transaction do
@@ -110,7 +115,7 @@ class Admin::TextBlocksController < Admin::BaseController
         block.decrement!(:order_number, 1)
       end
       head(:ok)
-    rescue
+    rescue => e
       render(json: {}, status: :unprocessable_entity)
     end
   end
@@ -129,7 +134,7 @@ class Admin::TextBlocksController < Admin::BaseController
         @text_block.save!
       end
       head(:ok)
-    rescue
+    rescue => e
       render(json: {}, status: :unprocessable_entity)
     end
   end
@@ -151,7 +156,7 @@ class Admin::TextBlocksController < Admin::BaseController
                        )
       @text_block.update!(contents: params[:first_contents].strip)
       head(:ok)
-    rescue
+    rescue => e
       render(json: {}, status: :unprocessable_entity)
     end
   end
@@ -160,7 +165,7 @@ class Admin::TextBlocksController < Admin::BaseController
     @text_block = TextBlock.find(params[:id])
     @text_block.update!(text_blocks_params)
     head(:ok)
-  rescue
+  rescue => e
     render(json: {}, status: :unprocessable_entity)
   end
 

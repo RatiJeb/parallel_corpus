@@ -55,10 +55,6 @@ class Admin::SupergroupsController < Admin::BaseController
 
   private
 
-  def require_admin_or_superadmin
-    redirect_to(root_url) unless current_user.admin? || current_user.superadmin?
-  end
-
   def set_search_params
     @search = Search::Supergroup.new(params.permit(:id, :name_ka, :name_en, :status))
   end

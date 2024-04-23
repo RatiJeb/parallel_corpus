@@ -164,10 +164,6 @@ class Admin::CollectionsController < Admin::BaseController
     end
   end
 
-  def require_admin_or_superadmin
-    redirect_to(root_url) unless current_user.admin? || current_user.superadmin?
-  end
-
   def set_search_params
     @search = Search::Collection.new(params.permit(:id, :supergroup_name_ka, :group_id, :group_name_ka, :name_ka, :name_en, :status))
   end

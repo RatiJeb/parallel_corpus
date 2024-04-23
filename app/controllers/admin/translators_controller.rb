@@ -1,5 +1,6 @@
 class Admin::TranslatorsController < Admin::BaseController
   before_action :set_search_params, only: :index
+  before_action :require_admin_or_superadmin, only: [:destroy]
 
   def index
     @translators = Translator.all

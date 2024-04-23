@@ -1,5 +1,6 @@
 class Admin::AuthorsController < Admin::BaseController
   before_action :set_search_params, only: :index
+  before_action :require_admin_or_superadmin, only: [:destroy]
 
   def index
     @authors = Author.all

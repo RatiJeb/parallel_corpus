@@ -1,5 +1,6 @@
 class Admin::PublishingsController < Admin::BaseController
   before_action :set_search_params, only: :index
+  before_action :require_admin_or_superadmin, only: [:destroy]
 
   def index
     @publishings = Publishing.all

@@ -1,5 +1,6 @@
 class Admin::FieldsController < Admin::BaseController
   before_action :set_search_params, only: :index
+  before_action :require_admin_or_superadmin, only: [:destroy]
 
   def index
     @fields = Field.all

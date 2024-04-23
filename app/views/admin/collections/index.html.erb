@@ -15,25 +15,37 @@
     <% if @group %>
 
       <div class="mt-4 flex grid grid-flow-col space-x-4 max-w-40">
-        <%= link_to export_admin_collections_path(group_id: @group.id, format: :xlsx), class: "inline-flex justify-center bg-gray-50 text-gray-700 rounded-md ring-1 ring-gray-300 p-1 hover:ring-2 hover:ring-oceanside-500 hover:bg-white hover:text-gray-900" do %>
-          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M3 16.5v2.25A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75V16.5M16.5 12 12 16.5m0 0L7.5 12m4.5 4.5V3" />
-          </svg>
-          .xlsx
+        <%= link_to export_admin_collections_path(group_id: @group.id, format: :xlsx), class: "px-3 py-2 grid grid-flow-col space-x-1 inline-flex justify-center items-center text-sm bg-gray-50 text-gray-700 rounded-md ring-1 ring-gray-300 p-1 hover:ring-2 hover:ring-oceanside-500 hover:bg-white hover:text-gray-900" do %>
+          <div class="inline-flex">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-4 h-4">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M3 16.5v2.25A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75V16.5M16.5 12 12 16.5m0 0L7.5 12m4.5 4.5V3" />
+            </svg>
+          </div>
+          <div class="inline-flex">
+            .xlsx
+          </div>
         <% end %>
 
-        <%= link_to export_admin_collections_path(group_id: @group.id, language: :ka, format: :docx), class: "inline-flex justify-center bg-gray-50 text-gray-700 rounded-md ring-1 ring-gray-300 p-1 hover:ring-2 hover:ring-oceanside-500 hover:bg-white hover:text-gray-900" do %>
-          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M3 16.5v2.25A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75V16.5M16.5 12 12 16.5m0 0L7.5 12m4.5 4.5V3" />
-          </svg>
-          ka.docx
+        <%= link_to export_admin_collections_path(group_id: @group.id, language: :ka, format: :docx), class: "px-3 py-2 grid grid-flow-col space-x-1 inline-flex justify-center items-center text-sm bg-gray-50 text-gray-700 rounded-md ring-1 ring-gray-300 p-1 hover:ring-2 hover:ring-oceanside-500 hover:bg-white hover:text-gray-900" do %>
+          <div class="inline-flex">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-4 h-4">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M3 16.5v2.25A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75V16.5M16.5 12 12 16.5m0 0L7.5 12m4.5 4.5V3" />
+            </svg>
+          </div>
+          <div class="inline-flex">
+            ka.docx
+          </div>
         <% end %>
 
-        <%= link_to export_admin_collections_path(group_id: @group.id, language: :en, format: :docx), class: "inline-flex justify-center bg-gray-50 text-gray-700 rounded-md ring-1 ring-gray-300 p-1 hover:ring-2 hover:ring-oceanside-500 hover:bg-white hover:text-gray-900" do %>
-          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M3 16.5v2.25A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75V16.5M16.5 12 12 16.5m0 0L7.5 12m4.5 4.5V3" />
-          </svg>
-          en.docx
+        <%= link_to export_admin_collections_path(group_id: @group.id, language: :en, format: :docx), class: "px-3 py-2 grid grid-flow-col space-x-1 inline-flex justify-center items-center text-sm bg-gray-50 text-gray-700 rounded-md ring-1 ring-gray-300 p-1 hover:ring-2 hover:ring-oceanside-500 hover:bg-white hover:text-gray-900" do %>
+          <div class="inline-flex">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-4 h-4">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M3 16.5v2.25A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75V16.5M16.5 12 12 16.5m0 0L7.5 12m4.5 4.5V3" />
+            </svg>
+          </div>
+          <div class="inline-flex">
+            en.docx
+          </div>
         <% end %>
       </div>
     <% end %>
