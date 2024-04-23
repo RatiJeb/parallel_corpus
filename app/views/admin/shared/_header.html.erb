@@ -9,18 +9,30 @@
 
 <nav class="border-b border-gray-200 bg-white">
   <div class="mx-auto max-w-screen-2xl px-4 sm:px-6 lg:px-8">
-    <div class="flex h-24 justify-between">
+    <div class="flex h-24 grid grid-flow-col items-center justify-between">
       <div class="flex">
-        <div class="-mr-2 ml-6 mt-4">
-          <div class="p-4 inline-flex items-center rounded-md ring-2 ring-mountbatten-500 ring-offset-2">
-            <svg class="block h-12 w-12" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true">
-
-            </svg>
+        <div class="grid grid-flow-col grid-cols-4">
+          <div class="col-span-1 inline-flex items-center">
+            <%= link_to admin_supergroups_path do %>
+              <%= render 'shared/logo_md' %>
+            <% end %>
           </div>
-          <div class="mx-auto h-full inline-block align-middle items-center px-4 sm:px-6 lg:px-8">
-            <h1 class="text-3xl font-bold leading-tight tracking-tight text-gray-900">ინგლისურ-ქართული პარალელური კორპუსი</h1>
+          <div class="col-span-3 flex justify-center items-center">
+            <div class="ml-4">
+              <%= link_to admin_supergroups_path do %>
+                <h1 class="text-xl font-thin leading-tight tracking-tight text-gray-900">ინგლისურ-ქართული</h1>
+                <h1 class="text-xl font-thin leading-tight tracking-tight text-gray-900">პარალელური კორპუსი</h1>
+              <% end %>
+            </div>
           </div>
         </div>
+      </div>
+      <div class="flex justify-center items-center">
+        <%= link_to admin_supergroups_path do %>
+          <div class="p-2 border-2 border-transparent hover:border-gray-50">
+            <h2 class="text-l font-thin leading-tight tracking-tight text-gray-900 hover:border-1">EN</h2>
+          </div>
+        <% end %>
       </div>
     </div>
   </div>
