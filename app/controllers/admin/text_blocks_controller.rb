@@ -19,7 +19,7 @@ class Admin::TextBlocksController < Admin::BaseController
     @text_blocks = @text_blocks.where(language: :en).where(TextBlock.arel_table[:contents].matches("%#{params[:translation_contents]}%")) unless params[:translation_contents].blank?
     @text_blocks = @text_blocks.where(id: params[:original_id]) unless params[:original_id].blank?
     @text_blocks = @text_blocks.where(collection_id: params[:collection_id]) unless params[:collection_id].blank?
-    @text_blocks = @text_blocks.order(:order_number).page(params[:page]).per(20)
+    @text_blocks = @text_blocks.order(:order_number).page(params[:page]).per(40)
   end
 
   def show
