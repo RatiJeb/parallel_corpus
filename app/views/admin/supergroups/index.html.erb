@@ -18,22 +18,22 @@
                              columns: [{ name: 'UID' },
                                        { name: 'დასახელება ქართულად', classes: 'max-w-[240px]' },
                                        { name: 'დასახელება ინგლისურად', classes: 'max-w-[240px]' },
-                                       { name: 'სტატუსი' },
-                                       { name: 'ჯგუფები' },
-                                       { name: 'კრებულები' },
-                                       { name: 'წყვილები' },
-                                       { name: '' }] %>
+                                       { name: 'სტატუსი', classes: 'max-w-[100px]' },
+                                       { name: 'ჯგუფები', classes: 'max-w-[100px]' },
+                                       { name: 'კრებულები', classes: 'max-w-[100px]' },
+                                       { name: 'წყვილები', classes: 'max-w-[100px]' },
+                                       { name: '', classes: 'max-w-[100px]' }] %>
 
                   <%= render 'admin/shared/table/filter',
                              form: form,
                              columns: [{ name: :id, classes: 'max-w-[60px]', input_type: :text_field, input_classes: 'px-2' },
                                        { name: :name_ka, classes: 'max-w-[240px]', input_type: :text_field },
                                        { name: :name_en, classes: 'max-w-[240px]', input_type: :text_field },
-                                       { name: :status, input_type: :status_select, model: Supergroup },
-                                       { content: @groups_count, classes: 'py-3.5' },
-                                       { content: @collections_count, classes: 'py-3.5' },
-                                       { content: @text_blocks_count, classes: 'py-3.5' },
-                                       { input_type: :submit, classes: 'py-2 text-left text-sm text-gray-500' }] %>
+                                       { name: :status, classes: 'max-w-[100px]', input_type: :status_select, model: Supergroup },
+                                       { content: @groups_count, classes: 'max-w-[100px] py-3.5' },
+                                       { content: @collections_count, classes: 'max-w-[100px] py-3.5' },
+                                       { content: @text_blocks_count, classes: 'max-w-[100px] py-3.5' },
+                                       { input_type: :submit, classes: 'max-w-[100px] py-2 text-left text-sm text-gray-500' }] %>
 
 
                 </thead>
