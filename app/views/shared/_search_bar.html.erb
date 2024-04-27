@@ -1,4 +1,6 @@
-<%= form_tag(search_path, method: 'get') do %>
-  <%= text_field_tag(:query, params[:query], placeholder: 'Search...') %>
-  <%= submit_tag 'Search' %>
+<%= form_tag(search_text_blocks_path, method: 'get') do %>
+  <%= text_field_tag :query, params[:query], class: "w-[640px] border-stone-400 focus:ring-oceanside-500 focus:border-oceanside-500" %>
+  <button type=submit class="bg-mountbatten-500 py-2 px-8 text-white border border-mountbatten-600 hover:bg-mountbatten-400">
+    ძიება
+  </button>
 <% end %>

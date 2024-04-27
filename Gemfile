@@ -95,3 +95,5 @@ gem 'caxlsx'
 gem 'caxlsx_rails'
 gem 'docx'
 gem 'caracal'
+
+gem 'pg_search'
