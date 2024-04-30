@@ -89,8 +89,12 @@ class Admin::TextBlocksController < Admin::BaseController
   end
 
   def destroy_multiple
-    @collection = Collection.find(params[:collection_id])
-    @text_blocks = @collection.text_blocks
+    if params[:collection_id].present?
+      @collection = Collection.find(params[:collection_id])
+      @text_blocks = @collection.text_blocks
+    else
+      @text_blocks = TextBlock.where(id: params[:ids])
+    end
     ActiveRecord::Base.transaction do
       @text_blocks.each(&:destroy!)
       head(:ok)

@@ -98,15 +98,20 @@
                 <tbody>
                   <% @text_blocks.group_by(&:order_number).each_with_index do |block_group, index| %>
 
+                    <% order_number = block_group.first %>
                     <% ka_block = block_group.second.detect(&:ka?) %>
                     <% en_block = block_group.second.detect(&:en?) %>
 
-                    <% columns = [{ type: :text, name: ka_block.present? ? ka_block.id : en_block.id, classes: 'font-medium text-gray-900 py-4 px-3' },
-                                  { type: :text, name: ka_block.present? ? ka_block.contents : '', classes: "max-w-[240px] hover:!overflow-auto scrollbar-hide text-gray-500 py-4 px-3" },
-                                  { type: :text, name: en_block.present? ? en_block.contents : '', classes: "max-w-[240px] hover:!overflow-auto scrollbar-hide text-gray-500 py-4 px-3" },
-                                  { name: '' }] %>
-                    <%= render 'admin/shared/table/row',
-                               record: ka_block,
+                    <% columns = { uid: true,
+                                   contents_ka: true,
+                                   contents_en: true,
+                                   edit: true,
+                                   delete: true } %>
+
+                    <%= render 'admin/text_blocks/shared/table/row',
+                               ka_block: ka_block,
+                               en_block: en_block,
+                               order_number: order_number,
                                index: index,
                                columns: columns %>
                   <% end %>

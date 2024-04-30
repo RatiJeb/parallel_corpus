@@ -94,7 +94,7 @@ module ApplicationHelper
   end
 
   def table_body_cell_classes(column, index, size, row_index)
-    classes = "relative whitespace-nowrap overflow-hidden z-0 border-b border-r text-sm hover:overflow-visible hover:z-10"
+    classes = "relative whitespace-nowrap overflow-hidden z-0 border-b border-r text-sm hover:border-oceanside-500 hover:bg-white hover:!overflow-visible scrollbar-hide hover:z-10"
     classes += ' border-l' if index == 0
     classes += " bg-slate-50" if row_index % 2 == 0
     classes += " #{column[:classes]}" if column[:classes]
@@ -124,7 +124,7 @@ module ApplicationHelper
     else
       name = element[:name]
     end
-    link_to(name, element[:url_method].call(**element[:url_params]), class: "text-gray-700 border-transparent border-b-2 hover:text-gray-900 hover:border-oceanside-500 hover:bg-white hover:shadow-lg py-4 px-3")
+    link_to(name, element[:url_method].call(**element[:url_params]), class: "block w-full text-gray-700 border-transparent border-b-2 hover:text-gray-900 py-4 px-3")
   end
 
   def edit_svg

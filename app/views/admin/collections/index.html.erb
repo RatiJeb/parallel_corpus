@@ -85,15 +85,19 @@
                     <%= render 'admin/shared/table/row',
                                record: collection,
                                index: index,
-                               columns: [{ type: :text, name: :id, classes: 'font-medium text-gray-900 py-4 px-3' },
-                                         { type: :link, name: :supergroup_name_ka, url_method: -> (**params){ admin_groups_path(**params) }, url_params: { supergroup_id: collection.supergroup_id }, classes: "max-w-[240px] text-gray-500 py-4" },
-                                         { type: :link, name: :group_name_ka, url_method: -> (**params){ admin_collections_path(**params) }, url_params: { group_id: collection.group_id }, classes: "max-w-[240px] text-gray-500 py-4" },
-                                         { type: :link, name: :name_ka, url_method: -> (**params){ admin_text_blocks_path(**params) }, url_params: { collection_id: collection.id }, classes: "max-w-[240px] text-gray-500 py-4" },
-                                         { type: :link, name: :name_en, url_method: -> (**params){ admin_text_blocks_path(**params) }, url_params: { collection_id: collection.id }, classes: "max-w-[240px] text-gray-500 py-4" },
-                                         { type: :text, name: :status, classes: "text-gray-500 py-4 px-3" },
-                                         { type: :text, name: :text_blocks_count, classes: "text-gray-500 py-4 px-3" },
-                                         { type: :links, classes: "font-medium text-gray-500 max-w-[60px]", elements: [{ name: :edit, url_method: -> (**params){ edit_admin_collection_path(**params) }, url_params: { id: collection.id } },
-                                                                                                                       { name: :enter, url_method: -> (**params){ admin_text_blocks_path(**params) }, url_params: { collection_id: collection.id } }] }] %>
+                               columns: { uid: true,
+                                          supergroup_name_ka: true,
+                                          group_name_ka: true,
+                                          enter_url_method: -> (**params){ admin_text_blocks_path(**params) },
+                                          enter_url_params: { collection_id: collection.id },
+                                          edit_url_method: -> (**params){ edit_admin_collection_path(**params) },
+                                          edit_url_params: { id: collection.id },
+                                          name_ka: true,
+                                          name_en: true,
+                                          status: true,
+                                          text_blocks_count: true,
+                                          edit: true,
+                                          enter: true } %>
                   <% end %>
                 </tbody>
               </table>

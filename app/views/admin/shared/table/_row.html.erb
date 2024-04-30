@@ -1,7 +1,83 @@
-<tr>
-  <% columns.each_with_index do |column, col_index| %>
-    <td class="<%= table_body_cell_classes(column, col_index, columns.size, index) %>">
-      <%= table_body_cell_contents(record, column) %>
+<% if index % 2 == 0 %>
+  <tr class="bg-white">
+<% else %>
+  <tr class="bg-gray-50">
+<% end %>
+  <% if columns[:uid].present? %>
+    <td class="relative truncate z-0 border-b border-r border-l text-sm font-medium text-gray-900 py-4 px-3">
+      <%= record.id %>
     </td>
   <% end %>
+
+  <% if columns[:supergroup_name_ka].present? %>
+    <td class="relative truncate z-0 border-b border-r text-sm scrollbar-hide hover:z-10 max-w-[240px] text-gray-500 pr-3">
+      <%= link_to record.supergroup_name_ka, admin_groups_path(supergroup_id: record.supergroup_id), class: "hover:text-mountbatten-700 hover:font-semibold w-full text-gray-700 border-transparent hover:text-gray-900 py-5 px-3" %>
+    </td>
+  <% end %>
+
+  <% if columns[:group_name_ka].present? %>
+    <td class="relative truncate z-0 border-b border-r text-sm scrollbar-hide hover:z-10 max-w-[240px] text-gray-500 pr-3">
+      <%= link_to record.group_name_ka, admin_collections_path(group_id: record.group_id), class: "hover:text-mountbatten-700 hover:font-semibold w-full text-gray-700 border-transparent hover:text-gray-900 py-5 px-3" %>
+    </td>
+  <% end %>
+
+  <% if columns[:name_ka].present? %>
+    <td class="relative truncate z-0 border-b border-r text-sm scrollbar-hide hover:z-10 max-w-[240px] text-gray-500 pr-3">
+      <%= link_to record.name_ka, columns[:enter_url_method].call(**columns[:enter_url_params]), class: "hover:text-mountbatten-700 hover:font-semibold w-full text-gray-700 border-transparent hover:text-gray-900 py-5 px-3" %>
+    </td>
+  <% end %>
+
+  <% if columns[:name_en].present? %>
+    <td class="relative truncate z-0 border-b border-r text-sm scrollbar-hide hover:z-10 max-w-[240px] text-gray-500 pr-3">
+      <%= link_to record.name_en, columns[:enter_url_method].call(**columns[:enter_url_params]), class: "hover:text-mountbatten-700 hover:font-semibold w-full text-gray-700 border-transparent hover:text-gray-900 py-5 px-3" %>
+    </td>
+  <% end %>
+
+  <% if columns[:status].present? %>
+    <td class="relative truncate z-0 border-b border-r text-sm text-gray-500 py-4 px-3">
+      <%= record.status %>
+    </td>
+  <% end %>
+
+  <% if columns[:groups_count].present? %>
+    <td class="relative truncate z-0 border-b border-r text-sm text-gray-500 py-4 px-3">
+      <%= record.groups_count %>
+    </td>
+  <% end %>
+
+  <% if columns[:collections_count].present? %>
+    <td class="relative truncate z-0 border-b border-r text-sm text-gray-500 py-4 px-3">
+      <%= record.collections_count %>
+    </td>
+  <% end %>
+
+  <% if columns[:text_blocks_count].present? %>
+    <td class="relative truncate z-0 border-b border-r text-sm text-gray-500 py-4 px-3">
+      <%= record.text_blocks_count %>
+    </td>
+  <% end %>
+
+  <td class="relative whitespace-nowrap overflow-hidden z-0 border-b border-r text-sm font-medium text-gray-500 max-w-[60px] px-2">
+
+    <div class="flex justify-between items-center grid grid-flow-col">
+
+      <% if columns[:edit].present? %>
+        <%= link_to columns[:edit_url_method].call(**columns[:edit_url_params]), class: "inline-flex text-gray-700 hover:text-oceanside-500 hover:ring-2 hover:ring-oceanside-500 hover:rounded-3xl px-2 py-2" do %>
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="inline w-6 h-6">
+            <path stroke-linecap="round" stroke-linejoin="round" d="m16.862 4.487 1.687-1.688a1.875 1.875 0 1 1 2.652 2.652L6.832 19.82a4.5 4.5 0 0 1-1.897 1.13l-2.685.8.8-2.685a4.5 4.5 0 0 1 1.13-1.897L16.863 4.487Zm0 0L19.5 7.125" />
+          </svg>
+        <% end %>
+      <% end %>
+
+      <% if columns[:enter].present? %>
+        <%= link_to columns[:enter_url_method].call(**columns[:enter_url_params]), class: "inline-flex text-gray-700 hover:text-oceanside-500 hover:ring-2 hover:ring-oceanside-500 hover:rounded-3xl px-2 py-2" do %>
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="inline w-6 h-6">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M8.25 9V5.25A2.25 2.25 0 0 1 10.5 3h6a2.25 2.25 0 0 1 2.25 2.25v13.5A2.25 2.25 0 0 1 16.5 21h-6a2.25 2.25 0 0 1-2.25-2.25V15M12 9l3 3m0 0-3 3m3-3H2.25" />
+          </svg>
+        <% end %>
+      <% end %>
+
+    </div>
+
+  </td>
 </tr>

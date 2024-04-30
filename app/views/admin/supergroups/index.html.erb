@@ -42,15 +42,19 @@
                     <%= render 'admin/shared/table/row',
                                record: supergroup,
                                index: index,
-                               columns: [{ type: :text, name: :id, classes: 'font-medium text-gray-900 py-4 px-3' },
-                                         { type: :link, name: :name_ka, url_method: -> (**params){ admin_groups_path(**params) }, url_params: { supergroup_id: supergroup.id }, classes: "max-w-[240px] py-4 text-gray-500" },
-                                         { type: :link, name: :name_en, url_method: -> (**params){ admin_groups_path(**params) }, url_params: { supergroup_id: supergroup.id }, classes: "max-w-[240px] py-4 text-gray-500" },
-                                         { type: :text, name: :status, classes: "text-gray-500 py-4 px-3" },
-                                         { type: :text, name: :groups_count, classes: "text-gray-500 py-4 px-3" },
-                                         { type: :text, name: :collections_count, classes: "text-gray-500 py-4 px-3" },
-                                         { type: :text, name: :text_blocks_count, classes: "text-gray-500 py-4 px-3" },
-                                         { type: :links, classes: "font-medium text-gray-500 py-0 max-w-[60px]", elements: [{ name: :edit, url_method: -> (**params){ edit_admin_supergroup_path(**params) }, url_params: { id: supergroup.id } },
-                                                                                                          { name: :enter, url_method: -> (**params){ admin_groups_path(**params) }, url_params: { supergroup_id: supergroup.id } }] }] %>
+                               columns: { uid: true,
+                                          enter_url_method: -> (**params){ admin_groups_path(**params) },
+                                          enter_url_params: { supergroup_id: supergroup.id },
+                                          edit_url_method: -> (**params){ edit_admin_supergroup_path(**params) },
+                                          edit_url_params: { id: supergroup.id },
+                                          name_ka: true,
+                                          name_en: true,
+                                          status: true,
+                                          groups_count: true,
+                                          collections_count: true,
+                                          text_blocks_count: true,
+                                          edit: true,
+                                          enter: true } %>
 
                   <% end %>
                 </tbody>
