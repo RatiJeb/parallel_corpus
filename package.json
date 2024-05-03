@@ -1,5 +1,6 @@
 {
   "dependencies": {
+    "micromodal": "^0.4.10",
     "tailwind-scrollbar-hide": "^1.1.7"
   }
 }

@@ -11,5 +11,7 @@
     <%= render 'admin/shared/breadcrumbs', crumbs: crumbs %>
 
     <%= render 'admin/groups/shared/form', url: admin_group_path, method: :put %>
+
+    <%= render 'admin/shared/confirm_delete_modal', modal_title: 'გსურთ ჯგუფის წაშლა?', modal_text: 'ჯგუფი წაიშლება სრულად' %>
   </div>
 <main>

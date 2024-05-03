@@ -41,6 +41,8 @@
                 data-controller="delete-record"
                 data-delete-record-url-value="<%= destroy_multiple_admin_text_blocks_path(ids: block_ids) %>"
                 data-delete-record-redirect-url-value="<%= admin_text_blocks_path(collection_id: @collection.id) %>"
+                data-delete-record-modal-title-value="გსურთ ტექსტური წყვილის წაშლა?"
+                data-delete-record-modal-text-value="ეს ტექსტური წყვილი წაიშლება სრულად"
                 data-action="click->delete-record#submit"
                 class="inline-flex text-gray-700 hover:text-oceanside-500 hover:ring-2 hover:ring-oceanside-500 hover:rounded-3xl px-2 py-2">
           <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">

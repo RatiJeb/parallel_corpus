@@ -12,5 +12,7 @@
     <%= render 'admin/shared/breadcrumbs', crumbs: crumbs %>
 
     <%= render 'admin/collections/shared/form', url: admin_collection_path, method: :put %>
+
+    <%= render 'admin/shared/confirm_delete_modal', modal_title: 'გსურთ კრებულის წაშლა?', modal_text: 'კრებული წაიშლება სრულად' %>
   </div>
 <main>
