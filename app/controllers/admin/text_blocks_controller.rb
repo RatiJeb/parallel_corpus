@@ -88,6 +88,14 @@ class Admin::TextBlocksController < Admin::BaseController
     end
   end
 
+  def update_multiple
+    @collection = Collection.find(params[:collection_id])
+    @text_blocks = @collection.text_blocks
+
+    
+
+  end
+
   def destroy_multiple
     if params[:collection_id].present?
       @collection = Collection.find(params[:collection_id])

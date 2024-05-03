@@ -15,7 +15,6 @@ export default class extends Controller {
 
   async tag() {
 
-    console.log('get here')
     const firstContents = this.textareaTarget.value.substring(0, this.textareaTarget.selectionStart)
     const term = this.textareaTarget.value.substring(this.textareaTarget.selectionStart, this.textareaTarget.selectionEnd)
     const lastContents = this.textareaTarget.value.substring(this.textareaTarget.selectionEnd, this.textareaTarget.value.length)
@@ -38,11 +37,8 @@ export default class extends Controller {
 
   async split() {
 
-    console.log('get here')
     const firstContents = this.textareaTarget.value.substring(0, this.textareaTarget.selectionStart)
     const lastContents = this.textareaTarget.value.substring(this.textareaTarget.selectionStart, this.textareaTarget.value.length)
-    console.log(firstContents)
-    console.log(lastContents)
 
     const response = await post(
       this.splitUrlValue, {

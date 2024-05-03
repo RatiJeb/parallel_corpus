@@ -9,7 +9,7 @@
 
     <%= render 'admin/shared/breadcrumbs', crumbs: crumbs unless crumbs.empty? %>
 
-    <div class="mt-8 flex grid grid-flow-col space-x-4 max-w-40">
+    <div class="mt-8 flex grid grid-flow-col space-x-4 justify-between">
       <%= link_to export_admin_text_blocks_path(collection_id: @collection.id, format: :xlsx), class: "px-3 py-2 grid grid-flow-col space-x-1 inline-flex justify-center items-center text-sm bg-gray-50 text-gray-700 rounded-md ring-1 ring-gray-300 p-1 hover:ring-2 hover:ring-oceanside-500 hover:bg-white hover:text-gray-900" do %>
         <div class="inline-flex">
           <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5">
@@ -20,6 +20,11 @@
           .xlsx
         </div>
       <% end %>
+      <div data-controller="update-multiple" class="inline-flex">
+        <button type="button"
+                data-action="click->update-multiple#trigger"
+                class="inline-flex justify-center rounded-md bg-mountbatten-500 ring-2 ring-mountbatten-500 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-mountbatten-400 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-mountbatten-500">ყველაფრის შენახვა</button>
+      </div>
     </div>
 
     <div class="mt-8 flex justify-stretch grid grid-cols-2 grid-flow-col max-w-screen-2xl">
