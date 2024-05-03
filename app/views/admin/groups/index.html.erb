@@ -16,7 +16,7 @@
     <div class="px-4 sm:px-6 lg:px-8">
       <div class="flow-root">
         <div class="-mx-4 -my-2 sm:-mx-6 lg:-mx-8">
-          <div class="inline-block min-w-full py-2 align-middle">
+          <div data-controller="search-highlight" class="inline-block min-w-full py-2 align-middle">
             <%= form_for @search, url: admin_groups_path, method: :get do |form| %>
               <table class="w-full border-separate border-spacing-0">
                 <thead>
@@ -47,7 +47,7 @@
 
 
                 </thead>
-                <tbody>
+                <tbody data-search-highlight-target="body">
                   <% @groups.each_with_index do |group, index| %>
                     <%= render 'admin/shared/table/row',
                                record: group,

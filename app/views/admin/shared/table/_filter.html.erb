@@ -1,9 +1,9 @@
-<tr>
+<tr data-search-highlight-target="searchbar">
   <% columns.each_with_index do |column, index| %>
     <% if column[:input_type] == :hidden %>
       <%= form.hidden_field column[:name], name: column[:name] %>
     <% else %>
-      <th scope="col" class="<%= table_filter_cell_classes(column, index, columns.size) %>">
+      <th data-search-highlight-target="searchbar" scope="col" class="<%= table_filter_cell_classes(column, index, columns.size) %>">
         <% if column[:input_type] == :submit %>
           <button type="submit" class="w-full inline-flex block rounded-md bg-mountbatten-500 px-3 py-2 grid grid-flow-col items-center justify-center space-x-1 text-center text-sm font-semibold text-white shadow-sm hover:bg-mountbatten-400 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-mountbatten-500">
             <div class="inline-flex">

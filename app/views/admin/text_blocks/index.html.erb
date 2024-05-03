@@ -73,11 +73,13 @@
 
     <% end %>
 
+
     <%= render 'admin/shared/paging', records: @text_blocks, url_method: -> (**params){ admin_text_blocks_path(**params) }, paging_params: { collection_id: @collection&.id } %>
+
     <div class="px-4 sm:px-6 lg:px-8">
       <div class="flow-root">
         <div class="-mx-4 -my-2 sm:-mx-6 lg:-mx-8">
-          <div class="inline-block min-w-full py-2 align-middle">
+          <div data-controller="search-highlight" class="inline-block min-w-full py-2 align-middle">
             <%= form_for @search, url: admin_text_blocks_path, method: :get do |form| %>
               <table class="w-full border-separate border-spacing-0">
                 <thead>
@@ -95,25 +97,27 @@
                                       { name: :translation_contents, classes: 'max-w-[240px]', input_type: :text_field },
                                       { input_type: :submit, classes: 'py-2 text-left text-sm text-gray-500' }] %>
                 </thead>
-                <tbody>
-                  <% @text_blocks.group_by(&:order_number).each_with_index do |block_group, index| %>
+                <tbody data-search-highlight-target="body">
+                  <% if @collection.present? %>
+                    <% @text_blocks.group_by(&:order_number).each_with_index do |block_group, index| %>
 
-                    <% order_number = block_group.first %>
-                    <% ka_block = block_group.second.detect(&:ka?) %>
-                    <% en_block = block_group.second.detect(&:en?) %>
+                      <% order_number = block_group.first %>
+                      <% ka_block = block_group.second.detect(&:ka?) %>
+                      <% en_block = block_group.second.detect(&:en?) %>
 
-                    <% columns = { uid: true,
-                                   contents_ka: true,
-                                   contents_en: true,
-                                   edit: true,
-                                   delete: true } %>
+                      <% columns = { uid: true,
+                                     contents_ka: true,
+                                     contents_en: true,
+                                     edit: true,
+                                     delete: true } %>
 
-                    <%= render 'admin/text_blocks/shared/table/row',
-                               ka_block: ka_block,
-                               en_block: en_block,
-                               order_number: order_number,
-                               index: index,
-                               columns: columns %>
+                      <%= render 'admin/text_blocks/shared/table/row',
+                                 ka_block: ka_block,
+                                 en_block: en_block,
+                                 order_number: order_number,
+                                 index: index,
+                                 columns: columns %>
+                    <% end %>
                   <% end %>
 
                 </tbody>
@@ -123,10 +127,11 @@
         </div>
       </div>
     </div>
+
     <%= render 'admin/shared/paging', records: @text_blocks, url_method: -> (**params){ admin_text_blocks_path(**params) }, paging_params: { collection_id: @collection&.id } %>
 
     <%= render 'admin/shared/confirm_delete_modal', modal_title: 'გსურთ ტექსტური წყვილების წაშლა?',
-                                                    modal_text: 'ყველა ტექტური წყვილი ამ კრებულში წაიშლება სრულად' %>
+                                                      modal_text: 'ყველა ტექტური წყვილი ამ კრებულში წაიშლება სრულად' %>
 
   </div>
 </main>
