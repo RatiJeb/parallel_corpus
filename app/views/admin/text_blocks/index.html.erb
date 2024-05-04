@@ -74,7 +74,7 @@
     <% end %>
 
 
-    <%= render 'admin/shared/paging', records: @text_blocks, url_method: -> (**params){ admin_text_blocks_path(**params) }, paging_params: { collection_id: @collection&.id } %>
+    <%= render 'admin/shared/paging', records: @text_blocks, url_method: -> (**params){ admin_text_blocks_path(**params) }, paging_params: { collection_id: @collection&.id }.merge(@search.attributes) %>
 
     <div class="px-4 sm:px-6 lg:px-8">
       <div class="flow-root">
@@ -128,7 +128,7 @@
       </div>
     </div>
 
-    <%= render 'admin/shared/paging', records: @text_blocks, url_method: -> (**params){ admin_text_blocks_path(**params) }, paging_params: { collection_id: @collection&.id } %>
+    <%= render 'admin/shared/paging', records: @text_blocks, url_method: -> (**params){ admin_text_blocks_path(**params) }, paging_params: { collection_id: @collection&.id }.merge(@search.attributes) %>
 
     <%= render 'admin/shared/confirm_delete_modal', modal_title: 'გსურთ ტექსტური წყვილების წაშლა?',
                                                       modal_text: 'ყველა ტექტური წყვილი ამ კრებულში წაიშლება სრულად' %>

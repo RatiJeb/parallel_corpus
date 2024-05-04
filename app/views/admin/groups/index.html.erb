@@ -11,7 +11,7 @@
 
     <%= render 'admin/shared/new_button', name: 'ახალი ჯგუფის დამატება', url: new_admin_group_path(supergroup_id: @supergroup&.id) %>
 
-    <%= render 'admin/shared/paging', records: @groups, url_method: -> (**params){ admin_groups_path(**params) }, paging_params: { supergroup_id: @supergroup&.id } %>
+    <%= render 'admin/shared/paging', records: @groups, url_method: -> (**params){ admin_groups_path(**params) }, paging_params: { supergroup_id: @supergroup&.id }.merge(@search.attributes) %>
 
     <div class="px-4 sm:px-6 lg:px-8">
       <div class="flow-root">
@@ -75,6 +75,6 @@
         </div>
       </div>
     </div>
-    <%= render 'admin/shared/paging', records: @groups, url_method: -> (**params){ admin_groups_path(**params) }, paging_params: { supergroup_id: @supergroup&.id } %>
+    <%= render 'admin/shared/paging', records: @groups, url_method: -> (**params){ admin_groups_path(**params) }, paging_params: { supergroup_id: @supergroup&.id }.merge(@search.attributes) %>
   </div>
 </main>
