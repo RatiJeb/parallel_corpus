@@ -20,14 +20,9 @@
           .xlsx
         </div>
       <% end %>
-      <div data-controller="update-multiple" class="inline-flex">
-        <button type="button"
-                data-action="click->update-multiple#trigger"
-                class="inline-flex justify-center rounded-md bg-mountbatten-500 ring-2 ring-mountbatten-500 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-mountbatten-400 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-mountbatten-500">ყველაფრის შენახვა</button>
-      </div>
     </div>
 
-    <div class="mt-8 flex justify-stretch grid grid-cols-2 grid-flow-col max-w-screen-2xl">
+    <div class="sticky -top-0.5 py-2 z-20 mt-5 flex justify-stretch grid grid-cols-2 grid-flow-col max-w-screen-2xl rounded-lg backdrop-blur backdrop-filter">
       <div class="mr-3 col-span-1 space-y-3 sm:space-y-4">
         <div class="flex justify-between grid grid-flow-col w-full">
           <div>
@@ -80,18 +75,25 @@
               </div>
             </div>
           </div>
-          <div class="flex items-center">
-            <div class="grid grid-flow-col items-end">
-              <%= link_to export_admin_text_blocks_path(collection_id: @collection.id, language: :en, format: :docx), class: "ml-2 px-3 py-2 grid grid-flow-col space-x-1 inline-flex justify-center items-center text-sm bg-gray-50 text-gray-700 rounded-md ring-1 ring-gray-300 p-1 hover:ring-2 hover:ring-oceanside-500 hover:bg-white hover:text-gray-900" do %>
-                <div class="inline-flex">
-                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5">
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M3 16.5v2.25A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75V16.5M16.5 12 12 16.5m0 0L7.5 12m4.5 4.5V3" />
-                  </svg>
-                </div>
-                <div class="inline-flex">
-                  en.docx
-                </div>
-              <% end %>
+          <div class="grid grid-flow-col space-x-2 justify-items-end">
+            <div class="inline-flex items-center">
+              <div class="grid grid-flow-col items-end">
+                <%= link_to export_admin_text_blocks_path(collection_id: @collection.id, language: :en, format: :docx), class: "ml-2 px-3 py-2 grid grid-flow-col space-x-1 inline-flex justify-center items-center text-sm bg-gray-50 text-gray-700 rounded-md ring-1 ring-gray-300 p-1 hover:ring-2 hover:ring-oceanside-500 hover:bg-white hover:text-gray-900" do %>
+                  <div class="inline-flex">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5">
+                      <path stroke-linecap="round" stroke-linejoin="round" d="M3 16.5v2.25A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75V16.5M16.5 12 12 16.5m0 0L7.5 12m4.5 4.5V3" />
+                    </svg>
+                  </div>
+                  <div class="inline-flex">
+                    en.docx
+                  </div>
+                <% end %>
+              </div>
+            </div>
+            <div data-controller="update-multiple" class="inline-flex">
+              <button type="button"
+                      data-action="click->update-multiple#trigger"
+                      class="inline-flex justify-center rounded-md bg-mountbatten-500 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-mountbatten-400 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-mountbatten-500">ყველას შენახვა</button>
             </div>
           </div>
         </div>
