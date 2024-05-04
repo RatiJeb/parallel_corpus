@@ -1,0 +1,10 @@
+<% highlightable ||= false %>
+<div data-tooltip-target="tooltip" class="absolute z-30 max-w-lg invisible block px-3 py-2 text-sm font-medium text-gray-900 bg-yellow-50 border border-gray-200 rounded-lg shadow-xl tooltip">
+  <% if highlightable %>
+    <span class="highlightable">
+      <%= text %>
+    </span>
+  <% else %>
+    <%= text %>
+  <% end %>
+</div>

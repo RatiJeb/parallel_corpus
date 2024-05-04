@@ -4,41 +4,29 @@
   <tr class="bg-gray-50">
 <% end %>
   <% if columns[:uid].present? %>
-    <td data-controller="tooltip" data-tooltip-target="cell" class="relative truncate z-0 border-b border-r border-l text-sm font-medium text-gray-900 py-4 px-3">
+    <td data-controller="tooltip" data-tooltip-target="cell" data-tooltip-overflow-value="true" class="relative truncate z-0 border-b border-r border-l text-sm font-medium text-gray-900 py-4 px-3">
       <span class="highlightable">
         <%= ka_block.present? ? ka_block.id : en_block.id %>
       </span>
-      <div data-tooltip-target="tooltip" class="absolute z-30 max-w-lg invisible block px-3 py-2 text-sm font-medium text-gray-900 bg-yellow-50 border border-gray-200 rounded-lg shadow-xl tooltip">
-        <span class="highlightable">
-          <%= ka_block.present? ? ka_block.id : en_block.id %>
-        </span>
-      </div>
+      <%= render 'admin/shared/tooltip', text: ka_block.present? ? ka_block.id : en_block.id, highlightable: true %>
     </td>
   <% end %>
 
   <% if columns[:contents_ka].present? %>
-    <td data-controller="tooltip" data-tooltip-target="cell" class="relative truncate z-0 border-b border-r text-sm scrollbar-hide hover:z-10 max-w-[240px] text-gray-500 px-3">
+    <td data-controller="tooltip" data-tooltip-target="cell" data-tooltip-overflow-value="true" class="relative truncate z-0 border-b border-r text-sm scrollbar-hide hover:z-10 max-w-[240px] text-gray-500 px-3">
       <span class="highlightable">
         <%= ka_block.present? ? ka_block.contents : '' %>
       </span>
-      <div data-tooltip-target="tooltip" class="absolute z-30 max-w-lg invisible block px-3 py-2 text-sm font-medium text-gray-900 bg-yellow-50 border border-gray-200 rounded-lg shadow-xl tooltip">
-        <span class="highlightable">
-          <%= ka_block.present? ? ka_block.contents : '' %>
-        </span>
-      </div>
+      <%= render 'admin/shared/tooltip', text: ka_block.present? ? ka_block.contents : '', highlightable: true %>
     </td>
   <% end %>
 
   <% if columns[:contents_en].present? %>
-    <td data-controller="tooltip" data-tooltip-target="cell" class="relative truncate z-0 border-b border-r text-sm scrollbar-hide hover:z-10 max-w-[240px] text-gray-500 px-3">
+    <td data-controller="tooltip" data-tooltip-target="cell" data-tooltip-overflow-value="true" class="relative truncate z-0 border-b border-r text-sm scrollbar-hide hover:z-10 max-w-[240px] text-gray-500 px-3">
       <span class="highlightable">
         <%= en_block.present? ? en_block.contents : '' %>
       </span>
-      <div data-tooltip-target="tooltip" class="absolute z-30 max-w-lg invisible block px-3 py-2 text-sm font-medium text-gray-900 bg-yellow-50 border border-gray-200 rounded-lg shadow-xl tooltip">
-        <span class="highlightable">
-          <%= en_block.present? ? en_block.contents : '' %>
-        </span>
-      </div>
+      <%= render 'admin/shared/tooltip', text: en_block.present? ? en_block.contents : '', highlightable: true %>
     </td>
   <% end %>
 

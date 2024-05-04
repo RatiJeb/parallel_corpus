@@ -4,75 +4,55 @@
   <tr class="bg-gray-50">
 <% end %>
   <% if columns[:uid].present? %>
-    <td data-controller="tooltip" data-tooltip-target="cell" class="relative truncate z-0 border-b border-r border-l text-sm font-medium text-gray-900 py-4 px-3">
+    <td data-controller="tooltip" data-tooltip-target="cell" data-tooltip-overflow-value="true" class="relative truncate z-0 border-b border-r border-l text-sm font-medium text-gray-900 py-4 px-3">
       <span class="highlightable">
         <%= record.id %>
       </span>
-      <div data-tooltip-target="tooltip" class="absolute z-30 max-w-lg invisible block px-3 py-2 text-sm font-medium text-gray-900 bg-yellow-50 border border-gray-200 rounded-lg shadow-xl tooltip">
-        <span class="highlightable">
-          <%= record.id %>
-        </span>
-      </div>
+      <%= render 'admin/shared/tooltip', text: record.id, highlightable: true %>
     </td>
   <% end %>
 
   <% if columns[:supergroup_name_ka].present? %>
-    <td data-controller="tooltip" data-tooltip-target="cell" class="relative truncate z-0 border-b border-r text-sm scrollbar-hide hover:z-10 max-w-[240px] text-gray-500 pr-3">
+    <td data-controller="tooltip" data-tooltip-target="cell" data-tooltip-overflow-value="true" class="relative truncate z-0 border-b border-r text-sm scrollbar-hide hover:z-10 max-w-[240px] text-gray-500 pr-3">
       <%= link_to admin_groups_path(supergroup_id: record.supergroup_id), class: "hover:text-mountbatten-700 hover:font-semibold w-full text-gray-700 border-transparent hover:text-gray-900 py-5 px-3" do %>
         <span class="highlightable">
           <%= record.supergroup_name_ka %>
         </span>
       <% end %>
-      <div data-tooltip-target="tooltip" class="absolute z-30 max-w-lg invisible block px-3 py-2 text-sm font-medium text-gray-900 bg-yellow-50 border border-gray-200 rounded-lg shadow-xl tooltip">
-        <span class="highlightable">
-          <%= record.supergroup_name_ka %>
-        </span>
-      </div>
+      <%= render 'admin/shared/tooltip', text: record.supergroup_name_ka, highlightable: true %>
     </td>
   <% end %>
 
   <% if columns[:group_name_ka].present? %>
-    <td data-controller="tooltip" data-tooltip-target="cell" class="relative truncate z-0 border-b border-r text-sm scrollbar-hide hover:z-10 max-w-[240px] text-gray-500 pr-3">
+    <td data-controller="tooltip" data-tooltip-target="cell" data-tooltip-overflow-value="true" class="relative truncate z-0 border-b border-r text-sm scrollbar-hide hover:z-10 max-w-[240px] text-gray-500 pr-3">
       <%= link_to admin_collections_path(group_id: record.group_id), class: "hover:text-mountbatten-700 hover:font-semibold w-full text-gray-700 border-transparent hover:text-gray-900 py-5 px-3" do %>
         <span class="highlightable">
           <%= record.group_name_ka %>
         </span>
       <% end %>
-      <div data-tooltip-target="tooltip" class="absolute z-30 max-w-lg invisible block px-3 py-2 text-sm font-medium text-gray-900 bg-yellow-50 border border-gray-200 rounded-lg shadow-xl tooltip">
-        <span class="highlightable">
-          <%= record.group_name_ka %>
-        </span>
-      </div>
+      <%= render 'admin/shared/tooltip', text: record.group_name_ka, highlightable: true %>
     </td>
   <% end %>
 
   <% if columns[:name_ka].present? %>
-    <td data-controller="tooltip" data-tooltip-target="cell" class="relative truncate z-0 border-b border-r text-sm scrollbar-hide hover:z-10 max-w-[240px] text-gray-500 pr-3">
+    <td data-controller="tooltip" data-tooltip-target="cell" data-tooltip-overflow-value="true" class="relative truncate z-0 border-b border-r text-sm scrollbar-hide hover:z-10 max-w-[240px] text-gray-500 pr-3">
       <%= link_to columns[:enter_url_method].call(**columns[:enter_url_params]), class: "hover:text-mountbatten-700 hover:font-semibold w-full text-gray-700 border-transparent hover:text-gray-900 py-5 px-3" do %>
         <span class="highlightable">
           <%= record.name_ka %>
         </span>
       <% end %>
-      <div data-tooltip-target="tooltip" class="absolute z-30 max-w-lg invisible block px-3 py-2 text-sm font-medium text-gray-900 bg-yellow-50 border border-gray-200 rounded-lg shadow-xl tooltip">
-        <span class="highlightable">
-          <%= record.name_ka %>
-        </span>
-      </div>
+      <%= render 'admin/shared/tooltip', text: record.name_ka, highlightable: true %>
     </td>
   <% end %>
 
   <% if columns[:name_en].present? %>
-    <td data-controller="tooltip" data-tooltip-target="cell" class="relative truncate z-0 border-b border-r text-sm scrollbar-hide hover:z-10 max-w-[240px] text-gray-500 pr-3">
+    <td data-controller="tooltip" data-tooltip-target="cell" data-tooltip-overflow-value="true" class="relative truncate z-0 border-b border-r text-sm scrollbar-hide hover:z-10 max-w-[240px] text-gray-500 pr-3">
       <%= link_to columns[:enter_url_method].call(**columns[:enter_url_params]), class: "hover:text-mountbatten-700 hover:font-semibold w-full text-gray-700 border-transparent hover:text-gray-900 py-5 px-3" do %>
         <span class="highlightable">
           <%= record.name_en %>
         </span>
       <% end %>
-      <div data-tooltip-target="tooltip" class="absolute z-30 max-w-lg invisible block px-3 py-2 text-sm font-medium text-gray-900 bg-yellow-50 border border-gray-200 rounded-lg shadow-xl tooltip">
-        <span class="highlightable">
-          <%= record.name_en %>
-        </span>
-      </div>
+      <%= render 'admin/shared/tooltip', text: record.name_en, highlightable: true %>
     </td>
   <% end %>
 
