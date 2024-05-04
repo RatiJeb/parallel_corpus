@@ -9,7 +9,7 @@
 
     <%= render 'admin/shared/new_button', name: 'ახალი ტიპის დამატება', url: new_admin_type_path %>
 
-    <%= render 'admin/shared/paging', records: @types, url_method: -> (**params){ admin_types_path(**params) }, paging_params: {} %>
+    <%= render 'admin/shared/paging', records: @types, url_method: -> (**params){ admin_types_path(**params) }, paging_params: {}.merge(@search.attributes) %>
     <div class="px-4 sm:px-6 lg:px-8">
       <div class="flow-root">
         <div class="-mx-4 -my-2 sm:-mx-6 lg:-mx-8">
@@ -51,6 +51,6 @@
         </div>
       </div>
     </div>
-    <%= render 'admin/shared/paging', records: @types, url_method: -> (**params){ admin_types_path(**params) }, paging_params: {} %>
+    <%= render 'admin/shared/paging', records: @types, url_method: -> (**params){ admin_types_path(**params) }, paging_params: {}.merge(@search.attributes) %>
   </div>
 </main>
