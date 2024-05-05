@@ -9,5 +9,7 @@
                back_url: admin_publishings_path,
                delete_url: ->(record){ admin_publishing_path(record) }
               ) %>
+
+    <%= render 'admin/shared/confirm_delete_modal', modal_title: 'გსურთ გამომცემლობის წაშლა?', modal_text: 'ეს გამომცემლობა წაიშლება სრულად' %>
   </div>
 <main>

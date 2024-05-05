@@ -9,5 +9,7 @@
                back_url: admin_fields_path,
                delete_url: ->(record){ admin_field_path(record) }
               ) %>
+
+    <%= render 'admin/shared/confirm_delete_modal', modal_title: 'გსურთ დარგის წაშლა?', modal_text: 'ეს დარგი წაიშლება სრულად' %>
   </div>
 <main>

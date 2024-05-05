@@ -9,5 +9,7 @@
                back_url: admin_genres_path,
                delete_url: ->(record){ admin_genre_path(record) }
               ) %>
+
+    <%= render 'admin/shared/confirm_delete_modal', modal_title: 'გსურთ ჟანრის წაშლა?', modal_text: 'ეს ჟანრი წაიშლება სრულად' %>
   </div>
 <main>

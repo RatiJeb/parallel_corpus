@@ -9,5 +9,7 @@
                back_url: admin_authors_path,
                delete_url: ->(record){ admin_author_path(record) }
               ) %>
+
+    <%= render 'admin/shared/confirm_delete_modal', modal_title: 'გსურთ ავტორის წაშლა?', modal_text: 'ეს ავტორი წაიშლება სრულად' %>
   </div>
 <main>

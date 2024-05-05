@@ -9,5 +9,7 @@
                back_url: admin_translators_path,
                delete_url: ->(record){ admin_translator_path(record) }
               ) %>
+
+    <%= render 'admin/shared/confirm_delete_modal', modal_title: 'გსურთ მთარგმნელის წაშლა?', modal_text: 'ეს მთარგმნელი წაიშლება სრულად' %>
   </div>
 <main>
