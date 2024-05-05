@@ -25,6 +25,8 @@ class Collection < ApplicationRecord
 
   after_initialize :set_default_status, if: :new_record?
 
+  before_create :assign_order_number
+
   validates :name_ka, uniqueness: { scope: :group_id, message: 'სახელი (ka) არაა უნიკალური ამავე ჯგუფში' }
   validates :name_en, uniqueness: { scope: :group_id, message: 'სახელი (en) არაა უნიკალური ამავე ჯგუფში' }
   validates :year, numericality: { only_integer: true, allow_blank: true, message: 'წელი უნდა იყოს რიცვხი' }, inclusion: { in: -> (_collection) { -3000..Date.current.year }, allow_blank: true, message: "წელი უნდა იყოს მეტი -3000-ზე და ნაკლები ან ტოლი წლევანდელ თარიღზე" }
@@ -32,6 +34,10 @@ class Collection < ApplicationRecord
 
   def set_default_status
     self.status ||= :active
+  end
+
+  def assign_order_number
+    self.order_number = group.collections.order(:order_number).last.order_number + 1
   end
 
 end

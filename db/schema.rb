@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_04_12_001112) do
+ActiveRecord::Schema[7.1].define(version: 2024_05_05_010646) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -101,8 +101,10 @@ ActiveRecord::Schema[7.1].define(version: 2024_04_12_001112) do
     t.datetime "updated_at", null: false
     t.bigint "group_id", null: false
     t.boolean "should_unsync", default: false, null: false
+    t.integer "order_number"
     t.index ["group_id", "name_en"], name: "index_collections_on_group_id_and_name_en", unique: true
     t.index ["group_id", "name_ka"], name: "index_collections_on_group_id_and_name_ka", unique: true
+    t.index ["group_id", "order_number"], name: "index_collections_on_group_id_and_order_number", unique: true
     t.index ["group_id"], name: "index_collections_on_group_id"
     t.index ["old_id"], name: "index_collections_on_old_id", unique: true
   end
