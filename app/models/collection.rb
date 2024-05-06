@@ -1,5 +1,6 @@
 class Collection < ApplicationRecord
   include Statusable
+  include Discardable
 
   belongs_to :group
   has_one :supergroup, through: :group
@@ -40,4 +41,12 @@ class Collection < ApplicationRecord
     self.order_number = group.collections.order(:order_number).last.order_number + 1
   end
 
+  def serialize
+    JSON.generate(as_json.merge({ author_ids: author_ids,
+                                  field_ids: field_ids,
+                                  genre_ids: genre_ids,
+                                  publishing_ids: publishing_ids,
+                                  translator_ids: translator_ids,
+                                  type_ids: type_ids }))
+  end
 end

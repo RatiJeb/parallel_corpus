@@ -1,4 +1,5 @@
 class User < ApplicationRecord
+  include Discardable
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
   devise :database_authenticatable, :registerable,
@@ -12,4 +13,7 @@ class User < ApplicationRecord
     self.role ||= :editor
   end
 
+  def serialize
+    JSON.generate(as_json)
+  end
 end

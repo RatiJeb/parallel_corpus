@@ -1,4 +1,6 @@
 class TextBlock < ApplicationRecord
+  include Discardable
+
   belongs_to :collection
   has_one :group, through: :collection
   has_one :supergroup, through: :group
@@ -27,6 +29,10 @@ class TextBlock < ApplicationRecord
       text_block.order_number, text_block.collection_id
       ])
     }
+  end
+
+  def serialize
+    JSON.generate(as_json)
   end
 
 end

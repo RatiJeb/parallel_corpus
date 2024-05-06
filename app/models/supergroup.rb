@@ -1,5 +1,6 @@
 class Supergroup < ApplicationRecord
   include Statusable
+  include Discardable
 
   has_many :groups, dependent: :destroy
   has_many :collections, through: :groups
@@ -14,4 +15,7 @@ class Supergroup < ApplicationRecord
     self.status ||= :active
   end
 
+  def serialize
+    JSON.generate(as_json)
+  end
 end
