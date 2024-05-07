@@ -29,7 +29,7 @@
                              columns: [{ name: :id, classes: 'max-w-[60px]', input_type: :text_field, input_classes: 'px-2' },
                                        { name: :name_ka, classes: 'max-w-[240px]', input_type: :text_field },
                                        { name: :name_en, classes: 'max-w-[240px]', input_type: :text_field },
-                                       { name: :status, classes: 'max-w-[100px]', input_type: :status_select, model: Supergroup },
+                                       { name: :status, classes: 'max-w-[100px]', input_type: :enum_select, model: Supergroup },
                                        { content: @groups_count, classes: 'max-w-[100px] py-3.5' },
                                        { content: @collections_count, classes: 'max-w-[100px] py-3.5' },
                                        { content: @text_blocks_count, classes: 'max-w-[100px] py-3.5' },

@@ -76,7 +76,7 @@
                                       { name: :group_id, input_type: :hidden },
                                       { name: :name_ka, classes: 'max-w-[240px]', input_type: :text_field },
                                       { name: :name_en, classes: 'max-w-[240px]', input_type: :text_field },
-                                      { name: :status, classes: 'max-w[100px]', input_type: :status_select, model: Group },
+                                      { name: :status, classes: 'max-w[100px]', input_type: :enum_select, model: Collection },
                                       { content: @text_blocks_count, classes: 'max-w[100px] py-3.5' },
                                       { input_type: :submit, classes: 'max-w[100px] py-2 text-left text-sm text-gray-500' }] %>
                 </thead>

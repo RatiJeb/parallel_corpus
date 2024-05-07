@@ -73,7 +73,7 @@ module ApplicationHelper
 
   def table_filter_cell_classes(column, index, size)
     classes = "sticky top-12 z-20 border-b border-r border-gray-400 bg-gray-200 bg-opacity-75 text-left text-sm text-gray-500 backdrop-blur backdrop-filter"
-    classes += ([:text_field, :status_select, :submit].include?(column[:input_type])) ? ' px-2' : ' px-3'
+    classes += ([:text_field, :enum_select, :submit].include?(column[:input_type])) ? ' px-2' : ' px-3'
     classes += ' border-l' if index == 0
     classes += " #{column[:classes]}" if column[:classes]
     classes
@@ -84,8 +84,8 @@ module ApplicationHelper
       classes = "bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-3xl focus:ring-oceanside-500 focus:border-oceanside-500 block w-full dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-oceanside-500 dark:focus:border-oceanside-500"
       classes += " #{column[:input_classes]}" if column[:input_classes]
       form.text_field column[:name], name: column[:name], class: classes
-    elsif column[:input_type] == :status_select
-      form.select :status, column[:model].statuses.keys.map { |status| [status.humanize, status] }, { include_blank: true }, { name: :status, class: "bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-3xl focus:ring-oceanside-500 focus:border-oceanside-500 block w-full dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-oceanside-500 dark:focus:border-oceanside-500" }
+    elsif column[:input_type] == :enum_select
+      form.select column[:name], column[:model].send(column[:name].to_s.pluralize).keys.map { |enum| [enum.humanize, enum] }, { include_blank: true }, { name: column[:name], class: "bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-3xl focus:ring-oceanside-500 focus:border-oceanside-500 block w-full dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-oceanside-500 dark:focus:border-oceanside-500" }
     elsif column[:input_type] == :hidden
       form.hidden_field column[:name], name: column[:name]
     else

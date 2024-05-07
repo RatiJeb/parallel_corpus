@@ -75,4 +75,9 @@ Rails.application.configure do
   config.action_controller.raise_on_missing_callback_actions = true
 
   config.hosts << "giant-webs-go.loca.lt"
+
+  config.action_mailer.default_url_options = { host: 'localhost:3000' } # for absolute urls in email
+  config.action_mailer.asset_host = "http://localhost:3000" # for image URLs in HTML email
+
+  Rails.application.routes.default_url_options[:host] = 'localhost:3000'
 end

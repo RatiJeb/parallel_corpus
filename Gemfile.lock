@@ -125,6 +125,9 @@ GEM
       railties (>= 4.1.0)
       responders
       warden (~> 1.2.3)
+    devise_invitable (2.0.9)
+      actionmailer (>= 5.0)
+      devise (>= 4.6)
     docx (0.3.0)
       nokogiri (~> 1.8, >= 1.8.1)
       rubyzip (~> 1.2, >= 1.2.1)
@@ -388,6 +391,7 @@ DEPENDENCIES
   caxlsx_rails
   debug
   devise (~> 4.9)
+  devise_invitable (~> 2.0.0)
   docx
   importmap-rails
   jbuilder

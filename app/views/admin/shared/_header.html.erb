@@ -55,42 +55,39 @@
             </svg>
           </button>
           <div data-dropdown-target="options" class="hidden opacity-0 scale-95 absolute right-0 z-30 mt-2 w-56 origin-top-right divide-y divide-gray-100 rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none" role="menu" aria-orientation="vertical" aria-labelledby="menu-button" tabindex="-1">
-            <div class="py-1" role="none">
-              <!-- Active: "bg-gray-100 text-gray-900", Not Active: "text-gray-700" -->
-              <!-- <a href="#" class="text-gray-700 group flex items-center px-4 py-2 text-sm" role="menuitem" tabindex="-1" id="menu-item-0"> -->
-              <%= link_to 'ავტორები', admin_authors_path, class: "text-gray-700 group flex items-center px-4 py-2 text-sm hover:bg-gray-50 hover:text-gray-900", role: "menuitem", tabindex: '-1', id: "menu-item-0" %>
-              <%= link_to 'მთარგმნელები', admin_translators_path, class: "text-gray-700 group flex items-center px-4 py-2 text-sm hover:bg-gray-50 hover:text-gray-900", role: "menuitem", tabindex: '-1', id: "menu-item-1" %>
-              <%= link_to 'ტიპები', admin_types_path, class: "text-gray-700 group flex items-center px-4 py-2 text-sm hover:bg-gray-50 hover:text-gray-900", role: "menuitem", tabindex: '-1', id: "menu-item-2" %>
-              <%= link_to 'ჟანრები', admin_genres_path, class: "text-gray-700 group flex items-center px-4 py-2 text-sm hover:bg-gray-50 hover:text-gray-900", role: "menuitem", tabindex: '-1', id: "menu-item-3" %>
-              <%= link_to 'დარგები', admin_fields_path, class: "text-gray-700 group flex items-center px-4 py-2 text-sm hover:bg-gray-50 hover:text-gray-900", role: "menuitem", tabindex: '-1', id: "menu-item-4" %>
-              <%= link_to 'გამომცემლობები', admin_publishings_path, class: "text-gray-700 group flex items-center px-4 py-2 text-sm hover:bg-gray-50 hover:text-gray-900", role: "menuitem", tabindex: '-1', id: "menu-item-5" %>
-              <!-- </a> -->
+            <div class="py-1 space-y-1">
+              <div class="border-b border-gray-100" role="none">
+                <!-- Active: "bg-gray-100 text-gray-900", Not Active: "text-gray-700" -->
+                <!-- <a href="#" class="text-gray-700 group flex items-center px-4 py-2 text-sm" role="menuitem" tabindex="-1" id="menu-item-0"> -->
+                <%= link_to 'ავტორები', admin_authors_path, class: "text-gray-700 group flex items-center px-4 py-2 text-sm hover:bg-gray-50 hover:text-gray-900", role: "menuitem", tabindex: '-1', id: "menu-item-0" %>
+                <%= link_to 'მთარგმნელები', admin_translators_path, class: "text-gray-700 group flex items-center px-4 py-2 text-sm hover:bg-gray-50 hover:text-gray-900", role: "menuitem", tabindex: '-1', id: "menu-item-1" %>
+                <%= link_to 'ტიპები', admin_types_path, class: "text-gray-700 group flex items-center px-4 py-2 text-sm hover:bg-gray-50 hover:text-gray-900", role: "menuitem", tabindex: '-1', id: "menu-item-2" %>
+                <%= link_to 'ჟანრები', admin_genres_path, class: "text-gray-700 group flex items-center px-4 py-2 text-sm hover:bg-gray-50 hover:text-gray-900", role: "menuitem", tabindex: '-1', id: "menu-item-3" %>
+                <%= link_to 'დარგები', admin_fields_path, class: "text-gray-700 group flex items-center px-4 py-2 text-sm hover:bg-gray-50 hover:text-gray-900", role: "menuitem", tabindex: '-1', id: "menu-item-4" %>
+                <%= link_to 'გამომცემლობები', admin_publishings_path, class: "text-gray-700 group flex items-center px-4 py-2 text-sm hover:bg-gray-50 hover:text-gray-900", role: "menuitem", tabindex: '-1', id: "menu-item-5" %>
+                <!-- </a> -->
+              </div>
+              <div role="none">
+                <%= link_to 'მომხმარებლები', admin_users_path, class: "text-gray-700 group flex items-center px-4 py-2 text-sm hover:bg-gray-50 hover:text-gray-900", role: "menuitem", tabindex: '-1', id: "menu-item-0" %>
+              </div>
             </div>
           </div>
         </div>
-        <button type="button" class="relative inline-flex items-center justify-center rounded-md bg-white p-2 text-gray-400 hover:bg-gray-100 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-mountbatten-500 focus:ring-offset-2" aria-controls="mobile-menu" aria-expanded="false">
+        <button type="button"
+                data-controller="tooltip"
+                data-tooltip-target="cell"
+                class="relative inline-flex items-center justify-center rounded-md bg-white p-2 text-gray-400 hover:bg-gray-100 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-mountbatten-500 focus:ring-offset-2" aria-controls="mobile-menu" aria-expanded="false">
         <!-- <div class="hidden sm:-my-px sm:flex sm:space-x-8"> -->
           <!-- Current: "border-indigo-500 text-gray-900", Default: "border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700" -->
           <%= link_to destroy_user_session_path, 'data-turbo-method': :delete do %>
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
               <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 9V5.25A2.25 2.25 0 0 0 13.5 3h-6a2.25 2.25 0 0 0-2.25 2.25v13.5A2.25 2.25 0 0 0 7.5 21h6a2.25 2.25 0 0 0 2.25-2.25V15m3 0 3-3m0 0-3-3m3 3H9" />
             </svg>
+            <%= render 'admin/shared/tooltip', text: "შესული ხართ როგორც #{current_user.email}" %>
           <% end %>
         <!-- </div> -->
         </button>
       </div>
     </div>
-  </div>
-
-  <!-- Mobile menu, show/hide based on menu state. -->
-  <div class="sm:hidden" id="mobile-menu">
-    <div class="space-y-1 pb-3 pt-2">
-      <!-- Current: "border-indigo-500 bg-indigo-50 text-indigo-700", Default: "border-transparent text-gray-600 hover:border-gray-300 hover:bg-gray-50 hover:text-gray-800" -->
-      <%= header_link('ქვეკორპუსები', admin_supergroups_path, mobile: true) %>
-      <%= header_link('ჯგუფები', admin_groups_path, mobile: true) %>
-      <%= header_link('კრებულები', admin_collections_path, mobile: true) %>
-      <%= header_link('ტექსტური წყვილები', admin_text_blocks_path, mobile: true) %>
-    </div>
-
   </div>
 </nav>
