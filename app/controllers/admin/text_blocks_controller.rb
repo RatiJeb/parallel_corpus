@@ -9,10 +9,26 @@ class Admin::TextBlocksController < Admin::BaseController
 
     @text_blocks = TextBlock.all
 
-    @text_blocks = @text_blocks.where(language: :ka).where(TextBlock.arel_table[:contents].matches("%#{params[:original_contents]}%")) unless params[:original_contents].blank?
-    @text_blocks = @text_blocks.where(language: :en).where(TextBlock.arel_table[:contents].matches("%#{params[:translation_contents]}%")) unless params[:translation_contents].blank?
-    @text_blocks = @text_blocks.where(id: params[:original_id]) unless params[:original_id].blank?
     @text_blocks = @text_blocks.where(collection_id: params[:collection_id]) unless params[:collection_id].blank?
+    @text_blocks = @text_blocks.where(id: params[:original_id]) unless params[:original_id].blank?
+
+    if params[:original_contents].present?
+      ka_text_blocks = @text_blocks.where(language: :ka).where(TextBlock.arel_table[:contents].matches("%#{params[:original_contents]}%"))
+      en_text_blocks = @text_blocks.where(language: :en).where(order_number: ka_text_blocks.pluck(:order_number))
+      if params[:translation_contents].present?
+        en_text_blocks = en_text_blocks.where(TextBlock.arel_table[:contents].matches("%#{params[:translation_contents]}%"))
+        ka_text_blocks = @text_blocks.where(language: :ka).where(order_number: en_text_blocks.pluck(:order_number))
+      end
+      @text_blocks = ka_text_blocks.or(en_text_blocks)
+    elsif params[:translation_contents].present?
+      en_text_blocks = @text_blocks.where(language: :en).where(TextBlock.arel_table[:contents].matches("%#{params[:translation_contents]}%"))
+      ka_text_blocks = @text_blocks.where(language: :ka).where(order_number: en_text_blocks.pluck(:order_number))
+      if params[:original_contents].present?
+        ka_text_blocks = ka_text_blocks.where(language: :ka).where(TextBlock.arel_table[:contents].matches("%#{params[:original_contents]}%"))
+        en_text_blocks = @text_blocks.where(language: :en).where(order_number: ka_text_blocks.pluck(:order_number))
+      end
+    end
+
     @text_blocks = @text_blocks.order(:order_number).page(params[:page]).per(40)
   end
 
