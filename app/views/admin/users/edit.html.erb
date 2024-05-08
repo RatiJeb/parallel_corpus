@@ -1,0 +1,16 @@
+<%= render 'admin/shared/heading', name: 'მომხმარებლის რედაქტირება' %>
+
+<main>
+  <div class="mx-auto max-w-screen-2xl sm:px-6 lg:px-8">
+
+    <% crumbs = [] %>
+    <% crumbs << { name: @user.email } %>
+    <% crumbs << { name: 'რედაქტირება', url: edit_admin_user_path(user_id: @user.id) } %>
+
+    <%= render 'admin/shared/breadcrumbs', crumbs: crumbs %>
+
+    <%= render 'admin/users/shared/form', url: admin_user_path, method: :put %>
+
+    <%= render 'admin/shared/confirm_delete_modal', modal_title: 'გსურთ მომხმარებლის წაშლა?', modal_text: 'მომხმარებელი წაიშლება სრულად' %>
+  </div>
+<main>
