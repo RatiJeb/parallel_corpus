@@ -1,39 +1,44 @@
-
-<div class="max-w-screen-2xl mx-auto mt-4 flex grid grid-flow-col justify-start space-x-8">
-  <div class="inline-flex">
-    <%= render 'shared/search_bar' %>
+<div data-controller="search-highlight">
+  <div class="max-w-screen-2xl mx-auto mt-4 flex grid grid-flow-col justify-start space-x-8">
+    <div data-search-highlight-target="searchbar" class="inline-flex">
+      <%= render 'shared/search_bar' %>
+    </div>
+    <div class="inline-flex text-gray-400 text-sm items-center">
+      <%= @text_block_pairs.total_count %> შედეგი
+    </div>
   </div>
-  <div class="inline-flex text-gray-400 text-sm items-center">
-    <%= @text_block_pairs.total_count %> შედეგი
-  </div>
-</div>
 
-<div class="max-w-screen-2xl mx-auto mt-4 flex grid grid-flow-row space-y-3">
-  <% @text_block_pairs.each_with_index do |text_block_pair, index| %>
-    <!-- Display your record information here -->
-    <div class="inline-flex px-5 py-5 rounded-xl bg-white">
-      <div class="flex grid grid-flow-col space-x-2 justify-items-end">
-        <div class="inline-flex text-gray-400 justify-end w-6">
-          <%= index + 1 %>.
-        </div>
-        <div class"inline-flex">
-          <div class="flex grid grid-flow-row space-y-5">
-            <div class="inline-flex text-gray-400">
-              <%= text_block_pair.collection.group.name_ka %> | <%= text_block_pair.collection.name_ka %>
-            </div>
-            <div class="inline-flex">
-              <div class="flex grid grid-flow-row space-y-4">
-                <div class="inline-flex">
-                  <%= text_block_pair.original_contents %>
-                </div>
-                <div class="inline-flex">
-                  <%= text_block_pair.translation_contents %>
+  <div data-search-highlight-target="body" class="max-w-screen-2xl mx-auto mt-4 flex grid grid-flow-row space-y-3">
+    <% @text_block_pairs.each_with_index do |text_block_pair, index| %>
+      <!-- Display your record information here -->
+      <div class="inline-flex px-5 py-5 rounded-xl bg-white">
+        <div class="flex grid grid-flow-col space-x-2 justify-items-end">
+          <div class="inline-flex text-gray-400 justify-end w-6">
+            <%= index + 1 %>.
+          </div>
+          <div class"inline-flex">
+            <div class="flex grid grid-flow-row space-y-5">
+              <div class="inline-flex text-gray-400">
+                <%= text_block_pair.collection.group.name_ka %> | <%= text_block_pair.collection.name_ka %>
+              </div>
+              <div class="inline-flex">
+                <div class="flex grid grid-flow-row space-y-4">
+                  <div class="inline-flex">
+                    <span class="highlightable">
+                      <%= text_block_pair.original_contents %>
+                    </span>
+                  </div>
+                  <div class="inline-flex">
+                    <span class="highlightable">
+                      <%= text_block_pair.translation_contents %>
+                    </span>
+                  </div>
                 </div>
               </div>
             </div>
           </div>
         </div>
       </div>
-    </div>
-  <% end %>
+    <% end %>
+  </div>
 </div>
