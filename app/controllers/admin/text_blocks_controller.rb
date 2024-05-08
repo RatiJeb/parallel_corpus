@@ -23,10 +23,7 @@ class Admin::TextBlocksController < Admin::BaseController
     elsif params[:translation_contents].present?
       en_text_blocks = @text_blocks.where(language: :en).where(TextBlock.arel_table[:contents].matches("%#{params[:translation_contents]}%"))
       ka_text_blocks = @text_blocks.where(language: :ka).where(order_number: en_text_blocks.pluck(:order_number))
-      if params[:original_contents].present?
-        ka_text_blocks = ka_text_blocks.where(language: :ka).where(TextBlock.arel_table[:contents].matches("%#{params[:original_contents]}%"))
-        en_text_blocks = @text_blocks.where(language: :en).where(order_number: ka_text_blocks.pluck(:order_number))
-      end
+      @text_blocks = ka_text_blocks.or(en_text_blocks)
     end
 
     @text_blocks = @text_blocks.order(:order_number).page(params[:page]).per(40)
