@@ -1,16 +1,29 @@
-<h2><%= t "devise.invitations.new.header" %></h2>
-
-<%= form_for(resource, as: resource_name, url: invitation_path(resource_name), html: { method: :post }) do |f| %>
-  <%= render "users/shared/error_messages", resource: resource %>
-
-  <% resource.class.invite_key_fields.each do |field| -%>
-    <div class="field">
-      <%= f.label field %><br />
-      <%= f.text_field field %>
-    </div>
-  <% end -%>
-
-  <div class="actions">
-    <%= f.submit t("devise.invitations.new.submit_button") %>
+<div class="flex min-h-full flex-col justify-center py-12 sm:px-6 lg:px-8">
+  <div class="sm:mx-auto sm:w-full sm:max-w-md">
+    <img class="mx-auto h-10 w-auto" src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=600" alt="Your Company">
+    <h2 class="mt-6 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900">გაგზავნეთ მოწვევა</h2>
   </div>
-<% end %>
+
+  <div class="mt-10 sm:mx-auto sm:w-full sm:max-w-[480px]">
+    <div class="bg-white px-6 py-12 shadow sm:rounded-lg sm:px-12">
+      <%= form_for(resource, as: resource_name, url: invitation_path(resource_name), html: { method: :post }) do |f| %>
+        <%= render "users/shared/error_messages", resource: resource %>
+
+        <div class="mb-4">
+          <% resource.class.invite_key_fields.each do |field| -%>
+            <div class="field">
+              <label for="email" class="block text-sm font-medium leading-6 text-gray-900">იმეილი</label>
+              <div class="mt-2">
+                <%= f.text_field field, class: "block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-oceanside-500 sm:text-sm sm:leading-6" %>
+              </div>
+            </div>
+          <% end -%>
+        </div>
+
+        <div class="actions">
+          <%= f.submit "გაგზავნა" , class: "flex w-full justify-center rounded-md bg-mountbatten-500 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-mountbatten-400 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-mountbatten-500" %>
+        </div>
+      <% end %>
+    </div>
+  </div>
+</div>

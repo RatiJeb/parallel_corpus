@@ -1,25 +1,38 @@
-<h2>Change your password</h2>
-
-<%= form_for(resource, as: resource_name, url: password_path(resource_name), html: { method: :put }) do |f| %>
-  <%= render "devise/shared/error_messages", resource: resource %>
-  <%= f.hidden_field :reset_password_token %>
-
-  <div class="field">
-    <%= f.label :password, "New password" %><br />
-    <% if @minimum_password_length %>
-      <em>(<%= @minimum_password_length %> characters minimum)</em><br />
-    <% end %>
-    <%= f.password_field :password, autofocus: true, autocomplete: "new-password" %>
+<div class="flex min-h-full flex-col justify-center py-12 sm:px-6 lg:px-8">
+  <div class="sm:mx-auto sm:w-full sm:max-w-md">
+    <img class="mx-auto h-10 w-auto" src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=600" alt="Your Company">
+    <h2 class="mt-6 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900">შეცვალეთ პაროლი</h2>
   </div>
 
-  <div class="field">
-    <%= f.label :password_confirmation, "Confirm new password" %><br />
-    <%= f.password_field :password_confirmation, autocomplete: "new-password" %>
-  </div>
+  <div class="mt-10 sm:mx-auto sm:w-full sm:max-w-[480px]">
+    <div class="bg-white px-6 py-12 shadow sm:rounded-lg sm:px-12">
+      <%= form_for(resource, as: resource_name, url: password_path(resource_name), html: { method: :put }) do |f| %>
+        <%= render "devise/shared/error_messages", resource: resource %>
+        <%= f.hidden_field :reset_password_token %>
 
-  <div class="actions">
-    <%= f.submit "Change my password" %>
-  </div>
-<% end %>
+        <div>
+          <label for="password" class="block text-sm font-medium leading-6 text-gray-900">ახალი პაროლი</label>
+          <% if @minimum_password_length %>
+            <span class="text-xs">(მინიმუმ <%= @minimum_password_length %> სიმბოლო)</span>
+          <% end %>
+          <div class="mt-2">
+            <%= f.password_field :password, autofocus: true, autocomplete: "new-password", class: "block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-oceanside-500 sm:text-sm sm:leading-6" %>
+          </div>
+        </div>
 
-<%= render "devise/shared/links" %>
+        <div>
+          <label for="password_confirmation" class="block text-sm font-medium leading-6 text-gray-900">გაიმეორეთ პაროლი</label>
+          <div class="mt-2">
+            <%= f.password_field :password_confirmation, autocomplete: "new-password", class: "block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-oceanside-500 sm:text-sm sm:leading-6" %>
+          </div>
+        </div>
+
+        <div class="mt-4">
+          <%= f.submit "შეცვალე პაროლი", class: "flex w-full justify-center rounded-md bg-mountbatten-500 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-mountbatten-400 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-mountbatten-500" %>
+        </div>
+      <% end %>
+
+      <%= render "devise/shared/links" %>
+    </div>
+  </div>
+</div>
