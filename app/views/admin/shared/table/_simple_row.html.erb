@@ -48,6 +48,16 @@
     </td>
   <% end %>
 
+  <% if columns[:invitation_pending].present? %>
+    <td data-controller="tooltip" data-tooltip-target="cell" data-tooltip-overflow-value="true" class="relative truncate z-0 border-b border-r text-sm scrollbar-hide hover:z-10 max-w-[240px] text-gray-500 px-3">
+      <span class="highlightable">
+        <%= record.invitation_pending? %>
+      </span>
+      <%= render 'admin/shared/tooltip', text: record.invitation_pending?, highlightable: true %>
+    </td>
+  <% end %>
+
+
   <td class="relative whitespace-nowrap overflow-hidden z-0 border-b border-r text-sm font-medium text-gray-500 max-w-[60px] px-2">
 
     <div class="flex justify-between items-center grid grid-flow-col">

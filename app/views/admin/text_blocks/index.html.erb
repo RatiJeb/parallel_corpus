@@ -58,6 +58,8 @@
                 data-controller="delete-record"
                 data-delete-record-url-value="<%= destroy_multiple_admin_text_blocks_path(collection_id: @collection.id) %>"
                 data-delete-record-redirect-url-value="<%= admin_text_blocks_path(collection_id: @collection.id) %>"
+                data-delete-record-modal-title-value="გსურთ ტექსტური წყვილების წაშლა?"
+                data-delete-record-modal-text-value="ყველა ტექტური წყვილი ამ კრებულში წაიშლება სრულად"
                 data-action="click->delete-record#submit"
                 class="mt-4 px-3 py-2 grid grid-flow-col space-x-1 inline-flex justify-center items-center rounded-md bg-gray-500 text-sm font-semibold text-white shadow-sm hover:bg-gray-400 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gray-500">
           <div class="inline-flex">
