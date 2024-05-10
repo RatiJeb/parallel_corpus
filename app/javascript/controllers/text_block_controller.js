@@ -19,7 +19,7 @@ export default class extends Controller {
     const term = this.textareaTarget.value.substring(this.textareaTarget.selectionStart, this.textareaTarget.selectionEnd)
     const lastContents = this.textareaTarget.value.substring(this.textareaTarget.selectionEnd, this.textareaTarget.value.length)
 
-    const contents = firstContents + '<t>' + term + '</t>' + lastContents
+    const contents = firstContents + '[t]' + term + '[/t]' + lastContents
 
     const response = await put(
       this.tagUrlValue, {

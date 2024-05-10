@@ -7,8 +7,14 @@ export default class extends Controller {
 
     this.searchbarTarget.querySelectorAll("input[type=text]").forEach((text_field) => {
       this.bodyTarget.querySelectorAll(".highlightable").forEach((a) => {
-        if (text_field.value && a.textContent.includes(text_field.value)) {
-          a.innerHTML = a.textContent.replaceAll(text_field.value, '<span class="bg-yellow-200">' + text_field.value + '</span>')
+        if (text_field.value && a.textContent.search(new RegExp('(' + text_field.value + ')', 'i')) >= 0) {
+          var parts = a.textContent.split(new RegExp('(' + text_field.value + ')', 'gi'))
+          for (var i = 0; i < parts.length; i++) {
+            if (i % 2 == 1) {
+              parts[i] = '<span class="bg-yellow-200">' + parts[i] + '</span>'
+            }
+          }
+          a.innerHTML = parts.join('')
         }
       })
     })
