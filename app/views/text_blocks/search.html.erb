@@ -1,5 +1,5 @@
 <div data-controller="search-highlight" data-search-highlight-full-word-match-value="true">
-  <div class="sticky top-44 z-20 max-w-screen-2xl mx-auto mt-4 flex grid grid-flow-col justify-start space-x-8">
+  <div class="sticky top-40 z-20 max-w-screen-2xl mx-auto py-4 flex grid grid-flow-col justify-start space-x-8 bg-gray-100">
     <div data-search-highlight-target="searchbar" class="inline-flex">
       <%= render 'shared/search_bar' %>
     </div>
@@ -8,40 +8,10 @@
     </div>
   </div>
 
-  <div data-search-highlight-target="body" class="max-w-screen-2xl mx-auto mt-4 flex grid grid-flow-row space-y-3">
-    <% @text_block_pairs.each_with_index do |text_block_pair, index| %>
-      <!-- Display your record information here -->
-      <div class="inline-flex px-5 py-5 rounded-xl bg-white">
-        <div class="flex grid grid-flow-col space-x-2 justify-items-end">
-          <div class="inline-flex text-gray-400 justify-end w-6">
-            <%= index + 1 + @text_block_pairs.limit_value * (@text_block_pairs.current_page - 1) %>.
-          </div>
-          <div class"inline-flex">
-            <div class="flex grid grid-flow-row space-y-5">
-              <div class="inline-flex text-gray-400">
-                <%= text_block_pair.collection.group.name_ka %> | <%= text_block_pair.collection.name_ka %>
-              </div>
-              <div class="inline-flex">
-                <div class="flex grid grid-flow-row space-y-4">
-                  <div class="inline-flex">
-                    <span class="highlightable">
-                      <%= text_block_pair.original_contents %>
-                    </span>
-                  </div>
-                  <div class="inline-flex">
-                    <span class="highlightable">
-                      <%= text_block_pair.translation_contents %>
-                    </span>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    <% end %>
+  <div data-search-highlight-target="body" class="max-w-screen-2xl mx-auto flex grid grid-flow-row space-y-3">
+    <%= render 'shared/search_results', text_block_pairs: @text_block_pairs %>
   </div>
-
-  <%= render 'shared/paging', records: @text_block_pairs, url_method: -> (**params){ search_text_blocks_path(**params) }, paging_params: { query: params[:query] } %>
-
+  <div class="max-w-screen-2xl mx-auto flex items-center justify-between py-3">
+    <%= render 'shared/paging', records: @text_block_pairs, url_method: -> (**params){ search_text_blocks_path(**params) }, paging_params: { query: params[:query] } %>
+  </div>
 </div>

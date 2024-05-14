@@ -33,9 +33,15 @@
         <div class="flex my-2">
           <div class="flex space-x-0.5 grid grid-flow-col justify-items-center">
             <!-- Current: "border-indigo-500 text-gray-900", Default: "border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700" -->
-            <div class="inline-flex justify-center items-center bg-stone-100 text-md hover:bg-stone-50">
-              <%= link_to 'დეტალური ძიება', advanced_search_text_blocks_path(query: params[:query]), class: "px-8 h-full py-3" %>
-            </div>
+            <% if is_active_link?(advanced_search_text_blocks_path, :inclusive) %>
+              <div class="inline-flex justify-center items-center bg-mountbatten-400 text-md text-white hover:bg-mountbatten-500">
+                <%= link_to 'დეტალური ძიება', advanced_search_text_blocks_path(query: params[:query]), class: "px-8 h-full py-3" %>
+              </div>
+            <% else %>
+              <div class="inline-flex justify-center items-center bg-stone-100 text-md hover:bg-stone-50">
+                <%= link_to 'დეტალური ძიება', advanced_search_text_blocks_path(query: params[:query]), class: "px-8 h-full py-3" %>
+              </div>
+            <% end %>
             <div class="inline-flex justify-center items-center bg-stone-100 text-md hover:bg-stone-50">
               <a href="#" class="px-8 h-full py-3">ინსტრუმენტები</a>
             </div>

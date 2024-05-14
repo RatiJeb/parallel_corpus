@@ -3,8 +3,8 @@
   <div class="max-w-screen-2xl mx-auto flex grid grid-flow-col grid-cols-6 space-x-4">
 
     <div class="mt-4 flex col-span-2">
-      <%= form_tag(search_text_blocks_path, method: 'get') do %>
-        <div class="sticky z-20 top-44 flex grid grid-flow-row space-y-4 bg-gray-200">
+      <%= form_tag(advanced_search_text_blocks_path, method: 'get') do %>
+        <div class="sticky z-20 top-44 py-4 px-4 flex grid grid-flow-row space-y-4 bg-stone-200">
           <div data-search-highlight-target="searchbar" class="inline-flex">
             <%= text_field_tag :query, params[:query], class: "border-stone-400 focus:ring-oceanside-500 focus:border-oceanside-500" %>
           </div>
@@ -21,40 +21,11 @@
         </div>
 
         <div data-search-highlight-target="body" class="flex grid grid-flow-row space-y-3">
-
-          <% @text_block_pairs.each_with_index do |text_block_pair, index| %>
-            <!-- Display your record information here -->
-            <div class="inline-flex px-5 py-5 rounded-xl bg-white">
-              <div class="flex grid grid-flow-col space-x-2 justify-items-end">
-                <div class="inline-flex text-gray-400 justify-end w-6">
-                  <%= index + 1 + @text_block_pairs.limit_value * (@text_block_pairs.current_page - 1) %>.
-                </div>
-                <div class"inline-flex">
-                  <div class="flex grid grid-flow-row space-y-5">
-                    <div class="inline-flex text-gray-400">
-                      <%= text_block_pair.collection.group.name_ka %> | <%= text_block_pair.collection.name_ka %>
-                    </div>
-                    <div class="inline-flex">
-                      <div class="flex grid grid-flow-row space-y-4">
-                        <div class="inline-flex">
-                          <span class="highlightable">
-                            <%= text_block_pair.original_contents %>
-                          </span>
-                        </div>
-                        <div class="inline-flex">
-                          <span class="highlightable">
-                            <%= text_block_pair.translation_contents %>
-                          </span>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          <% end %>
+          <%= render 'shared/search_results', text_block_pairs: @text_block_pairs %>
         </div>
-        <%= render 'shared/paging', records: @text_block_pairs, url_method: -> (**params){ search_text_blocks_path(**params) }, paging_params: { query: params[:query] } %>
+        <div class="flex items-center justify-between py-3">
+          <%= render 'shared/paging', records: @text_block_pairs, url_method: -> (**params){ advanced_search_text_blocks_path(**params) }, paging_params: { query: params[:query] } %>
+        </div>
       </div>
     </div>
 
