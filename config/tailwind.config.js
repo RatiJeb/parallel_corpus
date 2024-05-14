@@ -43,6 +43,9 @@ module.exports = {
         chalmorise: {
           500: '#B0644F'
         },
+        magenta: {
+          500: '#C03A7A'
+        },
         oceanside: {
           500: '#6182B8'
         }

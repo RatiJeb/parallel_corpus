@@ -9,6 +9,12 @@ class TextBlocksController < ApplicationController
     @text_block_pairs = @text_block_pairs.includes(collection: :group).search(params[:query]).order(:original_id).page(params[:page]).per(20)
   end
 
+  def advanced_search
+    @text_block_pairs = Views::TextBlockPair
+
+    @text_block_pairs = @text_block_pairs.includes(collection: :group).search(params[:query]).order(:original_id).page(params[:page]).per(20)
+  end
+
   private
 
   def search_params

@@ -15,7 +15,7 @@ export default class extends Controller {
             var parts = a.textContent.split(new RegExp('(^|[^a-zA-Z0-9ა-ჰ-])(' + text_field.value + ')($|[^a-zA-Z0-9ა-ჰ-])', 'gi'))
             for (var i = 0; i < parts.length; i++) {
               if (i % 4 == 2) {
-                parts[i] = '<span class="bg-yellow-200">' + parts[i] + '</span>'
+                parts[i] = '<span class="text-magenta-500">' + parts[i] + '</span>'
               }
             }
             a.innerHTML = parts.join('')
