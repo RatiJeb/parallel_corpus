@@ -1,4 +1,4 @@
-<div data-controller="search-highlight">
+<div data-controller="search-highlight" data-search-highlight-full-word-match-value="true">
   <div class="max-w-screen-2xl mx-auto mt-4 flex grid grid-flow-col justify-start space-x-8">
     <div data-search-highlight-target="searchbar" class="inline-flex">
       <%= render 'shared/search_bar' %>
@@ -14,7 +14,7 @@
       <div class="inline-flex px-5 py-5 rounded-xl bg-white">
         <div class="flex grid grid-flow-col space-x-2 justify-items-end">
           <div class="inline-flex text-gray-400 justify-end w-6">
-            <%= index + 1 %>.
+            <%= index + 1 + @text_block_pairs.limit_value * (@text_block_pairs.current_page - 1) %>.
           </div>
           <div class"inline-flex">
             <div class="flex grid grid-flow-row space-y-5">
@@ -41,4 +41,7 @@
       </div>
     <% end %>
   </div>
+
+  <%= render 'shared/paging', records: @text_block_pairs, url_method: -> (**params){ search_text_blocks_path(**params) }, paging_params: { query: params[:query] } %>
+
 </div>
