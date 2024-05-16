@@ -6,6 +6,8 @@ class Supergroup < ApplicationRecord
   has_many :collections, through: :groups
   has_many :text_blocks, through: :collections
 
+  scope :ordered, -> { order(:name_ka) }
+
   after_initialize :set_default_status, if: :new_record?
 
   validates :name_ka, uniqueness: { message: 'სახელი (ka) არაა უნიკალური' }

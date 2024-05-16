@@ -1,13 +1,77 @@
 <div data-controller="search-highlight" data-search-highlight-full-word-match-value="true">
 
-  <div class="max-w-screen-2xl mx-auto flex grid grid-flow-col grid-cols-6 space-x-4">
+  <div class="max-w-screen-2xl mx-auto flex grid grid-flow-col grid-cols-6 space-x-4 justify-items-stretch">
 
     <div class="mt-4 flex col-span-2">
-      <%= form_tag(advanced_search_text_blocks_path, method: 'get') do %>
-        <div class="sticky z-20 top-44 py-4 px-4 flex grid grid-flow-row space-y-4 bg-stone-200">
+      <%= form_for @search, url: advanced_search_text_blocks_path, method: :get do |form| %>
+        <div class="sticky z-20 top-44 py-4 px-4 flex grid grid-flow-row justify-items-stretch space-y-4 bg-stone-200">
           <div data-search-highlight-target="searchbar" class="inline-flex">
-            <%= text_field_tag :query, params[:query], class: "border-stone-400 focus:ring-oceanside-500 focus:border-oceanside-500" %>
+            <%= form.text_field :query, name: :query, class: "border-stone-400 focus:ring-oceanside-500 focus:border-oceanside-500" %>
           </div>
+          <div class="inline-flex">
+            <div class="flex grid grid-flow-col space-x-2 items-center">
+              <div class="inline-flex">
+                <%= form.check_box :termin, name: :termin %>
+              </div>
+              <div class="inline-flex">
+                მხოლოდ ტერმინოლოგია
+              </div>
+            </div>
+          </div>
+          <div class="inline-flex">
+            <div class="flex grid grid-flow-row space-y-2 items-center">
+              <div class="inline-flex">
+                მხოლოდ ტერმინოლოგია
+              </div>
+              <div class="inline-flex">
+                <div class="flex grid grid-flow-col space-x-2 items-center">
+                  <div class="inline-flex">
+                    <%= form.radio_button :original_language, :ka, name: :original_language%>
+                  </div>
+                  <div class="inline-flex">
+                    <%= form.label :original_language_ka, 'ქართული' %>
+                  </div>
+                  <div class="inline-flex">
+                    <%= form.radio_button :original_language, :en, name: :original_language %>
+                  </div>
+                  <div class="inline-flex">
+                    <%= form.label :original_language_en, 'ინგლისური' %>
+                  </div>
+                  <div class="inline-flex">
+                    <%= form.radio_button :original_language, :both, name: :original_language, checked: "checked" %>
+                  </div>
+                  <div class="inline-flex">
+                    <%= form.label :original_language_both, 'ორივე' %>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="inline-flex">
+            <div class="flex grid grid-flow-row space-y-2 items-center">
+              <div class="inline-flex">
+                ქვეკორპუსები
+              </div>
+              <div class="inline-flex">
+                <%= form.collection_select :supergroup_ids,
+                                           Supergroup.ordered,
+                                           :id,
+                                           :name_ka,
+                                           { selected: @search.supergroup_ids },
+                                           { multiple: true, name: :supergroup_ids, data: { controller: 'multi-select' } } %>
+              </div>
+            </div>
+          </div>
+          <button type="submit" class="w-full inline-flex block rounded-md bg-mountbatten-500 px-3 py-2 grid grid-flow-col items-center justify-center space-x-1 text-center text-sm font-semibold text-white shadow-sm hover:bg-mountbatten-400 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-mountbatten-500">
+            <div class="inline-flex">
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5">
+                <path stroke-linecap="round" stroke-linejoin="round" d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z" />
+              </svg>
+            </div>
+            <div class="inline-flex">
+              ძიება
+            </div>
+          </button>
         </div>
       <% end %>
     </div>

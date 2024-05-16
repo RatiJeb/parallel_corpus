@@ -13,12 +13,12 @@
             <div class="flex grid grid-flow-row space-y-4">
               <div class="inline-flex text-justify">
                 <span class="highlightable">
-                  <%= text_block_pair.original_contents %>
+                  <%= clean_from_tags(text_block_pair.original_contents) %>
                 </span>
               </div>
               <div class="inline-flex text-justify">
                 <span class="highlightable">
-                  <%= text_block_pair.translation_contents %>
+                  <%= clean_from_tags(text_block_pair.translation_contents) %>
                 </span>
               </div>
             </div>

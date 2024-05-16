@@ -23,6 +23,7 @@ class Collection < ApplicationRecord
   enum original_language: [:ka, :en]
 
   scope :syncable, -> { where(should_unsync: false) }
+  scope :ordered, -> { order(:name_ka) }
 
   after_initialize :set_default_status, if: :new_record?
 
