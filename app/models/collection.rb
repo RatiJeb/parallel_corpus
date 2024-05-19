@@ -39,7 +39,11 @@ class Collection < ApplicationRecord
   end
 
   def assign_order_number
-    self.order_number = group.collections.order(:order_number).last.order_number + 1
+    if group.collections.any?
+      self.order_number = group.collections.order(:order_number).last.order_number + 1
+    else
+      self.order_number = 0
+    end
   end
 
   def serialize

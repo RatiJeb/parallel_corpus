@@ -76,7 +76,7 @@ Rails.application.configure do
   # Raise error when a before_action's only/except options reference missing actions
   config.action_controller.raise_on_missing_callback_actions = true
 
-  config.hosts << "hip-states-notice.loca.lt"
+  config.hosts << "witty-seals-occur.loca.lt"
 
   config.action_mailer.default_url_options = { host: 'localhost:3000' } # for absolute urls in email
   config.action_mailer.asset_host = "http://localhost:3000" # for image URLs in HTML email
