@@ -25,6 +25,13 @@ class Collection < ApplicationRecord
   scope :syncable, -> { where(should_unsync: false) }
   scope :ordered, -> { order(:name_ka) }
 
+  scope :matching_authors, -> (author_ids){ where(collection_authors: CollectionAuthor.where(author_id: author_ids)) }
+  scope :matching_fields, -> (field_ids){ where(collection_fields: CollectionField.where(field_id: field_ids)) }
+  scope :matching_genres, -> (genre_ids){ where(collection_genres: CollectionGenre.where(genre_id: genre_ids)) }
+  scope :matching_publishings, -> (publishing_ids){ where(collection_publishings: CollectionPublishing.where(publishing_id: publishing_ids)) }
+  scope :matching_translators, -> (translator_ids){ where(collection_translators: CollectionTranslator.where(translator_id: translator_ids)) }
+  scope :matching_types, -> (type_ids){ where(collection_types: CollectionType.where(type_id: type_ids)) }
+
   after_initialize :set_default_status, if: :new_record?
 
   before_create :assign_order_number

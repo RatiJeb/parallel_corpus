@@ -16,6 +16,20 @@ class TextBlocksController < ApplicationController
       @text_block_pairs = @text_block_pairs.where(original_language: params[:original_language] == 'ka' ? 0 : 1)
     end
 
+    @text_block_pairs = @text_block_pairs.where(collection: { year: params[:year_start]..params[:years_end] })
+    @text_block_pairs = @text_block_pairs.where(collection: { translation_year: params[:translation_year_start]..params[:translation_year_end] })
+
+    @text_block_pairs = @text_block_pairs.where(collections: { groups: { supergroup_id: params[:supergroup_ids] } }) if params[:supergroup_ids].present?
+    @text_block_pairs = @text_block_pairs.where(collection: { group_id: params[:group_ids] }) if params[:group_ids].present?
+    @text_block_pairs = @text_block_pairs.where(collection_id: params[:collection_ids]) if params[:collection_ids].present?
+
+    @text_block_pairs = @text_block_pairs.where(collection: Collection.matching_authors(params[:author_ids])) if params[:author_ids].present?
+    @text_block_pairs = @text_block_pairs.where(collection: Collection.matching_fields(params[:field_ids])) if params[:field_ids].present?
+    @text_block_pairs = @text_block_pairs.where(collection: Collection.matching_genres(params[:genre_ids])) if params[:genre_ids].present?
+    @text_block_pairs = @text_block_pairs.where(collection: Collection.matching_publishings(params[:publishing_ids])) if params[:publishing_ids].present?
+    @text_block_pairs = @text_block_pairs.where(collection: Collection.matching_translators(params[:translator_ids])) if params[:translator_ids].present?
+    @text_block_pairs = @text_block_pairs.where(collection: Collection.matching_types(params[:type_ids])) if params[:type_ids].present?
+
     @text_block_pairs = @text_block_pairs.order(:original_id).page(params[:page]).per(20)
   end
 
