@@ -20,4 +20,16 @@ class User < ApplicationRecord
   def invitation_pending?
     created_by_invite? && !invitation_accepted?
   end
+
+  def status
+    if created_by_invite?
+      if invitation_accepted?
+        :active
+      else
+        :pending
+      end
+    else
+      :active
+    end
+  end
 end

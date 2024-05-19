@@ -1,5 +1,6 @@
 class Admin::UsersController < Admin::BaseController
   before_action :set_search_params, only: :index
+  before_action :require_superadmin
 
   def index
     @users = User.all

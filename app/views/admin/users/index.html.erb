@@ -3,7 +3,7 @@
 <main>
   <div class="mx-auto max-w-screen-2xl sm:px-6 lg:px-8">
     <% if current_user.superadmin? %>
-      <%= render 'admin/shared/new_button', name: 'ახალი იუზერის დამატება', url: new_user_invitation_path %>
+      <%= render 'admin/shared/new_button', name: 'ახალი მომხმარებლის დამატება', url: new_user_invitation_path %>
     <% end %>
 
     <%= render 'admin/shared/paging', records: @users, url_method: -> (**params){ admin_users_path(**params) }, paging_params: {}.merge(@search.attributes) %>
@@ -19,7 +19,7 @@
                              columns: [{ name: 'UID' },
                                        { name: 'იმეილი', classes: 'max-w-[240px]' },
                                        { name: 'როლი', classes: 'max-w-[240px]' },
-                                       { name: 'მოწვევა', classes: 'max-w-[240px]' },
+                                       { name: 'სტატუსი', classes: 'max-w-[240px]' },
                                        { name: '' }] %>
 
                   <%= render 'admin/shared/table/filter',
@@ -46,7 +46,7 @@
                                           delete_modal_text: 'ეს მომხმარებელი წაიშლება სრულად',
                                           email: true,
                                           role: true,
-                                          invitation_pending: true,
+                                          status: true,
                                           edit: true,
                                           delete: true } %>
 

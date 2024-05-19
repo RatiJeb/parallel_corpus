@@ -5,6 +5,10 @@ class ApplicationController < ActionController::Base
     redirect_to(root_url) unless current_user.admin? || current_user.superadmin?
   end
 
+  def require_superadmin
+    redirect_to(root_url) unless current_user.superadmin?
+  end
+
   def authenticate_inviter!
     return redirect_to root_path unless current_user.blank? || current_user.superadmin?
     super
