@@ -23,7 +23,7 @@ class Collection < ApplicationRecord
   enum original_language: [:ka, :en]
 
   scope :syncable, -> { where(should_unsync: false) }
-  scope :ordered, -> { order(:name_ka) }
+  scope :ordered, -> { order(:order_number) }
 
   scope :matching_authors, -> (author_ids){ where(collection_authors: CollectionAuthor.where(author_id: author_ids)) }
   scope :matching_fields, -> (field_ids){ where(collection_fields: CollectionField.where(field_id: field_ids)) }

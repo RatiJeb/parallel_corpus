@@ -16,19 +16,21 @@ class TextBlocksController < ApplicationController
       @text_block_pairs = @text_block_pairs.where(original_language: params[:original_language] == 'ka' ? 0 : 1)
     end
 
-    @text_block_pairs = @text_block_pairs.where(collection: { year: params[:year_start]..params[:years_end] })
-    @text_block_pairs = @text_block_pairs.where(collection: { translation_year: params[:translation_year_start]..params[:translation_year_end] })
+    @text_block_pairs = @text_block_pairs.where(collection: { year: params[:year_start]&.to_i..params[:years_end]&.to_i })
+    @text_block_pairs = @text_block_pairs.where(collection: { translation_year: params[:translation_year_start]&.to_i..params[:translation_year_end]&.to_i })
 
-    @text_block_pairs = @text_block_pairs.where(collections: { groups: { supergroup_id: params[:supergroup_ids] } }) if params[:supergroup_ids].present?
-    @text_block_pairs = @text_block_pairs.where(collection: { group_id: params[:group_ids] }) if params[:group_ids].present?
-    @text_block_pairs = @text_block_pairs.where(collection_id: params[:collection_ids]) if params[:collection_ids].present?
+    if params[:search_text_block_pair].present?
+      @text_block_pairs = @text_block_pairs.where(collections: { groups: { supergroup_id: params[:search_text_block_pair][:supergroup_ids] } }) if params[:search_text_block_pair][:supergroup_ids]&.any?(&:present?)
+      @text_block_pairs = @text_block_pairs.where(collection: { group_id: params[:search_text_block_pair][:group_ids] }) if params[:search_text_block_pair][:group_ids]&.any?(&:present?)
+      @text_block_pairs = @text_block_pairs.where(collection_id: params[:search_text_block_pair][:collection_ids]) if params[:search_text_block_pair][:collection_ids]&.any?(&:present?)
 
-    @text_block_pairs = @text_block_pairs.where(collection: Collection.matching_authors(params[:author_ids])) if params[:author_ids].present?
-    @text_block_pairs = @text_block_pairs.where(collection: Collection.matching_fields(params[:field_ids])) if params[:field_ids].present?
-    @text_block_pairs = @text_block_pairs.where(collection: Collection.matching_genres(params[:genre_ids])) if params[:genre_ids].present?
-    @text_block_pairs = @text_block_pairs.where(collection: Collection.matching_publishings(params[:publishing_ids])) if params[:publishing_ids].present?
-    @text_block_pairs = @text_block_pairs.where(collection: Collection.matching_translators(params[:translator_ids])) if params[:translator_ids].present?
-    @text_block_pairs = @text_block_pairs.where(collection: Collection.matching_types(params[:type_ids])) if params[:type_ids].present?
+      @text_block_pairs = @text_block_pairs.where(collection: Collection.matching_authors(params[:search_text_block_pair][:author_ids])) if params[:search_text_block_pair][:author_ids]&.any?(&:present?)
+      @text_block_pairs = @text_block_pairs.where(collection: Collection.matching_fields(params[:search_text_block_pair][:field_ids])) if params[:search_text_block_pair][:field_ids]&.any?(&:present?)
+      @text_block_pairs = @text_block_pairs.where(collection: Collection.matching_genres(params[:search_text_block_pair][:genre_ids])) if params[:search_text_block_pair][:genre_ids]&.any?(&:present?)
+      @text_block_pairs = @text_block_pairs.where(collection: Collection.matching_publishings(params[:search_text_block_pair][:publishing_ids])) if params[:search_text_block_pair][:publishing_ids]&.any?(&:present?)
+      @text_block_pairs = @text_block_pairs.where(collection: Collection.matching_translators(params[:search_text_block_pair][:translator_ids])) if params[:search_text_block_pair][:translator_ids]&.any?(&:present?)
+      @text_block_pairs = @text_block_pairs.where(collection: Collection.matching_types(params[:search_text_block_pair][:type_ids])) if params[:search_text_block_pair][:type_ids]&.any?(&:present?)
+    end
 
     @text_block_pairs = @text_block_pairs.order(:original_id).page(params[:page]).per(20)
   end
@@ -37,9 +39,9 @@ class TextBlocksController < ApplicationController
 
   def set_search_params
     @search = Search::TextBlockPair.new(params.permit(:query, :termin, :original_language, :year_start, :year_end, :translation_year_start,
-                                                      :translation_year_end, supergroup_ids: [], group_ids: [],
+                                                      :translation_year_end, search_text_block_pair: { supergroup_ids: [], group_ids: [],
                                                       collection_ids: [], type_ids: [], field_ids: [], genre_ids: [], author_ids: [],
-                                                      translator_ids: [], publishing_ids: []))
+                                                      translator_ids: [], publishing_ids: [] }))
   end
 
   def search_params
