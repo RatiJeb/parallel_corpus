@@ -16,8 +16,8 @@ class TextBlocksController < ApplicationController
       @text_block_pairs = @text_block_pairs.where(original_language: params[:original_language] == 'ka' ? 0 : 1)
     end
 
-    @text_block_pairs = @text_block_pairs.where(collection: { year: params[:year_start]&.to_i..params[:years_end]&.to_i })
-    @text_block_pairs = @text_block_pairs.where(collection: { translation_year: params[:translation_year_start]&.to_i..params[:translation_year_end]&.to_i })
+    @text_block_pairs = @text_block_pairs.where(collection: { year: params[:year_start]..params[:year_end] }) if params[:year_start].present? || params[:year_end].present?
+    @text_block_pairs = @text_block_pairs.where(collection: { translation_year: params[:translation_year_start]..params[:translation_year_end] }) if params[:translation_year_start].present? || params[:translation_year_end].present?
 
     if params[:search_text_block_pair].present?
       @text_block_pairs = @text_block_pairs.where(collections: { groups: { supergroup_id: params[:search_text_block_pair][:supergroup_ids] } }) if params[:search_text_block_pair][:supergroup_ids]&.any?(&:present?)
