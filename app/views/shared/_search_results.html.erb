@@ -6,8 +6,49 @@
       </div>
       <div class"inline-flex">
         <div class="flex grid grid-flow-row space-y-5">
-          <div class="inline-flex text-gray-400">
+          <div data-controller="tooltip" data-tooltip-target="cell" class="inline-flex text-gray-400">
             <%= text_block_pair.collection.group.name_ka %> | <%= text_block_pair.collection.name_ka %>
+            <div data-tooltip-target="tooltip" class="absolute z-30 max-w-lg invisible block px-3 py-2 text-sm font-medium text-gray-900 bg-yellow-50 border border-gray-200 rounded-lg shadow-xl tooltip">
+              <% if text_block_pair.collection.authors.any? %>
+                <p>
+                  ავტორი: <%= text_block_pair.collection.authors.map(&:name_ka).join(', ') %>
+                </p>
+              <% end %>
+              <% if text_block_pair.collection.translators.any? %>
+                <p>
+                  მთარგმნელი: <%= text_block_pair.collection.translators.map(&:name_ka).join(', ') %>
+                </p>
+              <% end %>
+              <% if text_block_pair.collection.types.any? %>
+                <p>
+                  ტიპი: <%= text_block_pair.collection.types.map(&:name_ka).join(', ') %>
+                </p>
+              <% end %>
+              <% if text_block_pair.collection.genres.any? %>
+                <p>
+                  ჟანრი: <%= text_block_pair.collection.genres.map(&:name_ka).join(', ') %>
+                </p>
+              <% end %>
+              <% if text_block_pair.collection.fields.any? %>
+                <p>
+                  დარგი: <%= text_block_pair.collection.fields.map(&:name_ka).join(', ') %>
+                </p>
+              <% end %>
+              <% if text_block_pair.collection.publishings.any? %>
+                <p>
+                  გამომცემლობა: <%= text_block_pair.collection.publishings.map(&:name_ka).join(', ') %>
+                </p>
+              <% end %>
+              <p>
+                ორიგინალის ენა: <%= text_block_pair.original_language %>
+              </p>
+              <p>
+                გამოცემის წელი: <%= text_block_pair.collection.year %>
+              </p>
+              <p>
+                თარგმნის წელი: <%= text_block_pair.collection.translation_year %>
+              </p>
+            </div>
           </div>
           <div class="inline-flex">
             <div class="flex grid grid-flow-row space-y-4">
