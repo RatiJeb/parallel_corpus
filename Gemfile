@@ -98,3 +98,5 @@ gem 'docx'
 gem 'caracal'
 
 gem 'pg_search'
+
+gem "dotenv-rails", "~> 3.1"
