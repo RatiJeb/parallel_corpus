@@ -15,22 +15,19 @@
 default: &default
   adapter: postgresql
   encoding: unicode
-  url: <%= ENV["PARALLEL_CORPUS_DATABASE_HOST"]%>
   # For details on connection pooling, see Rails configuration guide
   # https://guides.rubyonrails.org/configuring.html#database-pooling
   pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
-  username: <%= ENV["PARALLEL_CORPUS_DATABASE_USERNAME"] %>
-  password: <%= ENV['PARALLEL_CORPUS_DATABASE_PASSWORD'] %>
 
 development:
   <<: *default
-  database: <%= ENV["PARALLEL_CORPUS_DATABASE_DEVELOPMENT"] %>
+  url: <%= ENV["PARALLEL_CORPUS_DATABASE_DEVELOPMENT"] %>
 
 test:
   <<: *default
-  database: <%= ENV["PARALLEL_CORPUS_DATABASE_TEST"] %>
+  url: <%= ENV["PARALLEL_CORPUS_DATABASE_TEST"] %>
 
 production:
   <<: *default
-  database: <%= ENV["PARALLEL_CORPUS_DATABASE_PRODUCTION"] %>
+  url: <%= ENV["PARALLEL_CORPUS_DATABASE_PRODUCTION"] %>
 
