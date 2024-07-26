@@ -4,10 +4,11 @@ Rails.application.routes.draw do
     get 'search', on: :collection
     get 'advanced_search', on: :collection
   end
-  root 'admin/supergroups#index'
+  root 'text_blocks#index'
   devise_for :users, controllers: { invitations: 'users/invitations' }
 
   namespace :admin do
+    root 'supergroups#index'
     resources :supergroups, :groups, :authors, :fields, :genres, :publishings, :types, :translators, :users
     resources :collections do
       get 'export', on: :collection
