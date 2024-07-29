@@ -1,9 +1,11 @@
 class TextBlocksController < ApplicationController
   before_action :set_search_params, only: [:advanced_search]
+  def index
+    @result = CacheService.get('text_blocks_count') || text_blocks_count
+  end
 
   def search
     @text_block_pairs = Views::TextBlockPair
-    #.@text_block_pairs = @text_block_pairs.joins(collection: [:types, :authors]).where(types: {id: 7}).where(authors: {id: 198}).search('მოუსვენრად')
     @text_block_pairs = @text_block_pairs
                           .includes(collection: :group)
                           .search(params[:query])
@@ -51,5 +53,16 @@ class TextBlocksController < ApplicationController
 
   def search_params
     params.permit(:query)
+  end
+
+  def text_blocks_count
+    value = {
+      pairs: ::NumbersFormattingService.call(TextBlock.group(:language).count.min.last),
+      terms: ::NumbersFormattingService.call(Term.count),
+      fields: ::NumbersFormattingService.call(Field.count),
+      words: TextBlock.word_count_by_language,
+    }
+    CacheService.set('text_blocks_count', value, DateTime.current + 2.hours)
+    value
   end
 end

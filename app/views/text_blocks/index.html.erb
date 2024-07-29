@@ -1,8 +1,11 @@
-<div class="my-16 h-full w-screen-2xl flex grid grid-flow-row space-y-4 items-center justify-center">
+<div class="mt-30 h-full w-screen-2xl flex grid grid-flow-row items-center justify-center">
   <div class="flex justify-center">
     <%= render 'shared/logo_lg' %>
   </div>
-  <div class="flex justify-center">
+  <div class="mt-10 flex justify-center">
     <%= render 'shared/search_bar' %>
+  </div>
+  <div class="mt-5 flex justify-center">
+    <p class="text-gray-500 text-sm">ჯგუფები: <%= @result[:fields] %>, კრებულები: <%= @result[:terms] %>, წყვილები: <%= @result[:pairs] %>, სიტყვაფორმები: <%= @result[:words][:ka] %> / <%= @result[:words][:en] %></p>
   </div>
 </div>
