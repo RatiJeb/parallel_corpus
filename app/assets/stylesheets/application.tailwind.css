@@ -2,6 +2,10 @@
 @tailwind components;
 @tailwind utilities;
 
+.mt-30 {
+  margin-top: 8rem;
+}
+
 /*
 
 @layer components {
