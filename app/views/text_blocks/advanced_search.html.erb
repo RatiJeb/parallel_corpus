@@ -19,6 +19,16 @@
             </div>
           </div>
           <div class="inline-flex">
+            <div class="flex grid grid-flow-col space-x-2 items-center">
+              <div class="inline-flex">
+                <%= form.check_box :exact_match, name: :exact_match, data: { action: "your-controller-name#toggleExactMatch" } %>
+              </div>
+              <div class="inline-flex">
+                ზუსტი დამთხვევა
+              </div>
+            </div>
+          </div>
+          <div class="inline-flex">
             <div class="flex grid grid-flow-row space-y-2 items-center">
               <div class="inline-flex">
                 ორიგინალის ენა
@@ -270,6 +280,7 @@
                                      url_method: -> (**params){ advanced_search_text_blocks_path(**params) },
                                      paging_params: params.permit(:query,
                                                                   :termin,
+                                                                  :exact_match,
                                                                   :original_language,
                                                                   :year_start,
                                                                   :year_end,
