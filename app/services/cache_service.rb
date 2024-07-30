@@ -12,7 +12,15 @@ class CacheService < ApplicationService
 
     del(key) && return if cache[:expires_in] && cache[:expires_in] < DateTime.current
 
-    JSON.parse(cache[:value])
+    result = JSON.parse(cache[:value])
+    case
+    when result&.class == Hash
+      result.deep_symbolize_keys
+    when result&.class == Array
+      result.map(&:deep_symbolize_keys)
+    else
+      result
+    end
   end
 
   def self.del(key)
