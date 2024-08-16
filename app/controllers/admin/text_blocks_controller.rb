@@ -29,8 +29,7 @@ class Admin::TextBlocksController < Admin::BaseController
     @text_blocks = @text_blocks.order(:order_number).page(params[:page]).per(40)
   end
 
-  def show
-  end
+  def show; end
 
   def new
     @text_block = TextBlock.new
@@ -99,6 +98,11 @@ class Admin::TextBlocksController < Admin::BaseController
         tb.en? && tb.contents&.include?(params[:translation_contents])
       end
     end
+  end
+
+  def update_multiple
+    Admin::TextBlocks::UpdateMultipleService.new(update_multiple_params).call
+    render(json: { updated: true }, status: :ok)
   end
 
   def destroy_multiple
@@ -200,10 +204,10 @@ class Admin::TextBlocksController < Admin::BaseController
         @filename = "#{@collection.send("name_#{@language}")}"[..60] + ".docx"
         response.headers["Content-Disposition"] = "attachment; filename=\"#{@filename}\""
 
-        Caracal::Document.save @filename do |docx|
-          docx.h1 @collection.send("name_#{@language}")
+        Caracal::Document.save(@filename) do |docx|
+          docx.h1(@collection.send("name_#{@language}"))
           @text_blocks.each do |text_block|
-            docx.p text_block.contents if text_block.language == @language
+            docx.p(text_block.contents) if text_block.language == @language
           end
         end
         send_file(File.join(Rails.root, @filename))
@@ -221,4 +225,7 @@ class Admin::TextBlocksController < Admin::BaseController
     params.require(:text_block).permit(:contents)
   end
 
+  def update_multiple_params
+    params.permit(:collection_id, text_blocks: [:language, :id, :order_number, :contents])
+  end
 end

@@ -170,13 +170,8 @@
                   <textarea rows="8"
                             data-text-block-target="textarea"
                             class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-md focus:ring-oceanside-500 focus:border-oceanside-500 block w-full dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-oceanside-500 dark:focus:border-oceanside-500"
-                            id="ka_text_block_contents"
+                            id="ka_text_block_contents<%= ka_block.id %>"
                             spellcheck="false"><%= ka_block.contents %></textarea>
-                </div>
-                <div class="mt-3 grid w-full justify-items-end">
-                  <button type="button"
-                          data-action="click->text-block#update"
-                          class="inline-flex justify-center rounded-md bg-mountbatten-500 ring-2 ring-mountbatten-500 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-mountbatten-400 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-mountbatten-500">შენახვა</button>
                 </div>
               </div>
 
@@ -292,13 +287,8 @@
                   <textarea rows="8"
                             data-text-block-target="textarea"
                             class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-md focus:ring-oceanside-500 focus:border-oceanside-500 block w-full dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-oceanside-500 dark:focus:border-oceanside-500"
-                            id="en_text_block_contents"
+                            id="en_text_block_contents<%= en_block.id %>"
                             spellcheck="false"><%= en_block.contents %></textarea>
-                </div>
-                <div class="mt-3 grid w-full justify-items-end">
-                  <button type="button"
-                          data-action="click->text-block#update"
-                          class="inline-flex justify-center rounded-md bg-mountbatten-500 ring-2 ring-mountbatten-500 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-mountbatten-400 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-mountbatten-500">შენახვა</button>
                 </div>
               </div>
             </div>
