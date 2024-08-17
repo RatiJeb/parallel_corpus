@@ -107,10 +107,10 @@
     <% @text_blocks.group_by(&:order_number).each do |order_number, block_group| %>
       <div class="mt-3 flex justify-stretch grid grid-cols-2 grid-flow-col max-w-screen-2xl">
         <% ka_block = block_group.detect(&:ka?) %>
-        <%= render partial: 'edit_card', locals: { block: ka_block, language: 'ka', new_id: nil, order_number: } %>
+        <%= render partial: 'edit_card', locals: { block: ka_block, language: 'ka', new_id: 'dummy' + SecureRandom.uuid, order_number: } %>
 
         <% en_block = block_group.detect(&:en?) %>
-        <%= render partial: 'edit_card', locals: { block: en_block, language: 'en', new_id: nil, order_number: } %>
+        <%= render partial: 'edit_card', locals: { block: en_block, language: 'en', new_id: 'dummy' + SecureRandom.uuid, order_number: } %>
       </div>
     <% end %>
 

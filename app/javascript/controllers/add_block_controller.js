@@ -40,7 +40,7 @@ export default class extends Controller {
       nextContainer.insertBefore(card, nextContainer.children[index]);
       nextContainer.children[index + 1].remove()
       if(!overflowCard.id.includes('text-block-dummy')){
-        overflowCard.children[0].children[0].children[0].innerText = `${index === 0 ? 'KA' : 'EN'}-${orderId}`
+        overflowCard.children[0].children[0].children[0].children[0].innerText = `${index === 0 ? 'KA' : 'EN'}-${orderId}`
         this.moveCardToNextContainer(overflowCard, nextContainer, index, orderId + 1);
       }
     } else {

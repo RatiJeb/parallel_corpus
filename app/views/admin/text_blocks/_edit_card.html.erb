@@ -1,4 +1,4 @@
-<div id="text-block-<%= block&.id || new_id || 'dummy' + SecureRandom.uuid %>" class="col-span-1">
+<div id="text-block-<%= block&.id || new_id %>" class="col-span-1">
   <% if block.present? %>
     <div class="px-3 rounded-md ring-2 <%= language == 'ka' ? 'mr-3 bg-mountbatten-100 ring-mountbatten-500' : 'ml-3 bg-gray-100 ring-gray-500'%>">
       <div
@@ -37,6 +37,8 @@
                 <%= render 'admin/shared/tooltip', text: 'ბლოკის ორად გაყოფა' %>
               </div>
               <button type="button"
+                      id="delete-button-<%= block&.id || new_id %>"
+                      data-delete-record-id="<%= block&.id || new_id %>"
                       data-controller="delete-record tooltip"
                       data-action="click->delete-record#submit"
                       data-tooltip-target="cell"
