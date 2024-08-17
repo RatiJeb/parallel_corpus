@@ -6,10 +6,12 @@ module Admin
       end
 
       def call
-        @collection = Collection.find(@params[:collection_id])
-        destroy_multiple
-        update_multiple
-        create_multiple
+        ActiveRecord::Base.transaction do
+          @collection = Collection.find(@params[:collection_id])
+          destroy_multiple
+          update_multiple
+          create_multiple
+        end
       end
 
       private
@@ -21,7 +23,7 @@ module Admin
       def update_multiple
         TextBlock.upsert_all(
           @params[:text_blocks]
-            .reject { |tb| tb[:id] == 'new' }
+            .reject { |tb| tb[:id].to_s.include?('new') }
             .map do |tb|
               param = tb.as_json
               param['collection_id'] = @params[:collection_id]
@@ -33,7 +35,7 @@ module Admin
       def create_multiple
         TextBlock.upsert_all(
           @params[:text_blocks]
-            .select { |tb| tb[:id] == 'new' }
+            .select { |tb| tb[:id].to_s.include?('new') }
             .map do |tb|
               param = tb.as_json.except('id')
               param['collection_id'] = @params[:collection_id]
