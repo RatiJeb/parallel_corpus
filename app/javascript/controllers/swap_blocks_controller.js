@@ -16,8 +16,8 @@ export default class extends Controller {
     const [currentCardOrderId, languageIndex] = this.extractOrderIdAndLang(currentCard);
     const secondCard = nextContainer.children[languageIndex]
     const secondCardOrderId = this.extractOrderIdAndLang(secondCard)[0];
-    currentCard.children[0].children[0].children[0].innerText = `${languageIndex === 0 ? 'KA' : 'EN'}-${secondCardOrderId}`
-    secondCard.children[0].children[0].children[0].innerText = `${languageIndex === 0 ? 'KA' : 'EN'}-${currentCardOrderId}`
+    currentCard.children[0].children[0].children[0].children[0].innerText = `${languageIndex === 0 ? 'KA' : 'EN'}-${secondCardOrderId}`
+    secondCard.children[0].children[0].children[0].children[0].innerText = `${languageIndex === 0 ? 'KA' : 'EN'}-${currentCardOrderId}`
     nextContainer.insertBefore(currentCard, nextContainer.children[languageIndex])
     parentContainer.insertBefore(secondCard, parentContainer.children[languageIndex])
   }

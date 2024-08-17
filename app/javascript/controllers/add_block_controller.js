@@ -17,7 +17,7 @@ export default class extends Controller {
     const newCardHTML = await this.fetchNewCardHTML(newCardOrderId, collectionId,languageIndex === 0 ? 'ka' : 'en');
     currentCard.insertAdjacentHTML('beforebegin', newCardHTML);
     currentCard.remove();
-    currentCard.children[0].children[0].children[0].innerText = `${languageIndex === 0 ? 'KA' : 'EN'}-${newCardOrderId + 1}`
+    currentCard.children[0].children[0].children[0].children[0].innerText = `${languageIndex === 0 ? 'KA' : 'EN'}-${newCardOrderId + 1}`
     this.moveCardToNextContainer(currentCard, parentContainer, languageIndex, newCardOrderId + 2);
   }
 
