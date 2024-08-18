@@ -115,6 +115,7 @@ class Admin::TextBlocksController < Admin::BaseController
         language: params[:language],
         order_number: params[:order_number],
         new_id: "new-#{SecureRandom.uuid}",
+        selected_block_id: -1,
       },
     )
   end

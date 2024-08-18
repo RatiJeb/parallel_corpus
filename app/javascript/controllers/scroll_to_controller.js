@@ -1,20 +1,27 @@
 import { Controller } from '@hotwired/stimulus'
 
 export default class extends Controller {
-  static values = {
-    anchor: String,
-  }
-
   connect() {
-    if (this.anchorValue) {
-      console.log('here')
-      window.location.hash = this.anchorValue
-      // this._scrollTo(this.anchorValue)
-    }
+    this.observeLoading();
   }
 
-  _scrollTo(id){
-    console.log('there')
-    setTimeout(document.getElementById(id).scrollIntoView({ behavior: 'smooth' }, 1000))
+  observeLoading() {
+    const observer = new MutationObserver((mutationsList, observer) => {
+      if (document.getElementsByClassName('selected-text-block')) {
+        this.scrollToSelected()
+        observer.disconnect();
+      }
+    });
+
+    observer.observe(document, {attributes: false, childList: true, characterData: false, subtree:true});
+  }
+
+  scrollToSelected() {
+    const selectedTextBlock = document.getElementsByClassName('selected-text-block')[0];
+    console.log(selectedTextBlock);
+    if (selectedTextBlock) {
+      selectedTextBlock.scrollIntoView({ behavior: "smooth"});
+      setTimeout(() => {selectedTextBlock.scrollIntoView({ behavior: "smooth"})},1000);
+    }
   }
 }

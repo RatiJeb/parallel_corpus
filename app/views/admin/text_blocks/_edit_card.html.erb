@@ -1,4 +1,4 @@
-<div id="text-block-<%= block&.id || new_id %>" class="col-span-1">
+<div id="text-block-<%= block&.id || new_id %>" class="col-span-1<%= ' selected-text-block' if block&.id == selected_block_id %>">
   <% if block.present? %>
     <div class="px-3 rounded-md ring-2 <%= language == 'ka' ? 'mr-3 bg-mountbatten-100 ring-mountbatten-500' : 'ml-3 bg-gray-100 ring-gray-500'%>">
       <div
