@@ -4,12 +4,16 @@ module Views
 
     enum original_language: { ka: 0, en: 1 }, _prefix: :original_language
 
-    scope :search, lambda { |query, termin = false|
+    scope :search, lambda { |query, exact_match = false, termin = false|
+      query = "\[t\]#{query}\[\/t\]" if termin
+      query = "(^|[^a-zA-Z0-9ა-ჰ-])#{query}($|[^a-zA-Z0-9ა-ჰ-])" if exact_match
       where(
-        Views::TextBlockPair.arel_table[:original_contents].matches_regexp(
-          "(^|[^a-zA-Z0-9ა-ჰ-])#{termin ? '\[t\]' : ''}#{query}#{termin ? '\[\/t\]' : ''}($|[^a-zA-Z0-9ა-ჰ-])",
-          case_sensitive = false
-        )
+        Views::TextBlockPair
+          .arel_table[:original_contents]
+          .matches_regexp(
+            query,
+            false,
+          ),
       )
     }
 

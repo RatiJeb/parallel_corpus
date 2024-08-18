@@ -17,11 +17,13 @@ Rails.application.routes.draw do
     end
     resources :text_blocks do
       get 'edit_multiple', on: :collection
+      get 'fetch_edit_card', on: :collection
       delete 'destroy_multiple', on: :collection
       get 'export', on: :collection
       post 'merge', on: :member
       post 'swap', on: :member
       post :split, on: :member
+      put 'update_multiple', on: :collection
       put 'tag_term', on: :member
     end
   end
