@@ -29,8 +29,7 @@ class Admin::TextBlocksController < Admin::BaseController
     @text_blocks = @text_blocks.order(:order_number).page(params[:page]).per(40)
   end
 
-  def show
-  end
+  def show; end
 
   def new
     @text_block = TextBlock.new
@@ -47,9 +46,9 @@ class Admin::TextBlocksController < Admin::BaseController
         block.increment!(:order_number, 1)
       end
       @text_block = TextBlock.create!(collection_id: last_block.collection_id,
-                        language: last_block.language,
-                        order_number: last_block.order_number + 1
-                       )
+                                      language: last_block.language,
+                                      order_number: last_block.order_number + 1
+      )
       head(:ok)
     rescue => e
       render(json: {}, status: :unprocessable_entity)
@@ -101,6 +100,25 @@ class Admin::TextBlocksController < Admin::BaseController
     end
   end
 
+  def update_multiple
+    Admin::TextBlocks::UpdateMultipleService.new(update_multiple_params).call
+    render(json: { updated: true }, status: :ok)
+  end
+
+  def fetch_edit_card
+    render(
+      partial: 'edit_card',
+      locals: {
+        block: TextBlock.new(order_number: params[:order_number],
+                             collection_id: params[:collection_id],
+                             contents: params[:contents]),
+        language: params[:language],
+        order_number: params[:order_number],
+        new_id: "new-#{SecureRandom.uuid}",
+      },
+    )
+  end
+
   def destroy_multiple
     if params[:collection_id].present?
       @collection = Collection.find(params[:collection_id])
@@ -141,8 +159,8 @@ class Admin::TextBlocksController < Admin::BaseController
     @text_block = TextBlock.find(params[:id])
     ActiveRecord::Base.transaction do
       next_block = TextBlock.where(collection_id: @text_block.collection_id)
-                             .where(language: @text_block.language)
-                             .where(order_number: @text_block.order_number + 1).first
+                            .where(language: @text_block.language)
+                            .where(order_number: @text_block.order_number + 1).first
       if next_block
         @text_block.order_number = -1
         @text_block.save!
@@ -170,7 +188,7 @@ class Admin::TextBlocksController < Admin::BaseController
                         language: @text_block.language,
                         order_number: @text_block.order_number + 1,
                         contents: params[:last_contents].strip
-                       )
+      )
       @text_block.update!(contents: params[:first_contents].strip)
       head(:ok)
     rescue => e
@@ -200,10 +218,10 @@ class Admin::TextBlocksController < Admin::BaseController
         @filename = "#{@collection.send("name_#{@language}")}"[..60] + ".docx"
         response.headers["Content-Disposition"] = "attachment; filename=\"#{@filename}\""
 
-        Caracal::Document.save @filename do |docx|
-          docx.h1 @collection.send("name_#{@language}")
+        Caracal::Document.save(@filename) do |docx|
+          docx.h1(@collection.send("name_#{@language}"))
           @text_blocks.each do |text_block|
-            docx.p text_block.contents if text_block.language == @language
+            docx.p(text_block.contents) if text_block.language == @language
           end
         end
         send_file(File.join(Rails.root, @filename))
@@ -221,4 +239,7 @@ class Admin::TextBlocksController < Admin::BaseController
     params.require(:text_block).permit(:contents)
   end
 
+  def update_multiple_params
+    params.permit(:collection_id, text_blocks: [:language, :id, :order_number, :contents])
+  end
 end
