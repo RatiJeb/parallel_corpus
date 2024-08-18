@@ -109,7 +109,9 @@ class Admin::TextBlocksController < Admin::BaseController
     render(
       partial: 'edit_card',
       locals: {
-        block: TextBlock.new(order_number: params[:order_number], collection_id: params[:collection_id]),
+        block: TextBlock.new(order_number: params[:order_number],
+                             collection_id: params[:collection_id],
+                             contents: params[:contents]),
         language: params[:language],
         order_number: params[:order_number],
         new_id: "new-#{SecureRandom.uuid}",

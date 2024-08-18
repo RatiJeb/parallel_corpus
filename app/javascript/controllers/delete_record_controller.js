@@ -85,6 +85,7 @@ export default class extends Controller {
       else{
         const dummyCard = document.createElement('div')
         dummyCard.classList.add('col-span-1')
+        dummyCard.setAttribute('id', `text-block-dummy${Math.random()}`)
         index === 0 ? parentContainer.insertBefore(dummyCard, parentContainer.children[index]) : parentContainer.appendChild(dummyCard);
       }
     }

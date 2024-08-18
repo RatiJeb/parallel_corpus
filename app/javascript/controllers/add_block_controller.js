@@ -49,6 +49,7 @@ export default class extends Controller {
       const dummyChild = document.createElement('div')
       newContainer.classList.add('mt-3', 'flex', 'justify-stretch', 'grid', 'grid-cols-2', 'grid-flow-col', 'max-w-screen-2xl');
       dummyChild.classList.add('col-span-1')
+      dummyChild.setAttribute('id', `text-block-dummy${Math.random()}`)
       newContainer.appendChild(card);
       index === 0 ? newContainer.appendChild(dummyChild) : newContainer.insertBefore(dummyChild, newContainer.childNodes[0]);
       parentContainer.parentNode.appendChild(newContainer);
