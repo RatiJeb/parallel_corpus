@@ -13,3 +13,7 @@
  *= require_tree .
  *= require_self
  */
+
+.admin-search-btn:hover {
+  opacity: 0.7;
+}
