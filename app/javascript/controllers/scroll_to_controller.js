@@ -18,7 +18,6 @@ export default class extends Controller {
 
   scrollToSelected() {
     const selectedTextBlock = document.getElementsByClassName('selected-text-block')[0];
-    console.log(selectedTextBlock);
     if (selectedTextBlock) {
       selectedTextBlock.scrollIntoView({ behavior: "smooth"});
       setTimeout(() => {selectedTextBlock.scrollIntoView({ behavior: "smooth"})},1000);

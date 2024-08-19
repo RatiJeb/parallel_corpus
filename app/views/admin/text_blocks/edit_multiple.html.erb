@@ -25,21 +25,16 @@
 
     <div class="sticky -top-0.5 py-2 z-20 mt-5 flex justify-stretch grid grid-cols-2 grid-flow-col max-w-screen-2xl rounded-lg backdrop-blur backdrop-filter">
       <div class="mr-3 col-span-1 space-y-3 sm:space-y-4">
-        <div class="flex justify-between grid grid-flow-col w-full">
+        <div class="flex justify-between grid grid-flow-col w-full" data-controller="search-text-block">
           <div>
             <div class="grid grid-flow-col space-x-2 justify-items-start">
               <div class="inline-flex">
-                <%= form_for @search, url: edit_multiple_admin_text_blocks_path(collection_id: @collection.id), method: :get do |form| %>
-                  <%= form.hidden_field :collection_id, name: :collection_id %>
-                  <%= form.text_field :order_number, name: :order_number, placeholder: "ID-თი ძიება", class: "max-w-[120px] bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-3xl focus:ring-oceanside-500 focus:border-oceanside-500 block w-full dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-oceanside-500 dark:focus:border-oceanside-500" %>
-                <% end %>
+                <input id="search-id-input" type="text" name="order_number" placeholder="ID-თი ძიება" data-action="keydown->search-text-block#search" class="max-w-[120px] bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-3xl focus:ring-oceanside-500 focus:border-oceanside-500 block w-full dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-oceanside-500 dark:focus:border-oceanside-500"/>
               </div>
               <div class="inline-flex">
-                <%= form_for @search, url: edit_multiple_admin_text_blocks_path(collection_id: @collection.id), method: :get do |form| %>
-                  <%= form.hidden_field :collection_id, name: :collection_id %>
-                  <%= form.text_field :original_contents, name: :original_contents, placeholder: "ტექსტით ძიება", class: "max-w-[180px] bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-3xl focus:ring-oceanside-500 focus:border-oceanside-500 block w-full dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-oceanside-500 dark:focus:border-oceanside-500" %>
-                <% end %>
+                <input id="search-text-input" type="text" name="translation_contents" placeholder="ტექსტით ძიება" data-action="keydown->search-text-block#search" class="max-w-[180px] bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-3xl focus:ring-oceanside-500 focus:border-oceanside-500 block w-full dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-oceanside-500 dark:focus:border-oceanside-500"/>
               </div>
+              <button id='search-ka' class="admin-search-btn" type="button" data-action="click->search-text-block#search"><%= image_tag 'search-icon.svg' %></button>
             </div>
           </div>
           <div class="flex items-center">
@@ -62,19 +57,14 @@
       <div class="ml-3 col-span-1 space-y-3 sm:space-y-4">
         <div class="flex justify-between grid grid-flow-col w-full">
           <div>
-            <div class="grid grid-flow-col space-x-2 justify-items-start">
+            <div class="grid grid-flow-col space-x-2 justify-items-start" data-controller="search-text-block">
               <div class="inline-flex">
-                <%= form_for @search, url: edit_multiple_admin_text_blocks_path(collection_id: @collection.id), method: :get do |form| %>
-                  <%= form.hidden_field :collection_id, name: :collection_id %>
-                  <%= form.text_field :order_number, name: :order_number, placeholder: "Search by ID", class: "max-w-[120px] bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-3xl focus:ring-oceanside-500 focus:border-oceanside-500 block w-full dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-oceanside-500 dark:focus:border-oceanside-500" %>
-                <% end %>
+                <input id="search-id-input" type="text" name="order_number" placeholder="Search by ID" data-action="keydown->search-text-block#search" class="max-w-[120px] bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-3xl focus:ring-oceanside-500 focus:border-oceanside-500 block w-full dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-oceanside-500 dark:focus:border-oceanside-500"/>
               </div>
               <div class="inline-flex">
-                <%= form_for @search, url: edit_multiple_admin_text_blocks_path(collection_id: @collection.id), method: :get do |form| %>
-                  <%= form.hidden_field :collection_id, name: :collection_id %>
-                  <%= form.text_field :translation_contents, name: :translation_contents, placeholder: "Search by text", class: "max-w-[180px] bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-3xl focus:ring-oceanside-500 focus:border-oceanside-500 block w-full dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-oceanside-500 dark:focus:border-oceanside-500" %>
-                <% end %>
+                <input id="search-text-input" type="text" name="translation_contents" placeholder="Search by text" data-action="keydown->search-text-block#search" class="max-w-[180px] bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-3xl focus:ring-oceanside-500 focus:border-oceanside-500 block w-full dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-oceanside-500 dark:focus:border-oceanside-500"/>
               </div>
+              <button id='search-en' class="admin-search-btn" type="button" data-action="click->search-text-block#search"><%= image_tag 'search-icon.svg' %></button>
             </div>
           </div>
           <div class="grid grid-flow-col space-x-2 justify-items-end">

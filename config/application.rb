@@ -17,6 +17,10 @@ module ParallelCorpus
     config.autoload_lib(ignore: %w(assets tasks))
 
     config.perform_caching = true
+
+    config.i18n.available_locales = %i[en ka]
+
+    config.i18n.default_locale = :ka
     # Configuration for the application, engines, and railties goes here.
     #
     # These settings can be overridden in specific environments using the files
