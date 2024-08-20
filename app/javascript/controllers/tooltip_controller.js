@@ -46,9 +46,6 @@ export default class extends Controller {
       const left = Math.max(rect.left + window.pageXOffset - this.tooltip.offsetWidth/2 + rect.width/2, 0)
       const top = Math.max(rect.top + scrollTop - this.tooltip.offsetHeight - 5)
 
-      console.log(left)
-      console.log(top)
-
       this.tooltip.style.left = `${left}px`;
       this.tooltip.style.top = `${top}px`;
 

@@ -1,300 +1,303 @@
 <div data-controller="search-highlight" data-search-highlight-full-word-match-value="true">
 
-  <div class="max-w-screen-2xl mx-auto flex grid grid-flow-col grid-cols-6 space-x-4 justify-items-stretch">
+  <div class="max-w-screen-2xl mx-auto justify-items-stretch" style="display: grid; gap: 2rem; grid-auto-columns: 350px auto; grid-auto-rows: auto auto">
 
-    <div class="mt-4 flex col-span-2">
+    <div id="search-form-div" class="mt-4 flex" style="grid-row-start: 1; grid-row-end: 3;">
       <%= form_for @search, url: advanced_search_text_blocks_path, method: :get do |form| %>
-        <div class="sticky top-44 py-4 px-4 flex grid grid-flow-row justify-items-stretch space-y-4 bg-stone-200">
-          <div data-search-highlight-target="searchbar" class="inline-flex">
-            <%= form.text_field :query, name: :query, class: "border-stone-400 focus:ring-oceanside-500 focus:border-oceanside-500" %>
-          </div>
-          <div class="inline-flex">
-            <div class="flex grid grid-flow-col space-x-2 items-center">
-              <div class="inline-flex">
-                <%= form.check_box :termin, name: :termin %>
-              </div>
-              <div class="inline-flex">
-                მხოლოდ ტერმინოლოგია
-              </div>
-            </div>
-          </div>
-          <div class="inline-flex">
-            <div class="flex grid grid-flow-col space-x-2 items-center">
-              <div class="inline-flex">
-                <%= form.check_box :exact_match, name: :exact_match, data: { action: "your-controller-name#toggleExactMatch" } %>
-              </div>
-              <div class="inline-flex">
-                ზუსტი დამთხვევა
-              </div>
-            </div>
-          </div>
-          <div class="inline-flex">
-            <div class="flex grid grid-flow-row space-y-2 items-center">
-              <div class="inline-flex">
-                ორიგინალის ენა
-              </div>
-              <div class="inline-flex">
-                <div class="flex grid grid-flow-col space-x-2 items-center">
-                  <div class="inline-flex">
-                    <%= form.radio_button :original_language, :ka, name: :original_language%>
-                  </div>
-                  <div class="inline-flex">
-                    <%= form.label :original_language_ka, 'ქართული' %>
-                  </div>
-                  <div class="inline-flex">
-                    <%= form.radio_button :original_language, :en, name: :original_language %>
-                  </div>
-                  <div class="inline-flex">
-                    <%= form.label :original_language_en, 'ინგლისური' %>
-                  </div>
-                  <div class="inline-flex">
-                    <%= form.radio_button :original_language, :both, name: :original_language, checked: "checked" %>
-                  </div>
-                  <div class="inline-flex">
-                    <%= form.label :original_language_both, 'ორივე' %>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="inline-flex">
-            <div class="flex grid grid-flow-row space-y-2 items-center">
-              <div class="inline-flex">
-                ქვეკორპუსები
-              </div>
-              <div class="inline-flex">
-                <%= form.collection_select :supergroup_ids,
-                                           Supergroup.ordered,
-                                           :id,
-                                           :name_ka,
-                                           { selected: @search.search_text_block_pair&.dig(:supergroup_ids) },
-                                           { multiple: true, data: { controller: 'multi-select' } } %>
-              </div>
-            </div>
-          </div>
-          <div class="inline-flex">
-            <div class="flex grid grid-flow-row space-y-2 items-center">
-              <div class="inline-flex">
-                ჯგუფები
-              </div>
-              <div class="inline-flex">
-                <%= form.collection_select :group_ids,
-                                           Group.where(supergroup_id: @search.search_text_block_pair&.dig(:supergroup_ids)).ordered,
-                                           :id,
-                                           :name_ka,
-                                           { selected: @search.search_text_block_pair&.dig(:group_ids) },
-                                           { multiple: true, data: { controller: 'multi-select' } } %>
-              </div>
-            </div>
-          </div>
-          <div class="inline-flex">
-            <div class="flex grid grid-flow-row space-y-2 items-center">
-              <div class="inline-flex">
-                კრებულები
-              </div>
-              <div class="inline-flex">
-                <%= form.collection_select :collection_ids,
-                                           Collection.where(group_id: @search.search_text_block_pair&.dig(:group_ids)).ordered,
-                                           :id,
-                                           :name_ka,
-                                           { selected: @search.search_text_block_pair&.dig(:collection_ids) },
-                                           { multiple: true, data: { controller: 'multi-select' } } %>
-              </div>
-            </div>
-          </div>
-          <div class="inline-flex">
-            <div class="flex grid grid-flow-row space-y-2 items-center">
-              <div class="inline-flex">
-                ტიპები
-              </div>
-              <div class="inline-flex">
-                <%= form.collection_select :type_ids,
-                                           Type.ordered,
-                                           :id,
-                                           :name_ka,
-                                           { selected: @search.search_text_block_pair&.dig(:type_ids) },
-                                           { multiple: true, data: { controller: 'multi-select' } } %>
-              </div>
-            </div>
-          </div>
-          <div class="inline-flex">
-            <div class="flex grid grid-flow-row space-y-2 items-center">
-              <div class="inline-flex">
-                ჟანრები
-              </div>
-              <div class="inline-flex">
-                <%= form.collection_select :genre_ids,
-                                           Genre.ordered,
-                                           :id,
-                                           :name_ka,
-                                           { selected: @search.search_text_block_pair&.dig(:genre_ids) },
-                                           { multiple: true, data: { controller: 'multi-select' } } %>
-              </div>
-            </div>
-          </div>
-          <div class="inline-flex">
-            <div class="flex grid grid-flow-row space-y-2 items-center">
-              <div class="inline-flex">
-                დარგები
-              </div>
-              <div class="inline-flex">
-                <%= form.collection_select :field_ids,
-                                           Field.ordered,
-                                           :id,
-                                           :name_ka,
-                                           { selected: @search.search_text_block_pair&.dig(:field_ids) },
-                                           { multiple: true, data: { controller: 'multi-select' } } %>
-              </div>
-            </div>
-          </div>
-          <div class="inline-flex">
-            <div class="flex grid grid-flow-row space-y-2 items-center">
-              <div class="inline-flex">
-                ავტორები
-              </div>
-              <div class="inline-flex">
-                <%= form.collection_select :author_ids,
-                                           Author.ordered,
-                                           :id,
-                                           :name_ka,
-                                           { selected: @search.search_text_block_pair&.dig(:author_ids) },
-                                           { multiple: true, data: { controller: 'multi-select' } } %>
-              </div>
-            </div>
-          </div>
-          <div class="inline-flex">
-            <div class="flex grid grid-flow-row space-y-2 items-center">
-              <div class="inline-flex">
-                მთარგმნელები
-              </div>
-              <div class="inline-flex">
-                <%= form.collection_select :translator_ids,
-                                           Translator.ordered,
-                                           :id,
-                                           :name_ka,
-                                           { selected: @search.search_text_block_pair&.dig(:translator_ids) },
-                                           { multiple: true, data: { controller: 'multi-select' } } %>
-              </div>
-            </div>
-          </div>
-          <div class="inline-flex">
-            <div class="flex grid grid-flow-row space-y-2 items-center">
-              <div class="inline-flex">
-                გამომცემლობები
-              </div>
-              <div class="inline-flex">
-                <%= form.collection_select :publishing_ids,
-                                           Publishing.ordered,
-                                           :id,
-                                           :name_ka,
-                                           { selected: @search.search_text_block_pair&.dig(:publishing_ids) },
-                                           { multiple: true, data: { controller: 'multi-select' } } %>
-              </div>
-            </div>
-          </div>
-          <div class="inline-flex">
-            <div class="flex grid grid-flow-row space-y-2 items-center">
-              <div class="inline-flex">
-                გამოცემულია
-              </div>
-              <div class="inline-flex">
-                <div class="flex grid grid-flow-col items-center space-x-2 justify-between">
-                  <div class="inline-flex">
-                    <div class="flex grid grid-flow-row space-y-2 items-center">
-                      <div class="inline-flex">
-                        წლიდან
-                      </div>
-                      <div class="inline-flex">
-                        <%= form.text_field :year_start, name: :year_start, class: "max-w-[80px] border-stone-400 focus:ring-oceanside-500 focus:border-oceanside-500" %>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="inline-flex">
-                    <div class="flex grid grid-flow-row space-y-2 items-center">
-                      <div class="inline-flex">
-                        წლამდე
-                      </div>
-                      <div class="inline-flex">
-                        <%= form.text_field :year_end, name: :year_end, class: "max-w-[80px] border-stone-400 focus:ring-oceanside-500 focus:border-oceanside-500" %>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div class="inline-flex">
-                თარგმნილია
-              </div>
-              <div class="inline-flex">
-                <div class="flex grid grid-flow-col items-center space-x-2 justify-between">
-                  <div class="inline-flex">
-                    <div class="flex grid grid-flow-row space-y-2 items-center">
-                      <div class="inline-flex">
-                        წლიდან
-                      </div>
-                      <div class="inline-flex">
-                        <%= form.text_field :translation_year_start, name: :translation_year_start, class: "max-w-[80px] border-stone-400 focus:ring-oceanside-500 focus:border-oceanside-500" %>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="inline-flex">
-                    <div class="flex grid grid-flow-row space-y-2 items-center">
-                      <div class="inline-flex">
-                        წლამდე
-                      </div>
-                      <div class="inline-flex">
-                        <%= form.text_field :translation_year_end, name: :translation_year_end, class: "max-w-[80px] border-stone-400 focus:ring-oceanside-500 focus:border-oceanside-500" %>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-          <button type="submit" class="sticky z-20 bottom-4 w-full inline-flex block rounded-md bg-mountbatten-500 px-3 py-2 grid grid-flow-col items-center justify-center space-x-1 text-center text-sm font-semibold text-white shadow-sm hover:bg-mountbatten-400 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-mountbatten-500">
-            <div class="inline-flex">
-              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5">
-                <path stroke-linecap="round" stroke-linejoin="round" d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z" />
-              </svg>
+        <div class="sticky top-44">
+          <div id='isVisible' class="py-4 px-4 flex grid grid-flow-row justify-items-stretch space-y-4 bg-stone-200" style="height: 80dvh; overflow-y:scroll;">
+            <button id='dropdown-arrow' style="display: flex; justify-content: right;" data-controller="dropdown" data-action="click->dropdown#showOrHide">
+              <%= image_tag 'arrow-up.svg' %>
+            </button>
+            <div data-search-highlight-target="searchbar">
+              <%= form.text_field :query, name: :query, class: "w-full border-stone-400 focus:ring-oceanside-500 focus:border-oceanside-500" %>
             </div>
             <div class="inline-flex">
-              ძიება
+              <div class="flex grid grid-flow-col space-x-2 items-center">
+                <div class="inline-flex">
+                  <%= form.check_box :termin, name: :termin %>
+                </div>
+                <div class="inline-flex">
+                  მხოლოდ ტერმინოლოგია
+                </div>
+              </div>
             </div>
-          </button>
+            <div class="inline-flex">
+              <div class="flex grid grid-flow-col space-x-2 items-center">
+                <div class="inline-flex">
+                  <%= form.check_box :exact_match, name: :exact_match, data: { action: "your-controller-name#toggleExactMatch" } %>
+                </div>
+                <div class="inline-flex">
+                  ზუსტი დამთხვევა
+                </div>
+              </div>
+            </div>
+            <div class="inline-flex">
+              <div class="flex grid grid-flow-row space-y-2 items-center">
+                <div class="inline-flex">
+                  ორიგინალის ენა
+                </div>
+                <div class="inline-flex">
+                  <div class="flex grid grid-flow-col space-x-2 items-center">
+                    <div class="inline-flex">
+                      <%= form.radio_button :original_language, :ka, name: :original_language %>
+                    </div>
+                    <div class="inline-flex">
+                      <%= form.label :original_language_ka, 'ქართული' %>
+                    </div>
+                    <div class="inline-flex">
+                      <%= form.radio_button :original_language, :en, name: :original_language %>
+                    </div>
+                    <div class="inline-flex">
+                      <%= form.label :original_language_en, 'ინგლისური' %>
+                    </div>
+                    <div class="inline-flex">
+                      <%= form.radio_button :original_language, :both, name: :original_language, checked: "checked" %>
+                    </div>
+                    <div class="inline-flex">
+                      <%= form.label :original_language_both, 'ორივე' %>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div>
+              <div class="flex grid grid-flow-row space-y-2 items-center">
+                <div>
+                  ქვეკორპუსები
+                </div>
+                <div>
+                  <%= form.collection_select :supergroup_ids,
+                                             Supergroup.ordered,
+                                             :id,
+                                             :name_ka,
+                                             { selected: @search.search_text_block_pair&.dig(:supergroup_ids) },
+                                             { multiple: true, data: { controller: 'multi-select' } } %>
+                </div>
+              </div>
+            </div>
+            <div>
+              <div class="flex grid grid-flow-row space-y-2 items-center">
+                <div>
+                  ჯგუფები
+                </div>
+                <div>
+                  <%= form.collection_select :group_ids,
+                                             Group.where(supergroup_id: @search.search_text_block_pair&.dig(:supergroup_ids)).ordered,
+                                             :id,
+                                             :name_ka,
+                                             { selected: @search.search_text_block_pair&.dig(:group_ids) },
+                                             { multiple: true, data: { controller: 'multi-select' } } %>
+                </div>
+              </div>
+            </div>
+            <div>
+              <div class="flex grid grid-flow-row space-y-2 items-center">
+                <div>
+                  კრებულები
+                </div>
+                <div>
+                  <%= form.collection_select :collection_ids,
+                                             Collection.where(group_id: @search.search_text_block_pair&.dig(:group_ids)).ordered,
+                                             :id,
+                                             :name_ka,
+                                             { selected: @search.search_text_block_pair&.dig(:collection_ids) },
+                                             { multiple: true, data: { controller: 'multi-select' } } %>
+                </div>
+              </div>
+            </div>
+            <div>
+              <div class="flex grid grid-flow-row space-y-2 items-center">
+                <div>
+                  ტიპები
+                </div>
+                <div>
+                  <%= form.collection_select :type_ids,
+                                             Type.ordered,
+                                             :id,
+                                             :name_ka,
+                                             { selected: @search.search_text_block_pair&.dig(:type_ids) },
+                                             { multiple: true, data: { controller: 'multi-select' } } %>
+                </div>
+              </div>
+            </div>
+            <div>
+              <div class="flex grid grid-flow-row space-y-2 items-center">
+                <div>
+                  ჟანრები
+                </div>
+                <div>
+                  <%= form.collection_select :genre_ids,
+                                             Genre.ordered,
+                                             :id,
+                                             :name_ka,
+                                             { selected: @search.search_text_block_pair&.dig(:genre_ids) },
+                                             { multiple: true, data: { controller: 'multi-select' } } %>
+                </div>
+              </div>
+            </div>
+            <div>
+              <div class="flex grid grid-flow-row space-y-2 items-center">
+                <div>
+                  დარგები
+                </div>
+                <div>
+                  <%= form.collection_select :field_ids,
+                                             Field.ordered,
+                                             :id,
+                                             :name_ka,
+                                             { selected: @search.search_text_block_pair&.dig(:field_ids) },
+                                             { multiple: true, data: { controller: 'multi-select' } } %>
+                </div>
+              </div>
+            </div>
+            <div>
+              <div class="flex grid grid-flow-row space-y-2 items-center">
+                <div>
+                  ავტორები
+                </div>
+                <div>
+                  <%= form.collection_select :author_ids,
+                                             Author.ordered,
+                                             :id,
+                                             :name_ka,
+                                             { selected: @search.search_text_block_pair&.dig(:author_ids) },
+                                             { multiple: true, data: { controller: 'multi-select' } } %>
+                </div>
+              </div>
+            </div>
+            <div>
+              <div class="flex grid grid-flow-row space-y-2 items-center">
+                <div>
+                  მთარგმნელები
+                </div>
+                <div>
+                  <%= form.collection_select :translator_ids,
+                                             Translator.ordered,
+                                             :id,
+                                             :name_ka,
+                                             { selected: @search.search_text_block_pair&.dig(:translator_ids) },
+                                             { multiple: true, data: { controller: 'multi-select' } } %>
+                </div>
+              </div>
+            </div>
+            <div>
+              <div class="flex grid grid-flow-row space-y-2 items-center">
+                <div>
+                  გამომცემლობები
+                </div>
+                <div>
+                  <%= form.collection_select :publishing_ids,
+                                             Publishing.ordered,
+                                             :id,
+                                             :name_ka,
+                                             { selected: @search.search_text_block_pair&.dig(:publishing_ids) },
+                                             { multiple: true, data: { controller: 'multi-select' } } %>
+                </div>
+              </div>
+            </div>
+            <div class="inline-flex">
+              <div class="flex grid grid-flow-row space-y-2 items-center">
+                <div class="inline-flex">
+                  გამოცემულია
+                </div>
+                <div class="inline-flex">
+                  <div class="flex grid grid-flow-col items-center space-x-2 justify-between">
+                    <div class="inline-flex">
+                      <div class="flex grid grid-flow-row space-y-2 items-center">
+                        <div class="inline-flex">
+                          წლიდან
+                        </div>
+                        <div class="inline-flex">
+                          <%= form.text_field :year_start, name: :year_start, class: "max-w-[80px] border-stone-400 focus:ring-oceanside-500 focus:border-oceanside-500" %>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="inline-flex">
+                      <div class="flex grid grid-flow-row space-y-2 items-center">
+                        <div class="inline-flex">
+                          წლამდე
+                        </div>
+                        <div class="inline-flex">
+                          <%= form.text_field :year_end, name: :year_end, class: "max-w-[80px] border-stone-400 focus:ring-oceanside-500 focus:border-oceanside-500" %>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="inline-flex">
+                  თარგმნილია
+                </div>
+                <div class="inline-flex mb-4">
+                  <div class="flex grid grid-flow-col items-center space-x-2 justify-between">
+                    <div class="inline-flex mb-4">
+                      <div class="flex grid grid-flow-row space-y-2 items-center">
+                        <div class="inline-flex">
+                          წლიდან
+                        </div>
+                        <div class="inline-flex">
+                          <%= form.text_field :translation_year_start, name: :translation_year_start, class: "max-w-[80px] border-stone-400 focus:ring-oceanside-500 focus:border-oceanside-500" %>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="inline-flex mb-4">
+                      <div class="flex grid grid-flow-row space-y-2 items-center">
+                        <div class="inline-flex">
+                          წლამდე
+                        </div>
+                        <div class="inline-flex">
+                          <%= form.text_field :translation_year_end, name: :translation_year_end, class: "max-w-[80px] border-stone-400 focus:ring-oceanside-500 focus:border-oceanside-500" %>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <button type="submit" class="sticky z-20 bottom-4 w-full inline-flex block rounded-md bg-mountbatten-500 px-3 py-2 grid grid-flow-col items-center justify-center space-x-1 text-center text-sm font-semibold text-white shadow-sm hover:bg-mountbatten-400 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-mountbatten-500">
+              <div>
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z"/>
+                </svg>
+              </div>
+              <div>
+                ძიება
+              </div>
+            </button>
+          </div>
         </div>
       <% end %>
     </div>
-
-    <div class="flex col-span-4">
+    <div id="total-count-div" class="sticky z-20 top-40 py-4 inline-flex text-gray-400 text-sm items-center bg-gray-100" style="grid-column: 2;">
+      <%= @text_block_pairs.total_count %> შედეგი
+    </div>
+    <div id="search-result-div" class="flex" style="grid-column-start: 2; grid-column-end: 3; grid-row: 2;">
 
       <div class="flex grid grid-flow-row">
-
-        <div class="sticky z-20 top-40 py-4 inline-flex text-gray-400 text-sm items-center bg-gray-100">
-          <%= @text_block_pairs.total_count %> შედეგი
-        </div>
 
         <div data-search-highlight-target="body" class="flex grid grid-flow-row space-y-3">
           <%= render 'shared/search_results', text_block_pairs: @text_block_pairs %>
         </div>
         <div class="flex items-center justify-between py-3">
-          <%= render 'shared/paging',records: @text_block_pairs,
-                                     url_method: -> (**params){ advanced_search_text_blocks_path(**params) },
-                                     paging_params: params.permit(:query,
-                                                                  :termin,
-                                                                  :exact_match,
-                                                                  :original_language,
-                                                                  :year_start,
-                                                                  :year_end,
-                                                                  :translation_year_start,
-                                                                  :translation_year_end,
-                                                                  search_text_block_pair: { supergroup_ids: [],
-                                                                                            group_ids: [],
-                                                                                            collection_ids: [],
-                                                                                            type_ids: [],
-                                                                                            genre_ids: [],
-                                                                                            field_ids: [],
-                                                                                            author_ids: [],
-                                                                                            translator_ids: [],
-                                                                                            publishing_ids: [] }) %>
+          <%= render 'shared/paging', records: @text_block_pairs,
+                     url_method: -> (**params) { advanced_search_text_blocks_path(**params) },
+                     paging_params: params.permit(:query,
+                                                  :termin,
+                                                  :exact_match,
+                                                  :original_language,
+                                                  :year_start,
+                                                  :year_end,
+                                                  :translation_year_start,
+                                                  :translation_year_end,
+                                                  search_text_block_pair: { supergroup_ids: [],
+                                                                            group_ids: [],
+                                                                            collection_ids: [],
+                                                                            type_ids: [],
+                                                                            genre_ids: [],
+                                                                            field_ids: [],
+                                                                            author_ids: [],
+                                                                            translator_ids: [],
+                                                                            publishing_ids: [] }) %>
         </div>
       </div>
     </div>
