@@ -1,10 +1,9 @@
 <div data-controller="search-highlight" data-search-highlight-full-word-match-value="true">
 
   <div class="max-w-screen-2xl mx-auto justify-items-stretch" style="display: grid; gap: 2rem; grid-auto-columns: 350px auto; grid-auto-rows: auto auto">
-
-    <div id="search-form-div" class="mt-4 flex" style="grid-row-start: 1; grid-row-end: 3;">
+    <div id="search-form-div" class="mt-4 flex" style="grid-row-start: 1; grid-row-end: 3; position: relative">
       <%= form_for @search, url: advanced_search_text_blocks_path, method: :get do |form| %>
-        <div class="sticky top-44">
+        <div style="position: sticky; top: 16%; left: 3%">
           <div id='isVisible' class="py-4 px-4 flex grid grid-flow-row justify-items-stretch space-y-4 bg-stone-200" style="height: 80dvh; overflow-y:scroll;">
             <button id='dropdown-arrow' style="display: flex; justify-content: right;" data-controller="dropdown" data-action="click->dropdown#showOrHide">
               <%= image_tag 'arrow-up.svg' %>
@@ -72,7 +71,11 @@
                                              :id,
                                              :name_ka,
                                              { selected: @search.search_text_block_pair&.dig(:supergroup_ids) },
-                                             { multiple: true, data: { controller: 'multi-select' } } %>
+                                             {
+                                               multiple: true,
+                                               onchange: 'this.form.submit();',
+                                               data: { controller: 'multi-select' }
+                                             } %>
                 </div>
               </div>
             </div>
@@ -87,7 +90,11 @@
                                              :id,
                                              :name_ka,
                                              { selected: @search.search_text_block_pair&.dig(:group_ids) },
-                                             { multiple: true, data: { controller: 'multi-select' } } %>
+                                             {
+                                               multiple: true,
+                                               onchange: 'this.form.submit();',
+                                               data: { controller: 'multi-select' }
+                                             }%>
                 </div>
               </div>
             </div>
@@ -102,7 +109,11 @@
                                              :id,
                                              :name_ka,
                                              { selected: @search.search_text_block_pair&.dig(:collection_ids) },
-                                             { multiple: true, data: { controller: 'multi-select' } } %>
+                                             {
+                                               multiple: true,
+                                               onchange: 'this.form.submit();',
+                                               data: { controller: 'multi-select' }
+                                             } %>
                 </div>
               </div>
             </div>
