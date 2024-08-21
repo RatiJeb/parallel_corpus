@@ -16,7 +16,7 @@ export default class extends Controller {
           loadingText: 'იტვირთება...',
           noResultsText: 'შედეგი არ მოიძებნა',
           noChoicesText: 'მონაცემები არ არის',
-          itemSelectText: 'დააჭირეთ ასარჩევად',
+          itemSelectText: '',
           uniqueItemText: 'მხოლოდ უნიკალური მნიშვნელობები შეიძლება დაემატოს',
           customAddItemText: 'მხოლოდ ის მნიშვნელობები შეიძლება დაემატოს, რომლებიც პირობას აკმაყოფილებენ',
           classNames: {
@@ -47,7 +47,8 @@ export default class extends Controller {
             noResults: 'has-no-results',
             noChoices: 'has-no-choices'
           }
-        }
+        },
+        allowHTML: true,
       }
     );
   }
