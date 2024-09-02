@@ -11,7 +11,7 @@ export default class extends Controller {
     let params = {collection_id: searchParams.get('collection_id'), text_blocks: []}
     document.querySelectorAll('[id^=\'text-block-\']:not([id^=\'text-block-dummy\'])').forEach((block) => {
       let [language, order_number] = block.outerText.split('-')
-      let id = block.dataset.new ? 'new' : block.id.split('text-block-')[1]
+      let id = block.id.split('text-block-')[1]
       let contents = block.children[0].children[0].children[1].children[0].value
       params.text_blocks.push({language: language.toLowerCase(), order_number, id, contents})
     })
