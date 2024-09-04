@@ -11,17 +11,17 @@
           <div class="col-span-3 flex justify-center items-center">
             <div class="ml-4">
               <%= link_to text_blocks_path do %>
-                <h1 class="text-xl font-thin leading-tight tracking-tight text-gray-900">ინგლისურ-ქართული</h1>
-                <h1 class="text-xl font-thin leading-tight tracking-tight text-gray-900">პარალელური კორპუსი</h1>
+                <h1 class="text-xl font-thin leading-tight tracking-tight text-gray-900"><%= t('header.english_georgian') %></h1>
+                <h1 class="text-xl font-thin leading-tight tracking-tight text-gray-900"><%= t('header.parallel_corpus') %></h1>
               <% end %>
             </div>
           </div>
         </div>
       </div>
       <div class="flex justify-center items-center">
-        <%= link_to text_blocks_path do %>
+        <%= link_to text_blocks_path(locale: (I18n.available_locales - [I18n.locale])&.first) do %>
           <div class="p-2 border-2 border-transparent hover:border-gray-50">
-            <h2 class="text-l font-thin leading-tight tracking-tight text-gray-900 hover:border-1">EN</h2>
+            <h2 class="text-l font-thin leading-tight tracking-tight text-gray-900 hover:border-1"><%= t('other_language') %></h2>
           </div>
         <% end %>
       </div>
@@ -32,27 +32,26 @@
       <div class="flex grid grid-flow-col h-16 justify-items-end">
         <div class="flex my-2">
           <div class="flex space-x-0.5 grid grid-flow-col justify-items-center">
-            <!-- Current: "border-indigo-500 text-gray-900", Default: "border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700" -->
             <% if is_active_link?(advanced_search_text_blocks_path, :inclusive) %>
               <div class="inline-flex justify-center items-center bg-mountbatten-400 text-md text-white hover:bg-mountbatten-500">
-                <%= link_to 'დეტალური ძიება', advanced_search_text_blocks_path(query: params[:query]), class: "px-8 h-full py-3" %>
+                <%= link_to t('navbar.advanced_search'), advanced_search_text_blocks_path(locale: I18n.locale, query: params[:query]), class: "px-8 h-full py-3" %>
               </div>
             <% else %>
               <div class="inline-flex justify-center items-center bg-stone-100 text-md hover:bg-stone-50">
-                <%= link_to 'დეტალური ძიება', advanced_search_text_blocks_path(query: params[:query]), class: "px-8 h-full py-3" %>
+                <%= link_to t('navbar.advanced_search'), advanced_search_text_blocks_path(locale: I18n.locale, query: params[:query]), class: "px-8 h-full py-3" %>
               </div>
             <% end %>
             <div class="inline-flex justify-center items-center bg-stone-100 text-md hover:bg-stone-50">
-              <a href="#" class="px-8 h-full py-3">ინსტრუმენტები</a>
+              <a href="#" class="px-8 h-full py-3"><%= t('navbar.instruments') %></a>
             </div>
             <div class="inline-flex justify-center items-center bg-stone-100 text-md hover:bg-stone-50">
-              <a href="#" class="px-8 h-full py-3">გამოყენების ინსტრუქცია</a>
+              <a href="#" class="px-8 h-full py-3"><%= t('navbar.instructions') %></a>
             </div>
             <div class="inline-flex justify-center items-center bg-stone-100 text-md hover:bg-stone-50">
-              <a href="#" class="px-8 h-full py-3">პროექტის შესახებ</a>
+              <a href="#" class="px-8 h-full py-3"><%= t('navbar.about_project') %></a>
             </div>
             <div class="inline-flex justify-center items-center bg-stone-100 text-md hover:bg-stone-50">
-              <a href="#" class="px-8 h-full py-3">კონტაქტი</a>
+              <a href="#" class="px-8 h-full py-3"><%= t('navbar.contact') %></a>
             </div>
           </div>
         </div>

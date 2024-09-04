@@ -1,9 +1,9 @@
-<%= render 'admin/shared/heading', name: 'ტექსტური წყვილების დამატება' %>
+<%= render 'admin/shared/heading', name: t('admin.add_new_text_pairs') %>
 
 <main>
   <div class="mx-auto max-w-screen-2xl sm:px-6 lg:px-8">
 
-    <%= form_with model: [:admin, @collection], url: create_text_blocks_admin_collection_path, method: :post do |form| %>
+    <%= form_with model: [:admin, @collection], url: create_text_blocks_admin_collection_path(locale: I18n.locale), method: :post do |form| %>
 
       <div class="mt-8 flex justify-stretch grid grid-cols-2 grid-flow-col max-w-screen-2xl">
         <div class="mr-3 bg-mountbatten-100 px-3 col-span-1 rounded-md ring-2 ring-mountbatten-500 space-y-12 sm:space-y-16 inline-flex">
@@ -30,7 +30,7 @@
       </div>
 
       <div class="mt-6 flex justify-items-center grid grid-flow-col gap-x-6 max-w-screen-2xl">
-        <button type="submit" class="inline-flex justify-center rounded-md bg-mountbatten-500 ring-2 ring-mountbatten-500 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-mountbatten-400 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-mountbatten-500">შენახვა</button>
+        <button type="submit" class="inline-flex justify-center rounded-md bg-mountbatten-500 ring-2 ring-mountbatten-500 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-mountbatten-400 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-mountbatten-500"><%= t('admin.form.submit') %></button>
       </div>
 
     <% end %>

@@ -1,40 +1,40 @@
-<%= render 'admin/shared/heading', name: 'ჯგუფები' %>
+<%= render 'admin/shared/heading', name: t('crumbs.groups') %>
 
 <main>
   <div class="mx-auto max-w-screen-2xl sm:px-6 lg:px-8">
     <% crumbs = [] %>
     <% if @supergroup %>
-      <% crumbs << { name: @supergroup.name_ka, url: admin_groups_path(supergroup_id: @supergroup.id) } %>
+      <% crumbs << { name: @supergroup.send("name_#{I18n.locale}"), url: admin_groups_path(locale: I18n.locale, supergroup_id: @supergroup.id) } %>
     <% end %>
 
     <%= render 'admin/shared/breadcrumbs', crumbs: crumbs unless crumbs.empty? %>
 
-    <%= render 'admin/shared/new_button', name: 'ახალი ჯგუფის დამატება', url: new_admin_group_path(supergroup_id: @supergroup&.id) %>
+    <%= render 'admin/shared/new_button', name: t('admin.add_new_group'), url: new_admin_group_path(locale: I18n.locale, supergroup_id: @supergroup&.id) %>
 
-    <%= render 'admin/shared/paging', records: @groups, url_method: -> (**params){ admin_groups_path(**params) }, paging_params: { supergroup_id: @supergroup&.id }.merge(@search.attributes) %>
+    <%= render 'admin/shared/paging', records: @groups, url_method: -> (**params){ admin_groups_path(**params.merge(locale: I18n.locale)) }, paging_params: { supergroup_id: @supergroup&.id }.merge(@search.attributes) %>
 
     <div class="px-4 sm:px-6 lg:px-8">
       <div class="flow-root">
         <div class="-mx-4 -my-2 sm:-mx-6 lg:-mx-8">
           <div data-controller="search-highlight" class="inline-block min-w-full py-2 align-middle">
-            <%= form_for @search, url: admin_groups_path, method: :get do |form| %>
+            <%= form_for @search, url: admin_groups_path(locale: I18n.locale), method: :get do |form| %>
               <table class="w-full border-separate border-spacing-0">
                 <thead>
 
                   <%= render 'admin/shared/table/header',
                              columns: [{ name: 'UID' },
-                                       { name: 'ქვეკორპუსი', classes: 'max-w-[160px]' },
-                                       { name: 'დასახელება ქართულად', classes: 'max-w-[240px]' },
-                                       { name: 'დასახელება ინგლისურად', classes: 'max-w-[240px]' },
-                                       { name: 'სტატუსი', classes: 'max-w-[100px]' },
-                                       { name: 'კრებულები', classes: 'max-w-[100px]' },
-                                       { name: 'წყვილები', classes: 'max-w-[100px]' },
+                                       { name: t('admin.form.sub_corpora'), classes: 'max-w-[160px]' },
+                                       { name: t('table.georgian_name'), classes: 'max-w-[240px]' },
+                                       { name: t('table.english_name'), classes: 'max-w-[240px]' },
+                                       { name: t('admin.form.status'), classes: 'max-w-[100px]' },
+                                       { name: t('admin.form.collections'), classes: 'max-w-[100px]' },
+                                       { name: t('admin.form.text_pairs'), classes: 'max-w-[100px]' },
                                        { name: '', classes: 'max-w-[100px]' }] %>
 
                    <%= render 'admin/shared/table/filter',
                               form: form,
                               columns: [{ name: :id, classes: 'max-w-[60px]', input_type: :text_field, input_classes: 'px-2' },
-                                        { name: :supergroup_name_ka, classes: 'max-w-[160px]', input_type: :text_field },
+                                        { name: "supergroup_name_#{I18n.locale}".to_sym, classes: 'max-w-[160px]', input_type: :text_field },
                                         { name: :supergroup_id, input_type: :hidden },
                                         { name: :name_ka, classes: 'max-w-[240px]', input_type: :text_field },
                                         { name: :name_en, classes: 'max-w-[240px]', input_type: :text_field },
@@ -53,10 +53,10 @@
                                record: group,
                                index: index,
                                columns: { uid: true,
-                                          supergroup_name_ka: true,
-                                          enter_url_method: -> (**params){ admin_collections_path(**params) },
+                                          "supergroup_name_#{I18n.locale}".to_sym => true,
+                                          enter_url_method: -> (**params){ admin_collections_path(**params.merge(locale: I18n.locale)) },
                                           enter_url_params: { group_id: group.id },
-                                          edit_url_method: -> (**params){ edit_admin_group_path(**params) },
+                                          edit_url_method: -> (**params){ edit_admin_group_path(**params.merge(locale: I18n.locale)) },
                                           edit_url_params: { id: group.id },
                                           name_ka: true,
                                           name_en: true,
@@ -75,6 +75,6 @@
         </div>
       </div>
     </div>
-    <%= render 'admin/shared/paging', records: @groups, url_method: -> (**params){ admin_groups_path(**params) }, paging_params: { supergroup_id: @supergroup&.id }.merge(@search.attributes) %>
+    <%= render 'admin/shared/paging', records: @groups, url_method: -> (**params){ admin_groups_path(**params.merge(locale: I18n.locale)) }, paging_params: { supergroup_id: @supergroup&.id }.merge(@search.attributes) %>
   </div>
 </main>

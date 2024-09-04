@@ -22,15 +22,15 @@
           </div>
           <div class="inline-flex">
             <label>
-              ვეთანხმები
+              <%= t('delete_modal.agree') %>
             </label>
           </div>
         </div>
       </div>
             <!-- Modal footer -->
       <div class="flex items-center justify-between p-4 md:p-5 border-t border-gray-200 rounded-b dark:border-gray-600">
-        <button id="confirm-delete-modal-delete-button" data-modal-hide="default-modal" type="button" class="w-full text-white font-semibold bg-gray-500 hover:bg-gray-400 focus:ring-4 focus:outline-none focus:ring-gray-200 font-medium rounded-lg text-sm px-5 py-2.5 text-center">წაშლა</button>
-        <button id="confirm-delete-modal-cancel-button" data-modal-hide="default-modal" type="button" class="w-full font-semibold py-2.5 px-5 ms-3 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:border-gray-300 focus:z-10 focus:ring-4 focus:ring-gray-100 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700">გაუქმება</button>
+        <button id="confirm-delete-modal-delete-button" data-modal-hide="default-modal" type="button" class="w-full text-white font-semibold bg-gray-500 hover:bg-gray-400 focus:ring-4 focus:outline-none focus:ring-gray-200 font-medium rounded-lg text-sm px-5 py-2.5 text-center"><%= t('delete_modal.delete') %></button>
+        <button id="confirm-delete-modal-cancel-button" data-modal-hide="default-modal" type="button" class="w-full font-semibold py-2.5 px-5 ms-3 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:border-gray-300 focus:z-10 focus:ring-4 focus:ring-gray-100 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700"><%= t('delete_modal.cancel') %></button>
       </div>
     </div>
   </div>

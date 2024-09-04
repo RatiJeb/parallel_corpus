@@ -1,5 +1,11 @@
 class ApplicationController < ActionController::Base
+  before_action :set_locale
+
   protected
+
+  def set_locale
+    I18n.locale = params[:locale] if params[:locale]
+  end
 
   def require_admin_or_superadmin
     redirect_to(root_url) unless current_user.admin? || current_user.superadmin?

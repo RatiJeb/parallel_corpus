@@ -35,7 +35,7 @@
     <div class="flex justify-between items-center grid grid-flow-col">
 
       <% if columns[:edit].present? %>
-        <%= link_to edit_multiple_admin_text_blocks_path(collection_id: @collection, order_number: order_number), class: "inline-flex text-gray-700 hover:text-oceanside-500 hover:ring-2 hover:ring-oceanside-500 hover:rounded-3xl px-2 py-2" do %>
+        <%= link_to edit_multiple_admin_text_blocks_path(locale: I18n.locale, collection_id: @collection, order_number: order_number), class: "inline-flex text-gray-700 hover:text-oceanside-500 hover:ring-2 hover:ring-oceanside-500 hover:rounded-3xl px-2 py-2" do %>
           <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="inline w-6 h-6">
             <path stroke-linecap="round" stroke-linejoin="round" d="m16.862 4.487 1.687-1.688a1.875 1.875 0 1 1 2.652 2.652L6.832 19.82a4.5 4.5 0 0 1-1.897 1.13l-2.685.8.8-2.685a4.5 4.5 0 0 1 1.13-1.897L16.863 4.487Zm0 0L19.5 7.125" />
           </svg>
@@ -48,10 +48,10 @@
         <% block_ids << en_block.id if en_block.present? %>
         <button type="button"
                 data-controller="delete-record"
-                data-delete-record-url-value="<%= destroy_multiple_admin_text_blocks_path(ids: block_ids) %>"
-                data-delete-record-redirect-url-value="<%= admin_text_blocks_path(collection_id: @collection.id) %>"
-                data-delete-record-modal-title-value="გსურთ ტექსტური წყვილის წაშლა?"
-                data-delete-record-modal-text-value="ეს ტექსტური წყვილი წაიშლება სრულად"
+                data-delete-record-url-value="<%= destroy_multiple_admin_text_blocks_path(locale: I18n.locale, ids: block_ids) %>"
+                data-delete-record-redirect-url-value="<%= admin_text_blocks_path(locale: I18n.locale, collection_id: @collection.id) %>"
+                data-delete-record-modal-title-value="<%= t('delete_text_pairs_modal.title') %>"
+                data-delete-record-modal-text-value="<%= t('delete_text_pairs_modal.text') %>"
                 data-action="click->delete-record#submit"
                 class="inline-flex text-gray-700 hover:text-oceanside-500 hover:ring-2 hover:ring-oceanside-500 hover:rounded-3xl px-2 py-2">
           <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">

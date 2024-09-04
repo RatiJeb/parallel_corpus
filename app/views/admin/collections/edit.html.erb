@@ -1,18 +1,18 @@
-<%= render 'admin/shared/heading', name: 'კრებულის რედაქტირება' %>
+<%= render 'admin/shared/heading', name: t('admin.edit_collection') %>
 
 <main>
   <div class="mx-auto max-w-screen-2xl sm:px-6 lg:px-8">
 
     <% crumbs = [] %>
-    <% crumbs << { name: @collection.supergroup.name_ka, url: admin_groups_path(supergroup_id: @collection.supergroup.id) } %>
-    <% crumbs << { name: @collection.group.name_ka, url: admin_collections_path(group_id: @collection.group.id) } %>
-    <% crumbs << { name: @collection.name_ka, url: admin_text_blocks_path(collection_id: @collection.id) } %>
-    <% crumbs << { name: 'რედაქტირება', url: edit_admin_collection_path(collection_id: @collection.id) } %>
+    <% crumbs << { name: @collection.supergroup.send("name_#{I18n.locale}"), url: admin_groups_path(locale: I18n.locale, supergroup_id: @collection.supergroup.id) } %>
+    <% crumbs << { name: @collection.group.send("name_#{I18n.locale}"), url: admin_collections_path(locale: I18n.locale, group_id: @collection.group.id) } %>
+    <% crumbs << { name: @collection.send("name_#{I18n.locale}"), url: admin_text_blocks_path(locale: I18n.locale, collection_id: @collection.id) } %>
+    <% crumbs << { name: t('crumbs.edit'), url: edit_admin_collection_path(locale: I18n.locale, collection_id: @collection.id) } %>
 
     <%= render 'admin/shared/breadcrumbs', crumbs: crumbs %>
 
-    <%= render 'admin/collections/shared/form', url: admin_collection_path, method: :put %>
+    <%= render 'admin/collections/shared/form', url: admin_collection_path(locale: I18n.locale), method: :put %>
 
-    <%= render 'admin/shared/confirm_delete_modal', modal_title: 'გსურთ კრებულის წაშლა?', modal_text: 'კრებული წაიშლება სრულად' %>
+    <%= render 'admin/shared/confirm_delete_modal', modal_title: t('delete_collection_modal.modal_title'), modal_text: t('delete_collection_modal.modal_text') %>
   </div>
-<main>
+</main>

@@ -1,16 +1,16 @@
-<%= render 'admin/shared/heading', name: 'ქვეკორპუსის რედაქტირება' %>
+<%= render 'admin/shared/heading', name: t('admin.edit_sub_corpus') %>
 
 <main>
   <div class="mx-auto max-w-screen-2xl sm:px-6 lg:px-8">
 
     <% crumbs = [] %>
-    <% crumbs << { name: @supergroup.name_ka, url: admin_groups_path(supergroup_id: @supergroup.id) } %>
-    <% crumbs << { name: 'რედაქტირება', url: edit_admin_supergroup_path(supergroup_id: @supergroup.id) } %>
+    <% crumbs << { name: @supergroup.send("name_#{I18n.locale}"), url: admin_groups_path(locale: I18n.locale, supergroup_id: @supergroup.id) } %>
+    <% crumbs << { name: t('crumbs.edit'), url: edit_admin_supergroup_path(locale: I18n.locale, supergroup_id: @supergroup.id) } %>
 
     <%= render 'admin/shared/breadcrumbs', crumbs: crumbs %>
 
-    <%= render 'admin/supergroups/shared/form', url: admin_supergroup_path, method: :put %>
+    <%= render 'admin/supergroups/shared/form', url: admin_supergroup_path(locale: I18n.locale), method: :put %>
 
-    <%= render 'admin/shared/confirm_delete_modal', modal_title: 'გსურთ ქვეკორპუსის წაშლა?', modal_text: 'ქვეკორპუსი წაიშლება სრულად' %>
+    <%= render 'admin/shared/confirm_delete_modal', modal_title: t('delete_sub_corpora_modal.title'), modal_text: t('delete_sub_corpora_modal.text') %>
   </div>
-<main>
+</main>

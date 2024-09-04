@@ -1,21 +1,21 @@
-<%= render 'admin/shared/heading', name: 'კრებულები' %>
+<%= render 'admin/shared/heading', name: t('admin.form.collections') %>
 
 <main>
   <div class="mx-auto max-w-screen-2xl sm:px-6 lg:px-8">
     <% crumbs = [] %>
     <% if @group %>
-      <% crumbs << { name: @group.supergroup.name_ka, url: admin_groups_path(supergroup_id: @group.supergroup.id) } %>
-      <% crumbs << { name: @group.name_ka, url: admin_collections_path(group_id: @group.id) } %>
+      <% crumbs << { name: @group.supergroup.send("name_#{I18n.locale}"), url: admin_groups_path(locale: I18n.locale, supergroup_id: @group.supergroup.id) } %>
+      <% crumbs << { name: @group.send("name_#{I18n.locale}"), url: admin_collections_path(locale: I18n.locale, group_id: @group.id) } %>
     <% end %>
 
     <%= render 'admin/shared/breadcrumbs', crumbs: crumbs unless crumbs.empty? %>
 
-    <%= render 'admin/shared/new_button', name: 'ახალი კრებულის დამატება', url: new_admin_collection_path(group_id: @group&.id) %>
+    <%= render 'admin/shared/new_button', name: t('admin.add_new_collection'), url: new_admin_collection_path(locale: I18n.locale, group_id: @group&.id) %>
 
     <% if @group %>
 
       <div class="mt-4 flex grid grid-flow-col space-x-4 max-w-40">
-        <%= link_to export_admin_collections_path(group_id: @group.id, format: :xlsx), class: "px-3 py-2 grid grid-flow-col space-x-1 inline-flex justify-center items-center text-sm bg-gray-50 text-gray-700 rounded-md ring-1 ring-gray-300 p-1 hover:ring-2 hover:ring-oceanside-500 hover:bg-white hover:text-gray-900" do %>
+        <%= link_to export_admin_collections_path(locale: I18n.locale, group_id: @group.id, format: :xlsx), class: "px-3 py-2 grid grid-flow-col space-x-1 inline-flex justify-center items-center text-sm bg-gray-50 text-gray-700 rounded-md ring-1 ring-gray-300 p-1 hover:ring-2 hover:ring-oceanside-500 hover:bg-white hover:text-gray-900" do %>
           <div class="inline-flex">
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-4 h-4">
               <path stroke-linecap="round" stroke-linejoin="round" d="M3 16.5v2.25A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75V16.5M16.5 12 12 16.5m0 0L7.5 12m4.5 4.5V3" />
@@ -26,7 +26,7 @@
           </div>
         <% end %>
 
-        <%= link_to export_admin_collections_path(group_id: @group.id, language: :ka, format: :docx), class: "px-3 py-2 grid grid-flow-col space-x-1 inline-flex justify-center items-center text-sm bg-gray-50 text-gray-700 rounded-md ring-1 ring-gray-300 p-1 hover:ring-2 hover:ring-oceanside-500 hover:bg-white hover:text-gray-900" do %>
+        <%= link_to export_admin_collections_path(locale: I18n.locale, group_id: @group.id, language: :ka, format: :docx), class: "px-3 py-2 grid grid-flow-col space-x-1 inline-flex justify-center items-center text-sm bg-gray-50 text-gray-700 rounded-md ring-1 ring-gray-300 p-1 hover:ring-2 hover:ring-oceanside-500 hover:bg-white hover:text-gray-900" do %>
           <div class="inline-flex">
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-4 h-4">
               <path stroke-linecap="round" stroke-linejoin="round" d="M3 16.5v2.25A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75V16.5M16.5 12 12 16.5m0 0L7.5 12m4.5 4.5V3" />
@@ -37,7 +37,7 @@
           </div>
         <% end %>
 
-        <%= link_to export_admin_collections_path(group_id: @group.id, language: :en, format: :docx), class: "px-3 py-2 grid grid-flow-col space-x-1 inline-flex justify-center items-center text-sm bg-gray-50 text-gray-700 rounded-md ring-1 ring-gray-300 p-1 hover:ring-2 hover:ring-oceanside-500 hover:bg-white hover:text-gray-900" do %>
+        <%= link_to export_admin_collections_path(locale: I18n.locale, group_id: @group.id, language: :en, format: :docx), class: "px-3 py-2 grid grid-flow-col space-x-1 inline-flex justify-center items-center text-sm bg-gray-50 text-gray-700 rounded-md ring-1 ring-gray-300 p-1 hover:ring-2 hover:ring-oceanside-500 hover:bg-white hover:text-gray-900" do %>
           <div class="inline-flex">
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-4 h-4">
               <path stroke-linecap="round" stroke-linejoin="round" d="M3 16.5v2.25A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75V16.5M16.5 12 12 16.5m0 0L7.5 12m4.5 4.5V3" />
@@ -50,29 +50,29 @@
       </div>
     <% end %>
 
-    <%= render 'admin/shared/paging', records: @collections, url_method: -> (**params){ admin_collections_path(**params) }, paging_params: { group_id: @group&.id }.merge(@search.attributes) %>
+    <%= render 'admin/shared/paging', records: @collections, url_method: -> (**params){ admin_collections_path(**params.merge(locale: I18n.locale)) }, paging_params: { group_id: @group&.id }.merge(@search.attributes) %>
     <div class="px-4 sm:px-6 lg:px-8">
       <div class="flow-root">
         <div class="-mx-4 -my-2 sm:-mx-6 lg:-mx-8">
           <div data-controller="search-highlight" class="inline-block min-w-full py-2 align-middle">
-            <%= form_for @search, url: admin_collections_path, method: :get do |form| %>
+            <%= form_for @search, url: admin_collections_path(locale: I18n.locale), method: :get do |form| %>
               <table class="w-full border-separate border-spacing-0">
                 <thead>
                   <%= render 'admin/shared/table/header',
                              columns: [{ name: 'UID' },
-                                       { name: 'ქვეკორპუსი', classes: 'max-w-[160px]' },
-                                       { name: 'ჯგუფი', classes: 'max-w-[160px]' },
-                                       { name: 'დასახელება ქართულად', classes: 'max-w-[240px]' },
-                                       { name: 'დასახელება ინგლისურად', classes: 'max-w-[240px]' },
-                                       { name: 'სტატუსი', classes: 'max-w[100px]' },
-                                       { name: 'წყვილები', classes: 'max-w[100px]' },
+                                       { name: t('admin.form.sub_corpora'), classes: 'max-w-[160px]' },
+                                       { name: t('admin.form.group'), classes: 'max-w-[160px]' },
+                                       { name: t('table.georgian_name'), classes: 'max-w-[240px]' },
+                                       { name: t('table.english_name'), classes: 'max-w-[240px]' },
+                                       { name: t('admin.form.status'), classes: 'max-w[100px]' },
+                                       { name: t('admin.form.text_pairs'), classes: 'max-w[100px]' },
                                        { name: '', classes: 'max-w[100px]' }] %>
 
                   <%= render 'admin/shared/table/filter',
                             form: form,
                             columns: [{ name: :id, classes: 'max-w-[60px]', input_type: :text_field, input_classes: 'px-2' },
-                                      { name: :supergroup_name_ka, classes: 'max-w-[160px]', input_type: :text_field },
-                                      { name: :group_name_ka, classes: 'max-w-[160px]', input_type: :text_field },
+                                      { name: "supergroup_name_#{I18n.locale}".to_sym, classes: 'max-w-[160px]', input_type: :text_field },
+                                      { name: "group_name_#{I18n.locale}".to_sym, classes: 'max-w-[160px]', input_type: :text_field },
                                       { name: :group_id, input_type: :hidden },
                                       { name: :name_ka, classes: 'max-w-[240px]', input_type: :text_field },
                                       { name: :name_en, classes: 'max-w-[240px]', input_type: :text_field },
@@ -86,11 +86,11 @@
                                record: collection,
                                index: index,
                                columns: { uid: true,
-                                          supergroup_name_ka: true,
-                                          group_name_ka: true,
-                                          enter_url_method: -> (**params){ admin_text_blocks_path(**params) },
+                                          "supergroup_name_#{I18n.locale}".to_sym => true,
+                                          "group_name_#{I18n.locale}".to_sym => true,
+                                          enter_url_method: -> (**params){ admin_text_blocks_path(**params.merge(locale: I18n.locale)) },
                                           enter_url_params: { collection_id: collection.id },
-                                          edit_url_method: -> (**params){ edit_admin_collection_path(**params) },
+                                          edit_url_method: -> (**params){ edit_admin_collection_path(**params.merge(locale: I18n.locale)) },
                                           edit_url_params: { id: collection.id },
                                           name_ka: true,
                                           name_en: true,
@@ -106,6 +106,6 @@
         </div>
       </div>
     </div>
-    <%= render 'admin/shared/paging', records: @collections, url_method: -> (**params){ admin_collections_path(**params) }, paging_params: { group_id: @group&.id }.merge(@search.attributes) %>
+    <%= render 'admin/shared/paging', records: @collections, url_method: -> (**params){ admin_collections_path(**params.merge(locale: I18n.locale)) }, paging_params: { group_id: @group&.id }.merge(@search.attributes) %>
   </div>
 </main>

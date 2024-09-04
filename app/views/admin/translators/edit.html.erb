@@ -1,15 +1,15 @@
-<%= render 'admin/shared/heading', name: 'მთარგმნელის რედაქტირება' %>
+<%= render 'admin/shared/heading', name: t('admin.edit_translator') %>
 
 <main>
   <div class="mx-auto max-w-screen-2xl sm:px-6 lg:px-8">
     <%= render('admin/shared/form',
-               url: admin_translator_path,
+               url: admin_translator_path(locale: I18n.locale),
                method: :put,
                record: @translator,
-               back_url: admin_translators_path,
+               back_url: admin_translators_path(locale: I18n.locale),
                delete_url: ->(record){ admin_translator_path(record) }
               ) %>
 
-    <%= render 'admin/shared/confirm_delete_modal', modal_title: 'გსურთ მთარგმნელის წაშლა?', modal_text: 'ეს მთარგმნელი წაიშლება სრულად' %>
+    <%= render 'admin/shared/confirm_delete_modal', modal_title: t('delete_translator_modal.title'), modal_text: t('delete_translator_modal.text') %>
   </div>
-<main>
+</main>

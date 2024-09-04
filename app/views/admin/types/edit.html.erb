@@ -1,15 +1,15 @@
-<%= render 'admin/shared/heading', name: 'ტიპის რედაქტირება' %>
+<%= render 'admin/shared/heading', name: t('admin.edit_type') %>
 
 <main>
   <div class="mx-auto max-w-screen-2xl sm:px-6 lg:px-8">
     <%= render('admin/shared/form',
-               url: admin_type_path,
+               url: admin_type_path(locale: I18n.locale),
                method: :put,
                record: @type,
-               back_url: admin_types_path,
+               back_url: admin_types_path(locale: I18n.locale),
                delete_url: ->(record){ admin_type_path(record) }
               ) %>
 
-    <%= render 'admin/shared/confirm_delete_modal', modal_title: 'გსურთ ტიპის წაშლა?', modal_text: 'ეს ტიპი წაიშლება სრულად' %>
+    <%= render 'admin/shared/confirm_delete_modal', modal_title: t('delete_type_modal.title'), modal_text: t('delete_type_modal.text') %>
   </div>
-<main>
+</main>

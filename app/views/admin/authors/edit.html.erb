@@ -1,15 +1,15 @@
-<%= render 'admin/shared/heading', name: 'ავტორის რედაქტირება' %>
+<%= render 'admin/shared/heading', name: t('admin.edit_author') %>
 
 <main>
   <div class="mx-auto max-w-screen-2xl sm:px-6 lg:px-8">
     <%= render('admin/shared/form',
-               url: admin_author_path,
+               url: admin_author_path(locale: I18n.locale),
                method: :put,
                record: @author,
-               back_url: admin_authors_path,
+               back_url: admin_authors_path(locale: I18n.locale),
                delete_url: ->(record){ admin_author_path(record) }
               ) %>
 
-    <%= render 'admin/shared/confirm_delete_modal', modal_title: 'გსურთ ავტორის წაშლა?', modal_text: 'ეს ავტორი წაიშლება სრულად' %>
+    <%= render 'admin/shared/confirm_delete_modal', modal_title: t('delete_author_modal.title'), modal_text: t('delete_author_modal.text') %>
   </div>
-<main>
+</main>

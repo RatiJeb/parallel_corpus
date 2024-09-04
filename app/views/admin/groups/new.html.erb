@@ -1,16 +1,16 @@
-<%= render 'admin/shared/heading', name: 'ჯგუფის დამატება' %>
+<%= render 'admin/shared/heading', name: t('admin.add_new_group') %>
 
 <main>
   <div class="mx-auto max-w-screen-2xl sm:px-6 lg:px-8">
 
     <% crumbs = [] %>
     <% if @supergroup %>
-      <% crumbs << { name: @supergroup.name_ka, url: admin_groups_path(supergroup_id: @supergroup.id) } %>
-      <% crumbs << { name: 'ახალი ჯგუფის დამატება', url: new_admin_group_path(supergroup_id: @supergroup&.id) } %>
+      <% crumbs << { name: @supergroup.send("name_#{I18n.locale}"), url: admin_groups_path(locale: I18n.locale, supergroup_id: @supergroup.id) } %>
+      <% crumbs << { name: t('admin.add_new_group'), url: new_admin_group_path(locale: I18n.locale, supergroup_id: @supergroup&.id) } %>
     <% end %>
 
     <%= render 'admin/shared/breadcrumbs', crumbs: crumbs unless crumbs.empty? %>
 
-    <%= render 'admin/groups/shared/form', url: admin_groups_path, method: :post %>
+    <%= render 'admin/groups/shared/form', url: admin_groups_path(locale: I18n.locale), method: :post %>
   </div>
-<main>
+</main>

@@ -1,27 +1,27 @@
-<%= render 'admin/shared/heading', name: 'გამომცემლობები' %>
+<%= render 'admin/shared/heading', name: t('admin.publishings') %>
 
 <main>
   <div class="mx-auto max-w-screen-2xl sm:px-6 lg:px-8">
     <% crumbs = [] %>
-    <% crumbs << { name: 'გამომცემლობები', url: admin_publishings_path } %>
+    <% crumbs << { name: t('admin.publishings'), url: admin_publishing_index_path(locale: I18n.locale) } %>
 
     <%= render 'admin/shared/breadcrumbs', crumbs: crumbs %>
 
-    <%= render 'admin/shared/new_button', name: 'ახალი გამომცემლობის დამატება', url: new_admin_publishing_path %>
+    <%= render 'admin/shared/new_button', name: t('buttons.new_publishing'), url: new_admin_publishing_path(locale: I18n.locale) %>
 
-    <%= render 'admin/shared/paging', records: @publishings, url_method: -> (**params){ admin_publishings_path(**params) }, paging_params: {}.merge(@search.attributes) %>
+    <%= render 'admin/shared/paging', records: @publishings, url_method: -> (**params){ admin_publishing_index_path(**params.merge(locale: I18n.locale)) }, paging_params: {}.merge(@search.attributes) %>
     <div class="px-4 sm:px-6 lg:px-8">
       <div class="flow-root">
         <div class="-mx-4 -my-2 sm:-mx-6 lg:-mx-8">
           <div data-controller="search-highlight" class="inline-block min-w-full py-2 align-middle">
-            <%= form_for @search, url: admin_publishings_path, method: :get do |form| %>
+            <%= form_for @search, url: admin_publishing_index_path(locale: I18n.locale), method: :get do |form| %>
               <table class="w-full border-separate border-spacing-0 border-gray-300">
                 <thead>
 
                   <%= render 'admin/shared/table/header',
                              columns: [{ name: 'UID' },
-                                       { name: 'დასახელება ქართულად', classes: 'max-w-[240px]' },
-                                       { name: 'დასახელება ინგლისურად', classes: 'max-w-[240px]' },
+                                       { name: t('table.georgian_name'), classes: 'max-w-[240px]' },
+                                       { name: t('table.english_name'), classes: 'max-w-[240px]' },
                                        { name: '' }] %>
 
                   <%= render 'admin/shared/table/filter',
@@ -39,12 +39,12 @@
                                record: publishing,
                                index: index,
                                columns: { uid: true,
-                                          edit_url_method: -> (**params){ edit_admin_publishing_path(**params) },
+                                          edit_url_method: -> (**params){ edit_admin_publishing_path(**params.merge(locale: I18n.locale)) },
                                           edit_url_params: { id: publishing.id },
-                                          delete_url_method: -> (record){ admin_publishing_path(record) },
-                                          delete_redirect_url_method: admin_publishing_path,
-                                          delete_modal_title: 'გსურთ გამომცემლობის წაშლა?',
-                                          delete_modal_text: 'ეს გამომცემლობა წაიშლება სრულად',
+                                          delete_url_method: -> (record){ admin_publishing_index_path(record) },
+                                          delete_redirect_url_method: admin_publishing_index_path(locale: I18n.locale),
+                                          delete_modal_title: t('delete_publishing_modal.title'),
+                                          delete_modal_text: t('delete_publishing_modal.text'),
                                           name_ka: true,
                                           name_en: true,
                                           edit: true,
@@ -58,9 +58,9 @@
         </div>
       </div>
     </div>
-    <%= render 'admin/shared/paging', records: @publishings, url_method: -> (**params){ admin_publishings_path(**params) }, paging_params: {}.merge(@search.attributes) %>
+    <%= render 'admin/shared/paging', records: @publishings, url_method: -> (**params){ admin_publishing_index_path(**params.merge(locale: I18n.locale)) }, paging_params: {}.merge(@search.attributes) %>
 
-    <%= render 'admin/shared/confirm_delete_modal', modal_title: 'გსურთ გამომცემლობის წაშლა?',
-                                                      modal_text: 'ეს გამომცემლობა წაიშლება სრულად' %>
+    <%= render 'admin/shared/confirm_delete_modal', modal_title: t('delete_publishing_modal.title'),
+                                                      modal_text: t('delete_publishing_modal.text') %>
   </div>
 </main>
