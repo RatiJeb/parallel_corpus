@@ -1,12 +1,12 @@
-<%= render 'admin/shared/heading', name: 'დარგის დამატება' %>
+<%= render 'admin/shared/heading', name: t('admin.add_new_field') %>
 
 <main>
   <div class="mx-auto max-w-screen-2xl sm:px-6 lg:px-8">
     <%= render('admin/shared/form',
-               url: admin_fields_path,
+               url: admin_fields_path(locale: I18n.locale),
                method: :post,
                record: @field,
-               back_url: admin_fields_path
+               back_url: admin_fields_path(locale: I18n.locale)
               ) %>
   </div>
-<main>
+</main>

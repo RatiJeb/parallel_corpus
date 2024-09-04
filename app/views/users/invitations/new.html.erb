@@ -3,7 +3,7 @@
     <div class="flex justify-center">
       <%= render 'shared/logo_md' %>
     </div>
-    <h2 class="mt-6 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900">გაგზავნეთ მოწვევა</h2>
+    <h2 class="mt-6 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900"><%= t('users.send_invitation') %></h2>
   </div>
 
   <div class="mt-10 sm:mx-auto sm:w-full sm:max-w-[480px]">
@@ -14,7 +14,7 @@
         <div class="mb-4">
           <% resource.class.invite_key_fields.each do |field| -%>
             <div class="field">
-              <label for="email" class="block text-sm font-medium leading-6 text-gray-900">იმეილი</label>
+              <label for="email" class="block text-sm font-medium leading-6 text-gray-900"><%= t('admin.email') %></label>
               <div class="mt-2">
                 <%= f.text_field field, class: "block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-oceanside-500 sm:text-sm sm:leading-6" %>
               </div>
@@ -23,7 +23,7 @@
         </div>
 
         <div class="actions">
-          <%= f.submit "გაგზავნა" , class: "flex w-full justify-center rounded-md bg-mountbatten-500 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-mountbatten-400 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-mountbatten-500" %>
+          <%= f.submit t('users.send') , class: "flex w-full justify-center rounded-md bg-mountbatten-500 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-mountbatten-400 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-mountbatten-500" %>
         </div>
       <% end %>
     </div>

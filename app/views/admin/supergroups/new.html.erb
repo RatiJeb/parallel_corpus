@@ -1,8 +1,8 @@
-<%= render 'admin/shared/heading', name: 'ქვეკორპუსის დამატება' %>
+<%= render 'admin/shared/heading', name: t('admin.add_new_sub_corpora') %>
 
 <main>
   <div class="mx-auto max-w-screen-2xl sm:px-6 lg:px-8">
 
-    <%= render 'admin/supergroups/shared/form', url: admin_supergroups_path, method: :post %>
+    <%= render 'admin/supergroups/shared/form', url: admin_supergroups_path(locale: I18n.locale), method: :post %>
   </div>
-<main>
+</main>

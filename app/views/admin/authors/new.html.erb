@@ -1,12 +1,12 @@
-<%= render 'admin/shared/heading', name: 'ავტორის დამატება' %>
+<%= render 'admin/shared/heading', name: t('admin.add_new_author') %>
 
 <main>
   <div class="mx-auto max-w-screen-2xl sm:px-6 lg:px-8">
     <%= render('admin/shared/form',
-               url: admin_authors_path,
+               url: admin_authors_path(locale: I18n.locale),
                method: :post,
                record: @author,
-               back_url: admin_authors_path
+               back_url: admin_authors_path(locale: I18n.locale)
               ) %>
   </div>
-<main>
+</main>

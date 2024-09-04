@@ -5,7 +5,7 @@
   <div class="flex justify-stretch grid grid-cols-3 grid-flow-col max-w-3xl">
     <div class="mt-8 bg-mountbatten-100 px-3 col-span-1 rounded-l-md ring-2 ring-mountbatten-500 space-y-12 sm:space-y-16 inline-flex">
       <div class="sm:py-3">
-        <%= form.label :role, 'როლი', class: "block text-sm font-medium leading-6 text-gray-900 sm:py-1.5" %>
+        <%= form.label :role, t('admin.role'), class: "block text-sm font-medium leading-6 text-gray-900 sm:py-1.5" %>
       </div>
     </div>
     <div class="mt-8 bg-gray-100 px-3 rounded-r-md col-span-2 ring-2 ring-gray-500 space-y-12 sm:space-y-16 inline-flex">
@@ -18,18 +18,17 @@
   </div>
 
   <div class="mt-6 flex justify-stretch grid grid-flow-col gap-x-6 max-w-3xl">
-    <%= link_to 'უკან დაბრუნება', admin_users_path, type: "button", class: "inline-flex justify-center rounded-md bg-gray-200 ring-2 ring-gray-500 px-3 py-2 text-sm font-semibold text-gray-700 shadow-sm hover:bg-gray-100 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gray-200" %>
-    <!-- <button type="button" class="inline-flex justify-center rounded-md bg-gray-200 ring-2 ring-gray-500 px-3 py-2 text-sm font-semibold text-gray-700 shadow-sm hover:bg-gray-100 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gray-200">უარყოფა</button> -->
+    <%= link_to t('admin.form.back'), admin_users_path(locale: I18n.locale), type: "button", class: "inline-flex justify-center rounded-md bg-gray-200 ring-2 ring-gray-500 px-3 py-2 text-sm font-semibold text-gray-700 shadow-sm hover:bg-gray-100 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gray-200" %>
     <% if current_user.superadmin? && @user.persisted? %>
       <button type="button"
               data-controller="delete-record"
               data-delete-record-url-value="<%= admin_user_path(@user) %>"
-              data-delete-record-redirect-url-value="<%= admin_users_path %>"
+              data-delete-record-redirect-url-value="<%= admin_users_path(locale: I18n.locale) %>"
               data-action="click->delete-record#submit"
               class="inline-flex justify-center rounded-md bg-gray-500 ring-2 ring-gray-500 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-gray-400 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gray-500">
-        წაშლა
+        <%= t('admin.form.delete') %>
       </button>
     <% end %>
-    <button type="submit" class="inline-flex justify-center rounded-md bg-mountbatten-500 ring-2 ring-mountbatten-500 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-mountbatten-400 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-mountbatten-500">შენახვა</button>
+    <button type="submit" class="inline-flex justify-center rounded-md bg-mountbatten-500 ring-2 ring-mountbatten-500 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-mountbatten-400 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-mountbatten-500"><%= t('admin.form.submit') %></button>
   </div>
 <% end %>

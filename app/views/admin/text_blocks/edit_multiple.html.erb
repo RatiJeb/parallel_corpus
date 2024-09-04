@@ -1,16 +1,16 @@
-<%= render 'admin/shared/heading', name: 'ტექსტური წყვილების რედაქტირება' %>
+<%= render 'admin/shared/heading', name: t('admin.edit_text_pairs') %>
 
 <main data-controller="scroll-to">
   <div class="mx-auto max-w-screen-2xl sm:px-6 lg:px-8">
     <% crumbs = [] %>
-    <% crumbs << { name: @collection.supergroup.name_ka, url: admin_groups_path(supergroup_id: @collection.supergroup.id) } %>
-    <% crumbs << { name: @collection.group.name_ka, url: admin_collections_path(group_id: @collection.group.id) } %>
-    <% crumbs << { name: @collection.name_ka, url: admin_text_blocks_path(collection_id: @collection.id) } %>
+    <% crumbs << { name: @collection.supergroup.send("name_#{I18n.locale}"), url: admin_groups_path(locale: I18n.locale, supergroup_id: @collection.supergroup.id) } %>
+    <% crumbs << { name: @collection.group.send("name_#{I18n.locale}"), url: admin_collections_path(locale: I18n.locale, group_id: @collection.group.id) } %>
+    <% crumbs << { name: @collection.send("name_#{I18n.locale}"), url: admin_text_blocks_path(locale: I18n.locale, collection_id: @collection.id) } %>
 
     <%= render 'admin/shared/breadcrumbs', crumbs: crumbs unless crumbs.empty? %>
 
     <div class="mt-8 flex grid grid-flow-col space-x-4 justify-between">
-      <%= link_to export_admin_text_blocks_path(collection_id: @collection.id, format: :xlsx), 'data-controller': "tooltip", 'data-tooltip-target': "cell", 'data-tooltip-placement-value': "top", class: "px-3 py-2 grid grid-flow-col space-x-1 inline-flex justify-center items-center text-sm bg-gray-50 text-gray-700 rounded-md ring-1 ring-gray-300 p-1 hover:ring-2 hover:ring-oceanside-500 hover:bg-white hover:text-gray-900" do %>
+      <%= link_to export_admin_text_blocks_path(locale: I18n.locale, collection_id: @collection.id, format: :xlsx), 'data-controller': "tooltip", 'data-tooltip-target': "cell", 'data-tooltip-placement-value': "top", class: "px-3 py-2 grid grid-flow-col space-x-1 inline-flex justify-center items-center text-sm bg-gray-50 text-gray-700 rounded-md ring-1 ring-gray-300 p-1 hover:ring-2 hover:ring-oceanside-500 hover:bg-white hover:text-gray-900" do %>
         <div class="inline-flex">
           <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5">
             <path stroke-linecap="round" stroke-linejoin="round" d="M3 16.5v2.25A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75V16.5M16.5 12 12 16.5m0 0L7.5 12m4.5 4.5V3" />
@@ -18,7 +18,7 @@
         </div>
         <div class="inline-flex">
           .xlsx
-          <%= render 'admin/shared/tooltip', text: 'ტექსტური წყვილების ექსელის ფაილად ჩამოწერა' %>
+          <%= render 'admin/shared/tooltip', text: t('admin.download_text_pairs_as_an_excel') %>
         </div>
       <% end %>
     </div>
@@ -29,17 +29,17 @@
           <div>
             <div class="grid grid-flow-col space-x-2 justify-items-start">
               <div class="inline-flex">
-                <input id="search-id-input" type="text" name="order_number" placeholder="ID-თი ძიება" data-action="keydown->search-text-block#search" class="max-w-[120px] bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-3xl focus:ring-oceanside-500 focus:border-oceanside-500 block w-full dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-oceanside-500 dark:focus:border-oceanside-500"/>
+                <input id="search-id-input" type="text" name="order_number" placeholder="<%= t('admin.search_by_id') %>" data-action="keydown->search-text-block#search" class="max-w-[120px] bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-3xl focus:ring-oceanside-500 focus:border-oceanside-500 block w-full dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-oceanside-500 dark:focus:border-oceanside-500"/>
               </div>
               <div class="inline-flex">
-                <input id="search-text-input" type="text" name="translation_contents" placeholder="ტექსტით ძიება" data-action="keydown->search-text-block#search" class="max-w-[180px] bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-3xl focus:ring-oceanside-500 focus:border-oceanside-500 block w-full dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-oceanside-500 dark:focus:border-oceanside-500"/>
+                <input id="search-text-input" type="text" name="translation_contents" placeholder="<%= t('admin.search_by_text') %>" data-action="keydown->search-text-block#search" class="max-w-[180px] bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-3xl focus:ring-oceanside-500 focus:border-oceanside-500 block w-full dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-oceanside-500 dark:focus:border-oceanside-500"/>
               </div>
               <button id='search-ka' class="admin-search-btn" type="button" data-action="click->search-text-block#search"><%= image_tag 'search-icon.svg' %></button>
             </div>
           </div>
           <div class="flex items-center">
             <div class="grid grid-flow-col items-end">
-              <%= link_to export_admin_text_blocks_path(collection_id: @collection.id, language: :ka, format: :docx), 'data-controller': "tooltip", 'data-tooltip-target': "cell", 'data-tooltip-placement-value': "top", class: "ml-2 px-3 py-2 grid grid-flow-col space-x-1 inline-flex justify-center items-center text-sm bg-gray-50 text-gray-700 rounded-md ring-1 ring-gray-300 p-1 hover:ring-2 hover:ring-oceanside-500 hover:bg-white hover:text-gray-900" do %>
+              <%= link_to export_admin_text_blocks_path(locale: I18n.locale, collection_id: @collection.id, language: :ka, format: :docx), 'data-controller': "tooltip", 'data-tooltip-target': "cell", 'data-tooltip-placement-value': "top", class: "ml-2 px-3 py-2 grid grid-flow-col space-x-1 inline-flex justify-center items-center text-sm bg-gray-50 text-gray-700 rounded-md ring-1 ring-gray-300 p-1 hover:ring-2 hover:ring-oceanside-500 hover:bg-white hover:text-gray-900" do %>
                 <div class="inline-flex">
                   <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5">
                     <path stroke-linecap="round" stroke-linejoin="round" d="M3 16.5v2.25A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75V16.5M16.5 12 12 16.5m0 0L7.5 12m4.5 4.5V3" />
@@ -47,7 +47,7 @@
                 </div>
                 <div class="inline-flex">
                   ka.docx
-                  <%= render 'admin/shared/tooltip', text: 'ქართული ტექსტის ვორდის ფაილად ჩამოწერა' %>
+                  <%= render 'admin/shared/tooltip', text: t('admin.download_georgian_text_as_a_word') %>
                 </div>
               <% end %>
             </div>
@@ -59,10 +59,10 @@
           <div>
             <div class="grid grid-flow-col space-x-2 justify-items-start" data-controller="search-text-block">
               <div class="inline-flex">
-                <input id="search-id-input" type="text" name="order_number" placeholder="Search by ID" data-action="keydown->search-text-block#search" class="max-w-[120px] bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-3xl focus:ring-oceanside-500 focus:border-oceanside-500 block w-full dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-oceanside-500 dark:focus:border-oceanside-500"/>
+                <input id="search-id-input" type="text" name="order_number" placeholder="<%= t('admin.search_by_id') %>" data-action="keydown->search-text-block#search" class="max-w-[120px] bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-3xl focus:ring-oceanside-500 focus:border-oceanside-500 block w-full dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-oceanside-500 dark:focus:border-oceanside-500"/>
               </div>
               <div class="inline-flex">
-                <input id="search-text-input" type="text" name="translation_contents" placeholder="Search by text" data-action="keydown->search-text-block#search" class="max-w-[180px] bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-3xl focus:ring-oceanside-500 focus:border-oceanside-500 block w-full dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-oceanside-500 dark:focus:border-oceanside-500"/>
+                <input id="search-text-input" type="text" name="translation_contents" placeholder="<%= t('admin.search_by_id') %>" data-action="keydown->search-text-block#search" class="max-w-[180px] bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-3xl focus:ring-oceanside-500 focus:border-oceanside-500 block w-full dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-oceanside-500 dark:focus:border-oceanside-500"/>
               </div>
               <button id='search-en' class="admin-search-btn" type="button" data-action="click->search-text-block#search"><%= image_tag 'search-icon.svg' %></button>
             </div>
@@ -70,7 +70,7 @@
           <div class="grid grid-flow-col space-x-2 justify-items-end">
             <div class="inline-flex items-center">
               <div class="grid grid-flow-col items-end">
-                <%= link_to export_admin_text_blocks_path(collection_id: @collection.id, language: :en, format: :docx), 'data-controller': "tooltip", 'data-tooltip-target': "cell", 'data-tooltip-placement-value': "top",  class: "ml-2 px-3 py-2 grid grid-flow-col space-x-1 inline-flex justify-center items-center text-sm bg-gray-50 text-gray-700 rounded-md ring-1 ring-gray-300 p-1 hover:ring-2 hover:ring-oceanside-500 hover:bg-white hover:text-gray-900" do %>
+                <%= link_to export_admin_text_blocks_path(locale: I18n.locale, collection_id: @collection.id, language: :en, format: :docx), 'data-controller': "tooltip", 'data-tooltip-target': "cell", 'data-tooltip-placement-value': "top",  class: "ml-2 px-3 py-2 grid grid-flow-col space-x-1 inline-flex justify-center items-center text-sm bg-gray-50 text-gray-700 rounded-md ring-1 ring-gray-300 p-1 hover:ring-2 hover:ring-oceanside-500 hover:bg-white hover:text-gray-900" do %>
                   <div class="inline-flex">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5">
                       <path stroke-linecap="round" stroke-linejoin="round" d="M3 16.5v2.25A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75V16.5M16.5 12 12 16.5m0 0L7.5 12m4.5 4.5V3" />
@@ -78,7 +78,7 @@
                   </div>
                   <div class="inline-flex">
                     en.docx
-                    <%= render 'admin/shared/tooltip', text: 'ინგლისური ტექსტის ვორდის ფაილად ჩამოწერა' %>
+                    <%= render 'admin/shared/tooltip', text: t('admin.download_english_text_as_a_word') %>
                   </div>
                 <% end %>
               </div>
@@ -86,7 +86,7 @@
             <div data-controller="update-multiple" class="inline-flex">
               <button type="button"
                       data-action="click->update-multiple#trigger"
-                      class="inline-flex justify-center rounded-md bg-mountbatten-500 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-mountbatten-400 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-mountbatten-500">ყველას შენახვა</button>
+                      class="inline-flex justify-center rounded-md bg-mountbatten-500 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-mountbatten-400 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-mountbatten-500"><%= t('admin.save_all_button') %></button>
             </div>
           </div>
         </div>
@@ -106,8 +106,8 @@
 
     </div>
 
-    <%= render 'admin/shared/confirm_delete_modal', modal_title: 'გსურთ ტექსტური ბლოკის წაშლა?',
-                                                    modal_text: 'ეს ტექტური ბლოკი წაიშლება სრულად' %>
+    <%= render 'admin/shared/confirm_delete_modal', modal_title: t('delete_text_block_modal.title'),
+                                                    modal_text: t('delete_text_block_modal.text') %>
 
   </div>
 </main>

@@ -3,7 +3,7 @@
     <div class="flex justify-center">
       <%= render 'shared/logo_md' %>
     </div>
-    <h2 class="mt-6 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900">შეცვალეთ პაროლი</h2>
+    <h2 class="mt-6 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900"><%= t('passwords.change_password') %></h2>
   </div>
 
   <div class="mt-10 sm:mx-auto sm:w-full sm:max-w-[480px]">
@@ -13,9 +13,9 @@
         <%= f.hidden_field :reset_password_token %>
 
         <div>
-          <label for="password" class="block text-sm font-medium leading-6 text-gray-900">ახალი პაროლი</label>
+          <label for="password" class="block text-sm font-medium leading-6 text-gray-900"><%= t('passwords.new_password') %></label>
           <% if @minimum_password_length %>
-            <span class="text-xs">(მინიმუმ <%= @minimum_password_length %> სიმბოლო)</span>
+            <span class="text-xs">(<%= t('passwords.minimum_symbols', length: @minimum_password_length) %>)</span>
           <% end %>
           <div class="mt-2">
             <%= f.password_field :password, autofocus: true, autocomplete: "new-password", class: "block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-oceanside-500 sm:text-sm sm:leading-6" %>
@@ -23,14 +23,14 @@
         </div>
 
         <div>
-          <label for="password_confirmation" class="block text-sm font-medium leading-6 text-gray-900">გაიმეორეთ პაროლი</label>
+          <label for="password_confirmation" class="block text-sm font-medium leading-6 text-gray-900"><%= t('passwords.confirm_password') %></label>
           <div class="mt-2">
             <%= f.password_field :password_confirmation, autocomplete: "new-password", class: "block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-oceanside-500 sm:text-sm sm:leading-6" %>
           </div>
         </div>
 
         <div class="mt-4">
-          <%= f.submit "შეცვალე პაროლი", class: "flex w-full justify-center rounded-md bg-mountbatten-500 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-mountbatten-400 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-mountbatten-500" %>
+          <%= f.submit t('passwords.change_password'), class: "flex w-full justify-center rounded-md bg-mountbatten-500 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-mountbatten-400 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-mountbatten-500" %>
         </div>
       <% end %>
 

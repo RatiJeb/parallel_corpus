@@ -57,7 +57,7 @@ module ApplicationHelper
   end
 
   def other_page(number, url_method, paging_params, records)
-    link_to(number, url_method.call(**paging_params.merge(page: number)), class: "relative inline-flex items-center px-4 py-2 rounded-md text-sm font-semibold text-gray-900 hover:bg-mountbatten-50 focus:z-20 focus:outline-offset-0")
+    link_to(number, url_method.call(**paging_params.merge(page: number, locale: I18n.locale)), class: "relative inline-flex items-center px-4 py-2 rounded-md text-sm font-semibold text-gray-900 hover:bg-mountbatten-50 focus:z-20 focus:outline-offset-0")
   end
 
   def page_ellipsis

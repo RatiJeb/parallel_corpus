@@ -12,25 +12,25 @@
     </td>
   <% end %>
 
-  <% if columns[:supergroup_name_ka].present? %>
+  <% if columns[:supergroup_name_ka].present? || columns[:supergroup_name_en].present? %>
     <td data-controller="tooltip" data-tooltip-target="cell" data-tooltip-overflow-value="true" class="relative truncate z-0 border-b border-r text-sm scrollbar-hide hover:z-10 max-w-[240px] text-gray-500 pr-3">
-      <%= link_to admin_groups_path(supergroup_id: record.supergroup_id), class: "hover:text-mountbatten-700 hover:font-semibold w-full text-gray-700 border-transparent hover:text-gray-900 py-5 px-3" do %>
+      <%= link_to admin_groups_path(locale: I18n.locale, supergroup_id: record.supergroup_id), class: "hover:text-mountbatten-700 hover:font-semibold w-full text-gray-700 border-transparent hover:text-gray-900 py-5 px-3" do %>
         <span class="highlightable">
-          <%= record.supergroup_name_ka %>
+          <%= record.send("supergroup_name_#{I18n.locale}") %>
         </span>
       <% end %>
-      <%= render 'admin/shared/tooltip', text: record.supergroup_name_ka, highlightable: true %>
+      <%= render 'admin/shared/tooltip', text: record.send("supergroup_name_#{I18n.locale}"), highlightable: true %>
     </td>
   <% end %>
 
-  <% if columns[:group_name_ka].present? %>
+  <% if columns[:group_name_ka].present? || columns[:group_name_en].present? %>
     <td data-controller="tooltip" data-tooltip-target="cell" data-tooltip-overflow-value="true" class="relative truncate z-0 border-b border-r text-sm scrollbar-hide hover:z-10 max-w-[240px] text-gray-500 pr-3">
-      <%= link_to admin_collections_path(group_id: record.group_id), class: "hover:text-mountbatten-700 hover:font-semibold w-full text-gray-700 border-transparent hover:text-gray-900 py-5 px-3" do %>
+      <%= link_to admin_collections_path(locale: I18n.locale, group_id: record.group_id), class: "hover:text-mountbatten-700 hover:font-semibold w-full text-gray-700 border-transparent hover:text-gray-900 py-5 px-3" do %>
         <span class="highlightable">
-          <%= record.group_name_ka %>
+          <%= record.send("group_name_#{I18n.locale}") %>
         </span>
       <% end %>
-      <%= render 'admin/shared/tooltip', text: record.group_name_ka, highlightable: true %>
+      <%= render 'admin/shared/tooltip', text: record.send("group_name_#{I18n.locale}"), highlightable: true %>
     </td>
   <% end %>
 

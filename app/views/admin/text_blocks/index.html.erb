@@ -1,25 +1,25 @@
-<%= render 'admin/shared/heading', name: 'ტექსტური წყვილები' %>
+<%= render 'admin/shared/heading', name: t('admin.text_pairs') %>
 
 <main>
   <div class="mx-auto max-w-screen-2xl sm:px-6 lg:px-8">
     <% crumbs = [] %>
     <% if @collection %>
-      <% crumbs << { name: @collection.supergroup.name_ka, url: admin_groups_path(supergroup_id: @collection.supergroup.id) } %>
-      <% crumbs << { name: @collection.group.name_ka, url: admin_collections_path(group_id: @collection.group.id) } %>
-      <% crumbs << { name: @collection.name_ka, url: admin_text_blocks_path(collection_id: @collection.id) } %>
+      <% crumbs << { name: @collection.supergroup.send("name_#{I18n.locale}"), url: admin_groups_path(locale: I18n.locale, supergroup_id: @collection.supergroup.id) } %>
+      <% crumbs << { name: @collection.group.send("name_#{I18n.locale}"), url: admin_collections_path(locale: I18n.locale, group_id: @collection.group.id) } %>
+      <% crumbs << { name: @collection.send("name_#{I18n.locale}"), url: admin_text_blocks_path(locale: I18n.locale, collection_id: @collection.id) } %>
     <% end %>
 
     <%= render 'admin/shared/breadcrumbs', crumbs: crumbs unless crumbs.empty? %>
 
     <% if @collection %>
       <% if @text_blocks.empty? %>
-        <%= render 'admin/shared/new_button', name: 'ახალი ტექსტური წყვილების დამატება', url: new_text_blocks_admin_collection_path(id: @collection.id) %>
+        <%= render 'admin/shared/new_button', name: t('admin.add_new_text_pairs'), url: new_text_blocks_admin_collection_path(locale: I18n.locale, id: @collection.id) %>
       <% else %>
-        <%= render 'admin/shared/edit_button', name: 'ტექსტური წყვილების რედაქტირება', url: edit_multiple_admin_text_blocks_path(collection_id: @collection.id) %>
+        <%= render 'admin/shared/edit_button', name: t('admin.edit_text_pairs'), url: edit_multiple_admin_text_blocks_path(locale: I18n.locale, collection_id: @collection.id) %>
       <% end %>
 
       <div class="mt-4 flex grid grid-flow-col space-x-4 max-w-40">
-        <%= link_to export_admin_text_blocks_path(collection_id: @collection.id, format: :xlsx), class: "px-3 py-2 grid grid-flow-col space-x-1 inline-flex justify-center items-center text-sm bg-gray-50 text-gray-700 rounded-md ring-1 ring-gray-300 p-1 hover:ring-2 hover:ring-oceanside-500 hover:bg-white hover:text-gray-900" do %>
+        <%= link_to export_admin_text_blocks_path(locale: I18n.locale, collection_id: @collection.id, format: :xlsx), class: "px-3 py-2 grid grid-flow-col space-x-1 inline-flex justify-center items-center text-sm bg-gray-50 text-gray-700 rounded-md ring-1 ring-gray-300 p-1 hover:ring-2 hover:ring-oceanside-500 hover:bg-white hover:text-gray-900" do %>
           <div class="inline-flex">
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5">
               <path stroke-linecap="round" stroke-linejoin="round" d="M3 16.5v2.25A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75V16.5M16.5 12 12 16.5m0 0L7.5 12m4.5 4.5V3" />
@@ -30,7 +30,7 @@
           </div>
         <% end %>
 
-        <%= link_to export_admin_text_blocks_path(collection_id: @collection.id, language: :ka, format: :docx), class: "px-3 py-2 grid grid-flow-col space-x-1 inline-flex justify-center items-center text-sm bg-gray-50 text-gray-700 rounded-md ring-1 ring-gray-300 p-1 hover:ring-2 hover:ring-oceanside-500 hover:bg-white hover:text-gray-900" do %>
+        <%= link_to export_admin_text_blocks_path(locale: I18n.locale, collection_id: @collection.id, language: :ka, format: :docx), class: "px-3 py-2 grid grid-flow-col space-x-1 inline-flex justify-center items-center text-sm bg-gray-50 text-gray-700 rounded-md ring-1 ring-gray-300 p-1 hover:ring-2 hover:ring-oceanside-500 hover:bg-white hover:text-gray-900" do %>
           <div class="inline-flex">
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5">
               <path stroke-linecap="round" stroke-linejoin="round" d="M3 16.5v2.25A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75V16.5M16.5 12 12 16.5m0 0L7.5 12m4.5 4.5V3" />
@@ -41,7 +41,7 @@
           </div>
         <% end %>
 
-        <%= link_to export_admin_text_blocks_path(collection_id: @collection.id, language: :en, format: :docx), class: "px-3 py-2 grid grid-flow-col space-x-1 inline-flex justify-center items-center text-sm bg-gray-50 text-gray-700 rounded-md ring-1 ring-gray-300 p-1 hover:ring-2 hover:ring-oceanside-500 hover:bg-white hover:text-gray-900" do %>
+        <%= link_to export_admin_text_blocks_path(locale: I18n.locale, collection_id: @collection.id, language: :en, format: :docx), class: "px-3 py-2 grid grid-flow-col space-x-1 inline-flex justify-center items-center text-sm bg-gray-50 text-gray-700 rounded-md ring-1 ring-gray-300 p-1 hover:ring-2 hover:ring-oceanside-500 hover:bg-white hover:text-gray-900" do %>
           <div class="inline-flex">
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5">
               <path stroke-linecap="round" stroke-linejoin="round" d="M3 16.5v2.25A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75V16.5M16.5 12 12 16.5m0 0L7.5 12m4.5 4.5V3" />
@@ -56,10 +56,10 @@
       <% if (current_user.admin? || current_user.superadmin?) && @text_blocks.any? %>
         <button type="button"
                 data-controller="delete-record"
-                data-delete-record-url-value="<%= destroy_multiple_admin_text_blocks_path(collection_id: @collection.id) %>"
-                data-delete-record-redirect-url-value="<%= admin_text_blocks_path(collection_id: @collection.id) %>"
-                data-delete-record-modal-title-value="გსურთ ტექსტური წყვილების წაშლა?"
-                data-delete-record-modal-text-value="ყველა ტექტური წყვილი ამ კრებულში წაიშლება სრულად"
+                data-delete-record-url-value="<%= destroy_multiple_admin_text_blocks_path(locale: I18n.locale, collection_id: @collection.id) %>"
+                data-delete-record-redirect-url-value="<%= admin_text_blocks_path(locale: I18n.locale, collection_id: @collection.id) %>"
+                data-delete-record-modal-title-value="<%= t('delete_text_pairs_modal.title') %>"
+                data-delete-record-modal-text-value="<%= t('delete_text_pairs_modal.text') %>"
                 data-action="click->delete-record#submit"
                 class="mt-4 px-3 py-2 grid grid-flow-col space-x-1 inline-flex justify-center items-center rounded-md bg-gray-500 text-sm font-semibold text-white shadow-sm hover:bg-gray-400 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gray-500">
           <div class="inline-flex">
@@ -68,7 +68,7 @@
             </svg>
           </div>
           <div class="inline-flex">
-            ყველა ტექსტური წყვილის წაშლა
+            <%= t('admin.delete_all_text_pairs') %>
           </div>
         </button>
       <% end %>
@@ -76,19 +76,19 @@
     <% end %>
 
 
-    <%= render 'admin/shared/paging', records: @text_blocks, url_method: -> (**params){ admin_text_blocks_path(**params) }, paging_params: { collection_id: @collection&.id }.merge(@search.attributes) %>
+    <%= render 'admin/shared/paging', records: @text_blocks, url_method: -> (**params){ admin_text_blocks_path(**params.merge(locale: I18n.locale)) }, paging_params: { collection_id: @collection&.id }.merge(@search.attributes) %>
 
     <div class="px-4 sm:px-6 lg:px-8">
       <div class="flow-root">
         <div class="-mx-4 -my-2 sm:-mx-6 lg:-mx-8">
           <div data-controller="search-highlight" class="inline-block min-w-full py-2 align-middle">
-            <%= form_for @search, url: admin_text_blocks_path, method: :get do |form| %>
+            <%= form_for @search, url: admin_text_blocks_path(locale: I18n.locale), method: :get do |form| %>
               <table class="w-full border-separate border-spacing-0">
                 <thead>
                   <%= render 'admin/shared/table/header',
                              columns: [{ name: 'UID' },
-                                       { name: 'ქართული წინადადება', classes: 'max-w-[240px]' },
-                                       { name: 'ინგლისური წინადადება', classes: 'max-w-[240px]' },
+                                       { name: t('table.georgian_sentence'), classes: 'max-w-[240px]' },
+                                       { name: t('table.english_sentence'), classes: 'max-w-[240px]' },
                                        { name: '' }] %>
 
                   <%= render 'admin/shared/table/filter',
@@ -130,10 +130,10 @@
       </div>
     </div>
 
-    <%= render 'admin/shared/paging', records: @text_blocks, url_method: -> (**params){ admin_text_blocks_path(**params) }, paging_params: { collection_id: @collection&.id }.merge(@search.attributes) %>
+    <%= render 'admin/shared/paging', records: @text_blocks, url_method: -> (**params){ admin_text_blocks_path(**params.merge(locale: I18n.locale)) }, paging_params: { collection_id: @collection&.id }.merge(@search.attributes) %>
 
-    <%= render 'admin/shared/confirm_delete_modal', modal_title: 'გსურთ ტექსტური წყვილების წაშლა?',
-                                                      modal_text: 'ყველა ტექტური წყვილი ამ კრებულში წაიშლება სრულად' %>
+    <%= render 'admin/shared/confirm_delete_modal', modal_title: t('delete_text_pairs_modal.title'),
+                                                      modal_text: t('delete_text_pairs_modal.text') %>
 
   </div>
 </main>

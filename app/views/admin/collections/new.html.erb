@@ -1,18 +1,18 @@
-<%= render 'admin/shared/heading', name: 'კრებულის დამატება' %>
+<%= render 'admin/shared/heading', name: t('admin.add_new_collection') %>
 
 <main>
   <div class="mx-auto max-w-screen-2xl sm:px-6 lg:px-8">
 
     <% crumbs = [] %>
     <% if @collection.group %>
-      <% crumbs << { name: 'ქვეკორპუსები', url: admin_supergroups_path } %>
-      <% crumbs << { name: @collection.group.supergroup.name_ka, url: admin_groups_path(supergroup_id: @collection.group.supergroup.id) } %>
-      <% crumbs << { name: @collection.group.name_ka, url: admin_collections_path(group_id: @collection.group.id) } %>
-      <% crumbs << { name: 'ახალი კრებულის დამატება', url: new_admin_collection_path(group_id: @collection.group&.id) } %>
+      <% crumbs << { name: t('crumbs.sub_corpora'), url: admin_supergroups_path(locale: I18n.locale) } %>
+      <% crumbs << { name: @collection.group.supergroup.send("name_#{I18n.locale}"), url: admin_groups_path(locale: I18n.locale, supergroup_id: @collection.group.supergroup.id) } %>
+      <% crumbs << { name: @collection.group.send("name_#{I18n.locale}"), url: admin_collections_path(locale: I18n.locale, group_id: @collection.group.id) } %>
+      <% crumbs << { name: t('crumbs.add_new_sub_corpora'), url: new_admin_collection_path(locale: I18n.locale, group_id: @collection.group&.id) } %>
     <% end %>
 
     <%= render 'admin/shared/breadcrumbs', crumbs: crumbs unless crumbs.empty? %>
 
-    <%= render 'admin/collections/shared/form', url: admin_collections_path, method: :post %>
+    <%= render 'admin/collections/shared/form', url: admin_collections_path(locale: I18n.locale), method: :post %>
   </div>
-<main>
+</main>

@@ -1,15 +1,15 @@
-<%= render 'admin/shared/heading', name: 'დარგის რედაქტირება' %>
+<%= render 'admin/shared/heading', name: t('admin.edit_field') %>
 
 <main>
   <div class="mx-auto max-w-screen-2xl sm:px-6 lg:px-8">
     <%= render('admin/shared/form',
-               url: admin_field_path,
+               url: admin_field_path(locale: I18n.locale),
                method: :put,
                record: @field,
-               back_url: admin_fields_path,
+               back_url: admin_fields_path(locale: I18n.locale),
                delete_url: ->(record){ admin_field_path(record) }
               ) %>
 
-    <%= render 'admin/shared/confirm_delete_modal', modal_title: 'გსურთ დარგის წაშლა?', modal_text: 'ეს დარგი წაიშლება სრულად' %>
+    <%= render 'admin/shared/confirm_delete_modal', modal_title: t('delete_field_modal.title'), modal_text: t('delete_field_modal.text') %>
   </div>
-<main>
+</main>
