@@ -17,3 +17,7 @@
 .admin-search-btn:hover {
   opacity: 0.7;
 }
+
+.border-advanced-gray {
+  border-color: #D0D0D0;
+}
