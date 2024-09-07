@@ -4,13 +4,13 @@
       <div class="flex">
         <div class="grid grid-flow-col grid-cols-4">
           <div class="col-span-1 inline-flex items-center">
-            <%= link_to text_blocks_path do %>
+            <%= link_to text_blocks_path(locale: I18n.locale) do %>
               <%= render 'shared/logo_md' %>
             <% end %>
           </div>
           <div class="col-span-3 flex justify-center items-center">
             <div class="ml-4">
-              <%= link_to text_blocks_path do %>
+              <%= link_to text_blocks_path(locale: I18n.locale) do %>
                 <h1 class="text-xl font-thin leading-tight tracking-tight text-gray-900"><%= t('header.english_georgian') %></h1>
                 <h1 class="text-xl font-thin leading-tight tracking-tight text-gray-900"><%= t('header.parallel_corpus') %></h1>
               <% end %>
