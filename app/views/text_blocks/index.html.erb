@@ -6,6 +6,6 @@
     <%= render 'shared/search_bar' %>
   </div>
   <div class="mt-5 flex justify-center">
-    <p class="text-gray-500 text-sm"><%= t('statistics.groups') %>: <%= @result[:fields] %>, <%= t('statistics.collections') %>: <%= @result[:terms] %>, <%= t('statistics.text_pairs') %>: <%= @result[:pairs] %>, <%= t('statistics.word_forms') %>: <%= @result[:words][:ka] %> / <%= @result[:words][:en] %></p>
+    <p class="text-gray-500 text-sm"><%= t('statistics.groups') %>: <%= @result[:groups] %>, <%= t('statistics.collections') %>: <%= @result[:collections] %>, <%= t('statistics.text_pairs') %>: <%= @result[:pairs] %>, <%= t('statistics.word_forms') %>: <%= @result[:words][:ka] %> / <%= @result[:words][:en] %></p>
   </div>
 </div>

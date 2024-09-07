@@ -58,8 +58,8 @@ class TextBlocksController < ApplicationController
   def text_blocks_count
     value = {
       pairs: ::NumbersFormattingService.call(TextBlock.group(:language).count.min.last),
-      terms: ::NumbersFormattingService.call(Term.count),
-      fields: ::NumbersFormattingService.call(Field.count),
+      collections: ::NumbersFormattingService.call(Collection.count),
+      groups: ::NumbersFormattingService.call(Group.count),
       words: TextBlock.word_count_by_language,
     }
     CacheService.set('text_blocks_count', value, DateTime.current + 2.hours)
