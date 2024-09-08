@@ -29,7 +29,10 @@ class TextBlock < ApplicationRecord
   def self.word_count_by_language
     query = "SELECT SUM(word_count) AS count, language
              FROM (SELECT COUNT(*) AS word_count, language
-                   FROM text_blocks,
+                   FROM text_blocks
+                   INNER JOIN collections ON text_blocks.collection_id = collections.id AND collections.status = 0
+                   INNER JOIN groups ON collections.group_id = groups.id AND groups.status = 0
+                   INNER JOIN supergroups ON groups.supergroup_id = supergroups.id AND supergroups.status = 0,
                    LATERAL regexp_split_to_table(contents, '\s+') AS word
                    GROUP BY language) AS word_counts
              GROUP BY language;"

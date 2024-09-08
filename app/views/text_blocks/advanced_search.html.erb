@@ -72,7 +72,7 @@
                   </div>
                   <div>
                     <%= form.collection_select :supergroup_ids,
-                                               Supergroup.ordered,
+                                               Supergroup.where(status: :active).ordered,
                                                :id,
                                                "name_#{I18n.locale}".to_sym,
                                                { selected: @search.search_text_block_pair&.dig(:supergroup_ids) },
@@ -91,7 +91,7 @@
                   </div>
                   <div>
                     <%= form.collection_select :group_ids,
-                                               Group.where(supergroup_id: @search.search_text_block_pair&.dig(:supergroup_ids)).ordered,
+                                               Group.where(status: :active, supergroup_id: @search.search_text_block_pair&.dig(:supergroup_ids)).ordered,
                                                :id,
                                                "name_#{I18n.locale}".to_sym,
                                                { selected: @search.search_text_block_pair&.dig(:group_ids) },
@@ -110,7 +110,7 @@
                   </div>
                   <div>
                     <%= form.collection_select :collection_ids,
-                                               Collection.where(group_id: @search.search_text_block_pair&.dig(:group_ids)).ordered,
+                                               Collection.where(status: :active, group_id: @search.search_text_block_pair&.dig(:group_ids)).ordered,
                                                :id,
                                                "name_#{I18n.locale}".to_sym,
                                                { selected: @search.search_text_block_pair&.dig(:collection_ids) },
@@ -131,7 +131,7 @@
                   </div>
                   <div>
                     <%= form.collection_select :type_ids,
-                                               Type.ordered,
+                                               Type.where(status: :active).ordered,
                                                :id,
                                                "name_#{I18n.locale}".to_sym,
                                                { selected: @search.search_text_block_pair&.dig(:type_ids) },
@@ -146,7 +146,7 @@
                   </div>
                   <div>
                     <%= form.collection_select :genre_ids,
-                                               Genre.ordered,
+                                               Genre.where(status: :active).ordered,
                                                :id,
                                                "name_#{I18n.locale}".to_sym,
                                                { selected: @search.search_text_block_pair&.dig(:genre_ids) },
@@ -161,7 +161,7 @@
                   </div>
                   <div>
                     <%= form.collection_select :field_ids,
-                                               Field.ordered,
+                                               Field.where(status: :active).ordered,
                                                :id,
                                                "name_#{I18n.locale}".to_sym,
                                                { selected: @search.search_text_block_pair&.dig(:field_ids) },
@@ -177,7 +177,7 @@
                 </div>
                 <div>
                   <%= form.collection_select :publishing_ids,
-                                             Publishing.ordered,
+                                             Publishing.where(status: :active).ordered,
                                              :id,
                                              "name_#{I18n.locale}".to_sym,
                                              { selected: @search.search_text_block_pair&.dig(:publishing_ids) },
@@ -192,7 +192,7 @@
                 </div>
                 <div>
                   <%= form.collection_select :author_ids,
-                                             Author.ordered,
+                                             Author.where(status: :active).ordered,
                                              :id,
                                              "name_#{I18n.locale}".to_sym,
                                              { selected: @search.search_text_block_pair&.dig(:author_ids) },
@@ -207,7 +207,7 @@
                 </div>
                 <div>
                   <%= form.collection_select :translator_ids,
-                                             Translator.ordered,
+                                             Translator.where(status: :active).ordered,
                                              :id,
                                              "name_#{I18n.locale}".to_sym,
                                              { selected: @search.search_text_block_pair&.dig(:translator_ids) },
