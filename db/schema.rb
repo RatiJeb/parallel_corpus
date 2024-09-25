@@ -324,11 +324,11 @@ ActiveRecord::Schema[7.1].define(version: 2024_08_17_155455) do
       tb_left.order_number,
       tb_left.collection_id,
       tb_left.contents AS original_contents,
-      tb_left.language AS original_language,
+      col_left.original_language,
       tb_right.id AS translation_id,
-      tb_right.contents AS translation_contents,
-      tb_right.language AS translation_language
-     FROM (text_blocks tb_left
+      tb_right.contents AS translation_contents
+     FROM ((text_blocks tb_left
+       JOIN collections col_left ON ((tb_left.collection_id = col_left.id)))
        FULL JOIN text_blocks tb_right ON (((tb_left.collection_id = tb_right.collection_id) AND (tb_left.order_number = tb_right.order_number) AND (tb_left.language <> tb_right.language))));
   SQL
 end

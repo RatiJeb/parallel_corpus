@@ -76,7 +76,7 @@
     <% end %>
 
 
-    <%= render 'admin/shared/paging', records: @text_blocks, url_method: -> (**params){ admin_text_blocks_path(**params.merge(locale: I18n.locale)) }, paging_params: { collection_id: @collection&.id }.merge(@search.attributes) %>
+    <%= render 'admin/text_blocks/paging', records: @text_blocks, url_method: -> (**params){ admin_text_blocks_path(**params.merge(locale: I18n.locale)) }, paging_params: { collection_id: @collection&.id }.merge(@search.attributes) %>
 
     <div class="px-4 sm:px-6 lg:px-8">
       <div class="flow-root">
@@ -130,7 +130,7 @@
       </div>
     </div>
 
-    <%= render 'admin/shared/paging', records: @text_blocks, url_method: -> (**params){ admin_text_blocks_path(**params.merge(locale: I18n.locale)) }, paging_params: { collection_id: @collection&.id }.merge(@search.attributes) %>
+    <%= render 'admin/text_blocks/paging', records: @text_blocks, url_method: -> (**params){ admin_text_blocks_path(**params.merge(locale: I18n.locale)) }, paging_params: { collection_id: @collection&.id }.merge(@search.attributes) %>
 
     <%= render 'admin/shared/confirm_delete_modal', modal_title: t('delete_text_pairs_modal.title'),
                                                       modal_text: t('delete_text_pairs_modal.text') %>

@@ -1,29 +1,31 @@
 <nav class="sticky top-0 z-20 bg-white">
-  <div class="mx-auto max-w-screen-2xl sm:px-6 lg:px-0">
-    <div class="flex h-24 grid grid-flow-col items-center justify-between">
-      <div class="flex">
-        <div class="grid grid-flow-col grid-cols-4">
-          <div class="col-span-1 inline-flex items-center">
-            <%= link_to text_blocks_path(locale: I18n.locale) do %>
-              <%= render 'shared/logo_md' %>
-            <% end %>
-          </div>
-          <div class="col-span-3 flex justify-center items-center">
-            <div class="ml-4">
+  <div class="mx-8">
+    <div class="max-w-screen-xl sm:px-6 lg:px-0">
+      <div class="flex h-24 grid grid-flow-col items-center justify-between">
+        <div class="flex">
+          <div class="grid grid-flow-col grid-cols-4">
+            <div class="col-span-1 inline-flex items-center">
               <%= link_to text_blocks_path(locale: I18n.locale) do %>
-                <h1 class="text-xl font-thin leading-tight tracking-tight text-gray-900"><%= t('header.english_georgian') %></h1>
-                <h1 class="text-xl font-thin leading-tight tracking-tight text-gray-900"><%= t('header.parallel_corpus') %></h1>
+                <%= render 'shared/logo_md' %>
               <% end %>
+            </div>
+            <div class="col-span-3 flex justify-center items-center">
+              <div class="ml-4">
+                <%= link_to text_blocks_path(locale: I18n.locale) do %>
+                  <h1 class="text-xl font-thin leading-tight tracking-tight text-gray-900"><%= t('header.english_georgian') %></h1>
+                  <h1 class="text-xl font-thin leading-tight tracking-tight text-gray-900"><%= t('header.parallel_corpus') %></h1>
+                <% end %>
+              </div>
             </div>
           </div>
         </div>
-      </div>
-      <div class="flex justify-center items-center">
-        <%= link_to text_blocks_path(locale: (I18n.available_locales - [I18n.locale])&.first) do %>
-          <div class="p-2 border-2 border-transparent hover:border-gray-50">
-            <h2 class="text-l font-thin leading-tight tracking-tight text-gray-900 hover:border-1"><%= t('other_language') %></h2>
-          </div>
-        <% end %>
+        <div class="flex justify-center items-center">
+          <%= link_to text_blocks_path(locale: (I18n.available_locales - [I18n.locale])&.first) do %>
+            <div class="p-2 border-2 border-transparent hover:border-gray-50">
+              <h2 class="text-l font-thin leading-tight tracking-tight text-gray-900 hover:border-1"><%= t('other_language') %></h2>
+            </div>
+          <% end %>
+        </div>
       </div>
     </div>
   </div>

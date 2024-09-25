@@ -9,6 +9,7 @@ class TextBlocksController < ApplicationController
     @text_block_pairs = Views::TextBlockPair
     @text_block_pairs = @text_block_pairs
                           .includes(collection: :group)
+                          .where(collection: Collection.where(group: Group.where(supergroup: Supergroup.where(status: :active), status: :active), status: :active))
                           .search(params[:query])
                           .order(:original_id)
                           .page(params[:page])
@@ -18,7 +19,7 @@ class TextBlocksController < ApplicationController
   def advanced_search
 
     @text_block_pairs = Views::TextBlockPair
-    @text_block_pairs = @text_block_pairs.includes(collection: :group).where(collection: Collection.where(group: Group.where(supergroup: Supergroup.where(status: :active), status: :active), status: :active)).search(params[:query], params[:exact_match].to_s != '0', params[:termin].to_s != "0")
+    @text_block_pairs = @text_block_pairs.includes(collection: :group).where(collection: Collection.where(group: Group.where(supergroup: Supergroup.where(status: :active), status: :active), status: :active)).search(params[:query], params[:exact_match].to_s != '0')#, params[:termin].to_s != "0")
 
     if params[:original_language].present? && params[:original_language] != 'both'
       @text_block_pairs = @text_block_pairs.where(collection: Collection.where(group: Group.where(supergroup: Supergroup.where(status: :active), status: :active), status: :active), original_language: params[:original_language] == 'ka' ? 0 : 1)
@@ -46,7 +47,8 @@ class TextBlocksController < ApplicationController
   private
 
   def set_search_params
-    @search = Search::TextBlockPair.new(params.permit(:query, :termin, :exact_match, :original_language, :year_start, :year_end, :translation_year_start,
+    @search = Search::TextBlockPair.new(params.permit(:query, #:termin,
+                                                      :exact_match, :original_language, :year_start, :year_end, :translation_year_start,
                                                       :translation_year_end, search_text_block_pair: { supergroup_ids: [], group_ids: [],
                                                                                                        collection_ids: [], type_ids: [], field_ids: [], genre_ids: [], author_ids: [],
                                                                                                        translator_ids: [], publishing_ids: [] }))

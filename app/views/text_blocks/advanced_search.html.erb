@@ -11,18 +11,19 @@
             <div data-search-highlight-target="searchbar" class="border-b-2 border-solid border-advanced-gray">
               <%= form.text_field :query, name: :query, class: "w-full mt-6 mb-6 border-stone-400 focus:ring-oceanside-500 focus:border-oceanside-500" %>
             </div>
-            <div class="inline-flex mt-6 mb-4">
-              <div class="flex grid grid-flow-col space-x-2 items-center">
-                <div class="inline-flex">
-                  <%= form.check_box :termin, name: :termin %>
-                </div>
-                <div class="inline-flex">
-                  <%= t('advanced_search.only_terminology') %>
-                </div>
-              </div>
-            </div>
+<!--            terms-->
+<!--            <div class="inline-flex mt-6 mb-4">-->
+<!--              <div class="flex grid grid-flow-col space-x-2 items-center">-->
+<!--                <div class="inline-flex">-->
+                  <%#= form.check_box :termin, name: :termin %>
+<!--                </div>-->
+<!--                <div class="inline-flex">-->
+                  <%#= t('advanced_search.only_terminology') %>
+<!--                </div>-->
+<!--              </div>-->
+<!--            </div>-->
             <div class="border-b-2 border-solid border-advanced-gray">
-              <div class="inline-flex mt-4 mb-6">
+              <div class="inline-flex mt-6 mb-6">
                 <div class="flex grid grid-flow-col space-x-2 items-center">
                   <div class="inline-flex">
                     <%= form.check_box :exact_match, name: :exact_match, data: { action: "your-controller-name#toggleExactMatch" } %>
@@ -54,7 +55,11 @@
                         <%= form.label :original_language_en, t('advanced_search.english') %>
                       </div>
                       <div class="inline-flex">
-                        <%= form.radio_button :original_language, :both, name: :original_language, checked: "checked" %>
+                        <% if params[:original_language].nil? %>
+                          <%= form.radio_button :original_language, :both, name: :original_language, checked: "checked" %>
+                        <% else %>
+                          <%= form.radio_button :original_language, :both, name: :original_language %>
+                        <% end %>
                       </div>
                       <div class="inline-flex">
                         <%= form.label :original_language_both, t('advanced_search.both') %>
@@ -301,7 +306,7 @@
           <%= render 'shared/paging', records: @text_block_pairs,
                      url_method: -> (**params) { advanced_search_text_blocks_path(**params) },
                      paging_params: params.permit(:query,
-                                                  :termin,
+                                                  # :termin,
                                                   :exact_match,
                                                   :original_language,
                                                   :year_start,
