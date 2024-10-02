@@ -1,17 +1,21 @@
-import {Controller} from '@hotwired/stimulus'
+import { Controller } from '@hotwired/stimulus'
+import { destroy } from '@rails/request.js'
 
 export default class extends Controller {
-
-  connect() {
+  static values = {
+    url: String,
+    redirectUrl: String,
+    modalTitle: String,
+    modalText: String
   }
 
-  async submit(event) {
-    event.preventDefault();
-
+  connect() {
     this.confirmCheckbox = document.getElementById('confirm-delete-modal-checkbox')
     this.confirmDeleteBtn = document.getElementById('confirm-delete-modal-delete-button')
     this.confirmCancelBtn = document.getElementById('confirm-delete-modal-cancel-button')
     this.confirmCloseBtn = document.getElementById('confirm-delete-modal-close')
+    this.confirmTitle = document.getElementById('confirm-delete-modal-title')
+    this.confirmText = document.getElementById('confirm-delete-modal-text')
 
     this.confirmDeleteBtn.addEventListener('click', () => {
       this.confirmDelete()
@@ -24,14 +28,19 @@ export default class extends Controller {
     this.confirmCancelBtn.addEventListener('click', () => {
       this.hideModal()
     })
+  }
 
-    this.recordId = event.currentTarget.dataset.deleteRecordId;
-
+  async submit() {
     this.modal = document.getElementById('confirm-delete-modal')
     this.showModal()
   }
 
   showModal() {
+
+    console.log('this.element')
+    console.log(this.modalTitleValue)
+    console.log(this.modalTextValue)
+    console.log(this.urlValue)
 
     this.modalInner = document.getElementById('confirm-delete-modal-inner')
 
@@ -44,61 +53,43 @@ export default class extends Controller {
     this.modal.style.left = `${left}px`;
     this.modal.style.top = `${top}px`;
 
+    if (this.modalTitleValue) {
+      this.confirmTitle.innerHTML = this.modalTitleValue
+    }
+
+    if (this.modalTextValue) {
+      this.confirmText.innerHTML = this.modalTextValue
+    }
+
     this.modal.classList.remove("invisible")
     this.modal.classList.add("visible")
+
+    this.modal.url = this.urlValue
+    console.log(this.urlValue)
   }
 
   hideModal() {
     this.modal.classList.remove("visible")
     this.modal.classList.add("invisible")
+    this.modal.url = null
   }
 
-  confirmDelete() {
-    if (!this.confirmCheckbox.checked) {
-      alert('გთხოვთ, მონიშნოთ "ვეთანხმები" თუ ნამდვილად გსურთ წაშლა.')
-      return
-    }
-    const currentCard = document.getElementById(`text-block-${this.recordId}`)
-    const parentContainer = currentCard.parentElement;
-    const [newCardOrderId, languageIndex] = this.extractOrderIdAndLang(currentCard);
-    currentCard.remove();
-    this.moveCardFromNextContainer(parentContainer.nextElementSibling, languageIndex, newCardOrderId);
-    this.hideModal()
-  }
+  async confirmDelete() {
 
-  moveCardFromNextContainer(parentContainer, index, orderId) {
-    const nextContainer = parentContainer.nextElementSibling
-    const previousContainer = parentContainer.previousElementSibling
-    const containerNeedsRemoval = parentContainer.children[this.oppositeIndex(index)].id.includes('text-block-dummy')
-    const cardToMove = parentContainer.children[index];
-    index === 0 ? previousContainer.insertBefore(cardToMove, previousContainer.children[index]) : previousContainer.appendChild(cardToMove);
-    if (!cardToMove.id.includes('text-block-dummy')) {
-      cardToMove.children[0].children[0].children[0].children[0].innerText = `${index === 0 ? 'KA' : 'EN'}-${orderId}`
-    }
-    if(nextContainer){
-      this.moveCardFromNextContainer(nextContainer, index, orderId + 1);
-    }
-    else{
-      if(containerNeedsRemoval){
-        parentContainer.remove()
+    console.log(this.modal.url)
+    if (this.modal.url) {
+      if (!this.confirmCheckbox.checked) {
+        alert('გთხოვთ, მონიშნოთ "ვეთანხმები" თუ ნამდვილად გსურთ წაშლა.')
+        return
       }
-      else{
-        const dummyCard = document.createElement('div')
-        dummyCard.classList.add('col-span-1')
-        dummyCard.setAttribute('id', `text-block-dummy${Math.random()}`)
-        index === 0 ? parentContainer.insertBefore(dummyCard, parentContainer.children[index]) : parentContainer.appendChild(dummyCard);
+
+      const response = await destroy(this.modal.url)
+
+      if (response.ok) {
+        window.location.href = this.redirectUrlValue
+      } else {
+        alert('წაშლის დროს მოხდა შეცდომა')
       }
     }
-  }
-
-  extractOrderIdAndLang(card) {
-    const title = card.children[0].children[0].children[0].innerText;
-    const id = parseInt(title.split('-')[1]) || 0
-    const lang = title.split('-')[0] === 'KA' ? 0 : 1
-    return [id, lang];
-  }
-
-  oppositeIndex(index) {
-    return index === 0 ? 1 : 0
   }
 }
