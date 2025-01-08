@@ -6,7 +6,7 @@ ka:
     parallel_corpus: "პარალელური კორპუსი"
   navbar:
     advanced_search: "დეტალური ძიება"
-    instruments: "ინსტრუმენტები"
+    collocations: "კოლოკაციები"
     instructions: "გამოყენების ინსტრუქცია"
     about_project: "პროექტის შესახებ"
     contact: "კონტაქტი"
@@ -214,3 +214,17 @@ ka:
     alert:
       updated_successfully: "ცვლილებები განახლდა წარმატებით."
       error_while_updating: "ცვლილებების შენახვისას წარმოიშვა შეცდომა."
+  collocations:
+    form:
+      submit: "კოლოკაციები"
+    table:
+      header:
+        collocant: "კოლოკანტი"
+        frequency: "სიხშირე"
+        log_di: "LOG DI"
+        mi: "MI"
+        collocation: "კოლოკაცია"
+        collocant_word: "კოლოკანტი სიტყვა"
+        left: "მარცხნივ"
+        right: "მარჯვნივ"
+    collocate_count: "მოთხოვნილი სიტყვის სიხშირე: %{count}"

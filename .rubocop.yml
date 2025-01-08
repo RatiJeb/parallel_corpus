@@ -23,14 +23,7 @@ Style/Documentation:
   Enabled: false
 
 Style/MethodCallWithArgsParentheses:
-  Enabled: true
-  IgnoreMacros: true
-  IgnoredMethods:
-    - require
-  EnforcedStyle: require_parentheses
-  Exclude:
-    - "spec/**/*_spec.rb"
-    - "Gemfile*"
+  Enabled: false
 
 Style/TrailingCommaInArguments:
   Enabled: true

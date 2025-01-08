@@ -5,6 +5,7 @@ Rails.application.routes.draw do
       get 'search', on: :collection
       get 'advanced_search', on: :collection
     end
+    resources :collocations, only: [:index]
     root 'text_blocks#index'
     devise_for :users, controllers: { invitations: 'users/invitations' }
 
@@ -18,15 +19,10 @@ Rails.application.routes.draw do
         post 'create_text_blocks', on: :member
       end
       resources :text_blocks do
-        get 'edit_multiple', on: :collection
-        get 'fetch_edit_card', on: :collection
-        delete 'destroy_multiple', on: :collection
         get 'export', on: :collection
-        post 'merge', on: :member
-        post 'swap', on: :member
-        post :split, on: :member
+        get 'edit_multiple', on: :collection
+        delete 'destroy_multiple', on: :collection
         put 'update_multiple', on: :collection
-        put 'tag_term', on: :member
       end
     end
   end

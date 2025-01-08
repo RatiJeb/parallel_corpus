@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_08_17_155455) do
+ActiveRecord::Schema[7.1].define(version: 2024_12_21_134854) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -191,6 +191,24 @@ ActiveRecord::Schema[7.1].define(version: 2024_08_17_155455) do
     t.index ["text_block_id"], name: "index_terms_on_text_block_id"
   end
 
+  create_table "text_block_component_pivots", force: :cascade do |t|
+    t.bigint "text_block_id", null: false
+    t.bigint "text_block_component_id", null: false
+    t.integer "position"
+    t.index ["text_block_component_id", "text_block_id", "position"], name: "idx_on_text_block_component_id_text_block_id_positi_7b56eeaf41"
+    t.index ["text_block_component_id"], name: "index_text_block_component_pivots_on_text_block_component_id"
+    t.index ["text_block_id"], name: "index_text_block_component_pivots_on_text_block_id"
+  end
+
+  create_table "text_block_components", force: :cascade do |t|
+    t.string "value"
+    t.integer "language"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["language"], name: "index_text_block_components_on_language"
+    t.index ["value"], name: "index_text_block_components_on_value", unique: true
+  end
+
   create_table "text_blocks", force: :cascade do |t|
     t.bigint "collection_id", null: false
     t.text "contents"
@@ -268,6 +286,8 @@ ActiveRecord::Schema[7.1].define(version: 2024_08_17_155455) do
   add_foreign_key "collections", "groups"
   add_foreign_key "groups", "supergroups"
   add_foreign_key "terms", "text_blocks"
+  add_foreign_key "text_block_component_pivots", "text_block_components"
+  add_foreign_key "text_block_component_pivots", "text_blocks"
   add_foreign_key "text_blocks", "collections"
 
   create_view "collection_details", sql_definition: <<-SQL
@@ -288,6 +308,20 @@ ActiveRecord::Schema[7.1].define(version: 2024_08_17_155455) do
        LEFT JOIN text_blocks ON (((collections.id = text_blocks.collection_id) AND (text_blocks.language = 0))))
     GROUP BY collections.id, collections.name_ka, collections.name_en, collections.status, groups.id, groups.name_ka, groups.name_en, supergroups.id, supergroups.name_ka, supergroups.name_en;
   SQL
+  create_view "supergroup_details", sql_definition: <<-SQL
+      SELECT supergroups.id,
+      supergroups.name_ka,
+      supergroups.name_en,
+      supergroups.status,
+      count(DISTINCT groups.id) AS groups_count,
+      count(DISTINCT collections.id) AS collections_count,
+      count(text_blocks.id) AS text_blocks_count
+     FROM (((supergroups
+       LEFT JOIN groups ON ((supergroups.id = groups.supergroup_id)))
+       LEFT JOIN collections ON ((groups.id = collections.group_id)))
+       LEFT JOIN text_blocks ON (((collections.id = text_blocks.collection_id) AND (text_blocks.language = 0))))
+    GROUP BY supergroups.id, supergroups.name_ka, supergroups.name_en, supergroups.status;
+  SQL
   create_view "group_details", sql_definition: <<-SQL
       SELECT groups.id,
       groups.name_ka,
@@ -303,20 +337,6 @@ ActiveRecord::Schema[7.1].define(version: 2024_08_17_155455) do
        LEFT JOIN collections ON ((groups.id = collections.group_id)))
        LEFT JOIN text_blocks ON (((collections.id = text_blocks.collection_id) AND (text_blocks.language = 0))))
     GROUP BY groups.id, groups.name_ka, groups.name_en, groups.status, supergroups.id, supergroups.name_ka, supergroups.name_en;
-  SQL
-  create_view "supergroup_details", sql_definition: <<-SQL
-      SELECT supergroups.id,
-      supergroups.name_ka,
-      supergroups.name_en,
-      supergroups.status,
-      count(DISTINCT groups.id) AS groups_count,
-      count(DISTINCT collections.id) AS collections_count,
-      count(text_blocks.id) AS text_blocks_count
-     FROM (((supergroups
-       LEFT JOIN groups ON ((supergroups.id = groups.supergroup_id)))
-       LEFT JOIN collections ON ((groups.id = collections.group_id)))
-       LEFT JOIN text_blocks ON (((collections.id = text_blocks.collection_id) AND (text_blocks.language = 0))))
-    GROUP BY supergroups.id, supergroups.name_ka, supergroups.name_en, supergroups.status;
   SQL
   create_view "text_block_pairs", sql_definition: <<-SQL
       SELECT concat((tb_left.id)::text, '-', (tb_right.id)::text) AS id,

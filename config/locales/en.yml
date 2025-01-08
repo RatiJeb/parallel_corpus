@@ -6,7 +6,7 @@ en:
     parallel_corpus: "Parallel Corpus"
   navbar:
     advanced_search: "Advanced search"
-    instruments: "Instruments"
+    collocations: "Collocations"
     instructions: "Usage Instructions"
     about_project: "About Project"
     contact: "Contact"
@@ -214,3 +214,17 @@ en:
     alert:
       updated_successfully: "Updated Successfully"
       error_while_updating: "There was an error while trying to update."
+  collocations:
+    form:
+      submit: "Collocations"
+    table:
+      header:
+        collocant: "Collocant"
+        frequency: "Frequency"
+        log_di: "LOG DI"
+        mi: "MI"
+        collocation: "Collocation"
+        collocant_word: "Collocant word"
+        left: "Left"
+        right: "Right"
+    collocate_count: "Requested word frequency: %{count}"

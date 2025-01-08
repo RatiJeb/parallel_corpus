@@ -1,0 +1,2 @@
+<%= turbo_stream.replace 'collocations', partial: 'collocations/index', locals: { collocations_data: @collocations_data } %>
+<%= turbo_stream.replace 'collocate_count', partial: 'collocations/collocate_count', locals: { collocations_data: @collocations_data } %>

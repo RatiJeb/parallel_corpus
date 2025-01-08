@@ -1,0 +1,10 @@
+<div class="px-6">
+  <%= form_with url: collocations_path, method: :get, data: { turbo_frame: 'collocations', turbo_stream: true }, class: 'flex mt-6 mb-6 justify-between', local: false do |form| %>
+    <%= form.text_field :query, name: :query, value: params[:query], class: "w-1/3 border-stone-400 focus:ring-oceanside-500 focus:border-oceanside-500" %>
+    <div class="flex w-full justify-between">
+      <%= render partial: 'collocations/collocate_count' %>
+      <%= form.submit t('collocations.form.submit'), class: 'inline-flex block rounded-md bg-mountbatten-500 px-3 py-2 text-center text-sm font-semibold text-white shadow-sm hover:bg-mountbatten-400 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-mountbatten-500' %>
+    </div>
+  <% end %>
+  <%= render partial: 'collocations/index', locals: { collocations_data: @collocations_data } %>
+</div>

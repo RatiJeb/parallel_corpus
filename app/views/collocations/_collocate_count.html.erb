@@ -1,0 +1,3 @@
+<%= turbo_frame_tag :collocate_count, class: "flex items-center ml-6" do %>
+  <%= content_tag :p, t('collocations.collocate_count', count: @collocations_data[:first_count]) if @collocations_data.is_a?(Hash) && @collocations_data[:first_count].present? %>
+<% end %>

@@ -8,12 +8,27 @@ class TextBlocksController < ApplicationController
   def search
     @text_block_pairs = Views::TextBlockPair
     @text_block_pairs = @text_block_pairs
-                          .includes(collection: :group)
-                          .where(collection: Collection.where(group: Group.where(supergroup: Supergroup.where(status: :active), status: :active), status: :active))
+                          .includes(
+                            collection:
+                              [
+                                :group,
+                                { collection_authors: :author },
+                                { collection_fields: :field },
+                                { collection_genres: :genre },
+                                { collection_publishings: :publishing },
+                                { collection_translators: :translator },
+                                { collection_types: :type },
+                              ],
+                          )
+                          .joins(collection: { group: :supergroup })
+                          .merge(Collection.active)
+                          .merge(Group.active)
+                          .merge(Supergroup.active)
                           .search(params[:query])
                           .order(:original_id)
                           .page(params[:page])
                           .per(20)
+                          .load
   end
 
   def advanced_search
@@ -33,12 +48,13 @@ class TextBlocksController < ApplicationController
       @text_block_pairs = @text_block_pairs.where(collection: { group_id: params[:search_text_block_pair][:group_ids] }) if params[:search_text_block_pair][:group_ids]&.any?(&:present?)
       @text_block_pairs = @text_block_pairs.where(collection_id: params[:search_text_block_pair][:collection_ids]) if params[:search_text_block_pair][:collection_ids]&.any?(&:present?)
 
-      @text_block_pairs = @text_block_pairs.where(collection: Collection.where(group: Group.where(supergroup: Supergroup.where(status: :active), status: :active), status: :active).matching_authors(params[:search_text_block_pair][:author_ids])) if params[:search_text_block_pair][:author_ids]&.any?(&:present?)
-      @text_block_pairs = @text_block_pairs.where(collection: Collection.where(group: Group.where(supergroup: Supergroup.where(status: :active), status: :active), status: :active).matching_fields(params[:search_text_block_pair][:field_ids])) if params[:search_text_block_pair][:field_ids]&.any?(&:present?)
-      @text_block_pairs = @text_block_pairs.where(collection: Collection.where(group: Group.where(supergroup: Supergroup.where(status: :active), status: :active), status: :active).matching_genres(params[:search_text_block_pair][:genre_ids])) if params[:search_text_block_pair][:genre_ids]&.any?(&:present?)
-      @text_block_pairs = @text_block_pairs.where(collection: Collection.where(group: Group.where(supergroup: Supergroup.where(status: :active), status: :active), status: :active).matching_publishings(params[:search_text_block_pair][:publishing_ids])) if params[:search_text_block_pair][:publishing_ids]&.any?(&:present?)
-      @text_block_pairs = @text_block_pairs.where(collection: Collection.where(group: Group.where(supergroup: Supergroup.where(status: :active), status: :active), status: :active).matching_translators(params[:search_text_block_pair][:translator_ids])) if params[:search_text_block_pair][:translator_ids]&.any?(&:present?)
-      @text_block_pairs = @text_block_pairs.where(collection: Collection.where(group: Group.where(supergroup: Supergroup.where(status: :active), status: :active), status: :active).matching_types(params[:search_text_block_pair][:type_ids])) if params[:search_text_block_pair][:type_ids]&.any?(&:present?)
+      collections = Collection.active.joins(group: :supergroup).merge(Group.active).merge(Supergroup.active)
+      @text_block_pairs = @text_block_pairs.where(collection: collections.matching_authors(params[:search_text_block_pair][:author_ids])) if params[:search_text_block_pair][:author_ids]&.any?(&:present?)
+      @text_block_pairs = @text_block_pairs.where(collection: collections.matching_fields(params[:search_text_block_pair][:field_ids])) if params[:search_text_block_pair][:field_ids]&.any?(&:present?)
+      @text_block_pairs = @text_block_pairs.where(collection: collections.matching_genres(params[:search_text_block_pair][:genre_ids])) if params[:search_text_block_pair][:genre_ids]&.any?(&:present?)
+      @text_block_pairs = @text_block_pairs.where(collection: collections.matching_publishings(params[:search_text_block_pair][:publishing_ids])) if params[:search_text_block_pair][:publishing_ids]&.any?(&:present?)
+      @text_block_pairs = @text_block_pairs.where(collection: collections.matching_translators(params[:search_text_block_pair][:translator_ids])) if params[:search_text_block_pair][:translator_ids]&.any?(&:present?)
+      @text_block_pairs = @text_block_pairs.where(collection: collections.matching_types(params[:search_text_block_pair][:type_ids])) if params[:search_text_block_pair][:type_ids]&.any?(&:present?)
     end
 
     @text_block_pairs = @text_block_pairs.order(:original_id).page(params[:page]).per(20)
@@ -59,30 +75,13 @@ class TextBlocksController < ApplicationController
   end
 
   def text_blocks_count
+    supergroup_id = Supergroup.where(status: :active).pluck(:id)
+    group_id = Group.where(status: :active, supergroup_id:).pluck(:id)
+    collection_id = Collection.where(status: :active, group_id:).pluck(:id)
     value = {
-      pairs: ::NumbersFormattingService.call(
-        TextBlock.where(
-          collection_id: Collection.where(
-            status: :active,
-            group_id: Group.where(
-              status: :active,
-              supergroup_id: Supergroup.where(status: :active)
-                                       .pluck(:id),
-            ).pluck(:id),
-          ),
-        ).group(:language).count.min.last,
-      ),
-      collections: ::NumbersFormattingService.call(
-        Collection.where(
-          status: :active,
-          group_id: Group.where(
-            status: :active,
-            supergroup_id: Supergroup.where(status: :active).pluck(:id),
-          ).pluck(:id)).count,
-      ),
-      groups: ::NumbersFormattingService.call(Group.where(status: :active,
-                                                          supergroup_id: Supergroup.where(status: :active)
-                                                                                   .pluck(:id)).count),
+      pairs: ::NumbersFormattingService.call(Views::TextBlockPair.where(collection_id:).count),
+      collections: ::NumbersFormattingService.call(supergroup_id.count),
+      groups: ::NumbersFormattingService.call(group_id.count),
       words: TextBlock.word_count_by_language,
     }
     CacheService.set('text_blocks_count', value, DateTime.current + 2.hours)

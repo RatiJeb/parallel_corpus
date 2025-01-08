@@ -54,11 +54,11 @@ class Collection < ApplicationRecord
   end
 
   def serialize
-    JSON.generate(as_json.merge({ author_ids: author_ids,
-                                  field_ids: field_ids,
-                                  genre_ids: genre_ids,
-                                  publishing_ids: publishing_ids,
-                                  translator_ids: translator_ids,
-                                  type_ids: type_ids }))
+    JSON.generate(as_json.merge({ author_ids:,
+                                  field_ids:,
+                                  genre_ids:,
+                                  publishing_ids:,
+                                  translator_ids:,
+                                  type_ids: }))
   end
 end

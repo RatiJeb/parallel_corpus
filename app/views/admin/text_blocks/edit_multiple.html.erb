@@ -93,7 +93,44 @@
       </div>
     </div>
 
-
+    <div class="mt-3 flex justify-stretch grid grid-cols-2 grid-flow-col max-w-screen-2xl">
+      <div id="text-block-00" class="col-span-1">
+        <div class="mr-3 mt-3 grid grid-flow-col justify-items-end">
+          <div class="space-x-2 flex">
+            <button type="button"
+                    data-controller="add-block tooltip"
+                    data-action="click->add-block#submit"
+                    data-tooltip-target="cell"
+                    data-tooltip-placement-value="top"
+                    data-language="KA"
+                    class="inline-flex justify-center bg-gray-50 text-gray-700 rounded-md ring-1 ring-gray-300 p-1 hover:ring-2 hover:ring-oceanside-500 hover:bg-white hover:text-gray-900">
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15"/>
+              </svg>
+              <%= render 'admin/shared/tooltip', text: t('admin.add_new_block') %>
+            </button>
+          </div>
+        </div>
+      </div>
+      <div id="text-block-01" class="col-span-1">
+        <div class="mt-3 grid grid-flow-col justify-items-end">
+          <div class="space-x-2 flex">
+            <button type="button"
+                    data-controller="add-block tooltip"
+                    data-action="click->add-block#submit"
+                    data-tooltip-target="cell"
+                    data-tooltip-placement-value="top"
+                    data-language="EN"
+                    class="inline-flex justify-center bg-gray-50 text-gray-700 rounded-md ring-1 ring-gray-300 p-1 hover:ring-2 hover:ring-oceanside-500 hover:bg-white hover:text-gray-900">
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15"/>
+              </svg>
+              <%= render 'admin/shared/tooltip', text: t('admin.add_new_block') %>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
     <% @text_blocks.group_by(&:order_number).each do |order_number, block_group| %>
       <div class="mt-3 flex justify-stretch grid grid-cols-2 grid-flow-col max-w-screen-2xl">
         <% ka_block = block_group.detect(&:ka?) %>

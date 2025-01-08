@@ -24,44 +24,44 @@ module ApplicationHelper
     end
   end
 
-  def page_link(current_page, total_pages, url_method, paging_params, records)
+  def page_link(current_page, total_pages, url_method, paging_params, records, turbo = false)
     html = ''
     unless current_page == 1
-      html += other_page(1, url_method, paging_params, records)
+      html += other_page(1, url_method, paging_params, records, turbo)
     end
     if current_page > 3
-      html += page_ellipsis
+      html += page_ellipsis(current_page - 3, url_method, paging_params, turbo)
     end
 
     if current_page > 2
-      html += other_page(current_page - 1, url_method, paging_params, records)
+      html += other_page(current_page - 1, url_method, paging_params, records, turbo)
     end
 
-    html += current_page(current_page, url_method, paging_params, records)
+    html += current_page(current_page, url_method, paging_params, records, turbo)
 
     if current_page < total_pages - 1
-      html += other_page(current_page + 1, url_method, paging_params, records)
+      html += other_page(current_page + 1, url_method, paging_params, records, turbo)
     end
 
     if current_page < total_pages - 2
-      html += page_ellipsis
+      html += page_ellipsis(current_page + 3, url_method, paging_params, turbo)
     end
     unless current_page == total_pages
-      html += other_page(total_pages, url_method, paging_params, records)
+      html += other_page(total_pages, url_method, paging_params, records, turbo)
     end
     html.html_safe
   end
 
-  def current_page(number, url_method, paging_params, records)
-    link_to(number, url_method.call(**paging_params.merge(page: records.current_page)), class: "relative z-10 inline-flex items-center bg-mountbatten-100 px-4 py-2 rounded-md text-sm font-semibold text-gray-900 focus:z-20 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-mountbatten-200", 'aria-current': "page")
+  def current_page(number, url_method, paging_params, records, turbo = false)
+    link_to(number, url_method.call(**paging_params.merge(page: records.current_page, locale: I18n.locale)), data: { turbo_stream: turbo }, class: "relative z-10 inline-flex items-center bg-mountbatten-100 px-4 py-2 rounded-md text-sm font-semibold text-gray-900 focus:z-20 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-mountbatten-200", 'aria-current': "page")
   end
 
-  def other_page(number, url_method, paging_params, records)
-    link_to(number, url_method.call(**paging_params.merge(page: number, locale: I18n.locale)), class: "relative inline-flex items-center px-4 py-2 rounded-md text-sm font-semibold text-gray-900 hover:bg-mountbatten-50 focus:z-20 focus:outline-offset-0")
+  def other_page(number, url_method, paging_params, records, turbo = false)
+    link_to(number, url_method.call(**paging_params.merge(page: number, locale: I18n.locale)), data: { turbo_stream: turbo }, class: "relative inline-flex items-center px-4 py-2 rounded-md text-sm font-semibold text-gray-900 hover:bg-mountbatten-50 focus:z-20 focus:outline-offset-0")
   end
 
-  def page_ellipsis
-    '<span class="relative inline-flex items-center px-4 py-2 text-sm font-semibold text-gray-700 focus:outline-offset-0">...</span>'
+  def page_ellipsis(number, url_method, paging_params, turbo = false)
+    link_to('...', url_method.call(**paging_params.merge(page: number, locale: I18n.locale)), data: { turbo_stream: turbo }, class: "relative inline-flex items-center px-4 py-2 text-sm font-semibold text-gray-700 focus:outline-offset-0 hover:bg-mountbatten-50 focus:z-20")
   end
 
   def table_header_cell_classes(column, index, size)

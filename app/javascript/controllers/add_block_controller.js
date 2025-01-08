@@ -15,14 +15,29 @@ export default class extends Controller {
     const collectionId = searchParams.get('collection_id')
 
     const newCardHTML = await this.fetchNewCardHTML(newCardOrderId, collectionId,languageIndex === 0 ? 'ka' : 'en');
-    currentCard.insertAdjacentHTML('beforebegin', newCardHTML);
-    currentCard.remove();
-    currentCard.children[0].children[0].children[0].children[0].innerText = `${languageIndex === 0 ? 'KA' : 'EN'}-${newCardOrderId + 1}`
-    this.moveCardToNextContainer(currentCard, parentContainer, languageIndex, newCardOrderId + 2);
+    const nextContainer = parentContainer.nextElementSibling
+    if (nextContainer) {
+      const overflowCard = nextContainer.children[languageIndex];
+      overflowCard.insertAdjacentHTML('beforebegin', newCardHTML);
+      nextContainer.children[languageIndex + 1].remove()
+      if(!overflowCard.id.includes('text-block-dummy')){
+        overflowCard.children[0].children[0].children[0].children[0].innerText = `${languageIndex === 0 ? 'KA' : 'EN'}-${newCardOrderId + 2}`
+        this.moveCardToNextContainer(overflowCard, nextContainer, languageIndex, newCardOrderId + 3);
+      }
+    } else {
+      const newContainer = document.createElement('div');
+      const dummyChild = document.createElement('div')
+      newContainer.classList.add('mt-3', 'flex', 'justify-stretch', 'grid', 'grid-cols-2', 'grid-flow-col', 'max-w-screen-2xl');
+      dummyChild.classList.add('col-span-1')
+      dummyChild.setAttribute('id', `text-block-dummy${Math.random()}`)
+      newContainer.append(newCardHTML);
+      languageIndex === 0 ? newContainer.appendChild(dummyChild) : newContainer.insertBefore(dummyChild, newContainer.childNodes[0]);
+      parentContainer.parentNode.appendChild(newContainer);
+    }
   }
 
   async fetchNewCardHTML(orderId, collectionId, language) {
-    const response = await fetch(`fetch_edit_card?order_number=${orderId}&collection_id=${collectionId}&language=${language}`);
+    const response = await fetch(`new?order_number=${orderId}&collection_id=${collectionId}&language=${language}`);
 
     if (response.ok) {
       return await response.text();
@@ -37,7 +52,7 @@ export default class extends Controller {
 
     if (nextContainer) {
       const overflowCard = nextContainer.children[index];
-      nextContainer.insertBefore(card, nextContainer.children[index]);
+      nextContainer.insertBefore(card, overflowCard);
       nextContainer.children[index + 1].remove()
       if(!overflowCard.id.includes('text-block-dummy')){
         overflowCard.children[0].children[0].children[0].children[0].innerText = `${index === 0 ? 'KA' : 'EN'}-${orderId}`
@@ -57,9 +72,9 @@ export default class extends Controller {
   }
 
   extractOrderIdAndLang(card) {
-    const title = card.children[0].children[0].children[0].innerText;
+    const title = card.children[0]?.children[0]?.children[0]?.innerText;
     const id = parseInt(title.split('-')[1]) || 0
-    const lang = title.split('-')[0] === 'KA' ? 0 : 1
+    const lang = (card.id === 'text-block-00' || title.split('-')[0] === 'KA') ? 0 : 1
     return [id, lang];
   }
 }

@@ -37,7 +37,7 @@ export default class extends Controller {
   }
 
   async fetchNewCardHTML(orderId, collectionId, language, contents) {
-    const response = await fetch(`fetch_edit_card?order_number=${orderId}&collection_id=${collectionId}&language=${language}&contents=${contents}`);
+    const response = await fetch(`new?order_number=${orderId}&collection_id=${collectionId}&language=${language}&contents=${contents}`);
 
     if (response.ok) {
       return await response.text();

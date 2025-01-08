@@ -20,7 +20,7 @@
           </div>
         </div>
         <div class="flex justify-center items-center">
-          <%= link_to text_blocks_path(locale: (I18n.available_locales - [I18n.locale])&.first) do %>
+          <%= link_to "/#{(I18n.available_locales - [I18n.locale])&.first}#{request.path[1..2] == params[:locale].to_s ? request.path[3..] : request.path }" do %>
             <div class="p-2 border-2 border-transparent hover:border-gray-50">
               <h2 class="text-l font-thin leading-tight tracking-tight text-gray-900 hover:border-1"><%= t('other_language') %></h2>
             </div>
@@ -44,7 +44,7 @@
               </div>
             <% end %>
             <div class="inline-flex justify-center items-center bg-stone-100 text-md hover:bg-stone-50">
-              <a href="#" class="px-8 h-full py-3"><%= t('navbar.instruments') %></a>
+              <%= link_to t('navbar.collocations'), collocations_path(locale: I18n.locale, query: params[:query]), class: 'px-8 h-full py-3' %>
             </div>
             <div class="inline-flex justify-center items-center bg-stone-100 text-md hover:bg-stone-50">
               <a href="#" class="px-8 h-full py-3"><%= t('navbar.instructions') %></a>

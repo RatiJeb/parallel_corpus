@@ -1,0 +1,72 @@
+<%= turbo_frame_tag :collocations do %>
+  <%= render 'shared/paging', records: collocations_data[:left]&.total_count.to_i > collocations_data[:right]&.total_count.to_i ? collocations_data[:left] : collocations_data[:right], url_method: -> (**params){ collocations_path(**params.merge(locale: I18n.locale)) }, paging_params: { query: params[:query] }, bg_color: 'bg-stone-100', turbo: true if collocations_data.is_a?(Hash) && collocations_data[:first_count].present? %>
+  <div class="flex items-start">
+    <table class="bg-stone-200 w-full font-medium">
+      <thead>
+      <tr>
+        <th class="border-stone-100 border-2 py-2" colspan="5"><%= t('collocations.table.header.left') %></th>
+      </tr>
+      <tr>
+        <th class="border-stone-100 border-2" rowspan="2"><%= t('collocations.table.header.collocant') %></th>
+        <th class="border-stone-100 border-2" colspan="2"><%= t('collocations.table.header.frequency') %></th>
+        <th class="border-stone-100 border-2" rowspan="2"><%= t('collocations.table.header.log_di') %></th>
+        <th class="border-stone-100 border-2" rowspan="2"><%= t('collocations.table.header.mi') %></th>
+      </tr>
+      <tr>
+        <th class="border-stone-100 border-2"><%= t('collocations.table.header.collocation') %></th>
+        <th class="border-stone-100 border-2"><%= t('collocations.table.header.collocant_word') %></th>
+      </tr>
+      </thead>
+      <tbody>
+      <% collocations_data[:left]&.each do |collocation_data| %>
+        <tr class="font-medium h-3">
+          <td class="px-4 border-stone-100 border-2"><%= collocation_data.attributes['value'] %></td>
+          <td class="px-4 border-stone-100 border-2"><%= collocation_data.attributes['both_count'] %></td>
+          <td class="px-4 border-stone-100 border-2"><%= collocation_data.attributes['second_count'] %></td>
+          <td class="px-4 border-stone-100 border-2"><%= log_di(collocations_data[:first_count],
+                                                                collocation_data.attributes['second_count'],
+                                                                collocation_data.attributes['both_count']) %></td>
+          <td class="px-4 border-stone-100 border-2"><%= mi(collocations_data[:first_count],
+                                                            collocation_data.attributes['second_count'],
+                                                            collocation_data.attributes['both_count'],
+                                                            collocations_data[:all_count]) %></td>
+        </tr>
+      <% end %>
+      </tbody>
+    </table>
+    <table class="bg-stone-200 w-full font-medium">
+      <thead>
+      <tr>
+        <th class="border-stone-100 border-2 py-2" colspan="5"><%= t('collocations.table.header.right') %></th>
+      </tr>
+      <tr>
+        <th class="border-stone-100 border-2" rowspan="2"><%= t('collocations.table.header.collocant') %></th>
+        <th class="border-stone-100 border-2" colspan="2"><%= t('collocations.table.header.frequency') %></th>
+        <th class="border-stone-100 border-2" rowspan="2"><%= t('collocations.table.header.log_di') %></th>
+        <th class="border-stone-100 border-2" rowspan="2"><%= t('collocations.table.header.mi') %></th>
+      </tr>
+      <tr>
+        <th class="border-stone-100 border-2"><%= t('collocations.table.header.collocation') %></th>
+        <th class="border-stone-100 border-2"><%= t('collocations.table.header.collocant_word') %></th>
+      </tr>
+      </thead>
+      <tbody>
+      <% collocations_data[:right]&.each do |collocation_data| %>
+        <tr class="font-medium h-3">
+          <td class="px-4 border-stone-100 border-2"><%= collocation_data.attributes['value'] %></td>
+          <td class="px-4 border-stone-100 border-2"><%= collocation_data.attributes['both_count'] %></td>
+          <td class="px-4 border-stone-100 border-2"><%= collocation_data.attributes['second_count'] %></td>
+          <td class="px-4 border-stone-100 border-2"><%= log_di(collocations_data[:first_count],
+                                                            collocation_data.attributes['second_count'],
+                                                            collocation_data.attributes['both_count']) %></td>
+          <td class="px-4 border-stone-100 border-2"><%= mi(collocations_data[:first_count],
+                                                            collocation_data.attributes['second_count'],
+                                                            collocation_data.attributes['both_count'],
+                                                            collocations_data[:all_count]) %></td>
+        </tr>
+      <% end %>
+      </tbody>
+    </table>
+  </div>
+  <%= render 'shared/paging', records: collocations_data[:left]&.total_count.to_i > collocations_data[:right]&.total_count.to_i ? collocations_data[:left] : collocations_data[:right], url_method: -> (**params){ collocations_path(**params.merge(locale: I18n.locale)) }, paging_params: { query: params[:query] }, bg_color: 'bg-stone-100', turbo: true if collocations_data.is_a?(Hash) && collocations_data[:first_count].present? %>
+<% end %>

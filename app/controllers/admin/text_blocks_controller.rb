@@ -29,10 +29,19 @@ class Admin::TextBlocksController < Admin::BaseController
     @text_blocks = @text_blocks.order(:order_number).page(params[:page]).per(40)
   end
 
-  def show; end
-
   def new
-    @text_block = TextBlock.new
+    render(
+      partial: 'edit_card',
+      locals: {
+        block: TextBlock.new(order_number: params[:order_number],
+                             collection_id: params[:collection_id],
+                             contents: params[:contents]),
+        language: params[:language],
+        order_number: params[:order_number].to_i,
+        new_id: "new-#{SecureRandom.uuid}",
+        selected_block_id: -1,
+      },
+      )
   end
 
   def create
@@ -51,19 +60,6 @@ class Admin::TextBlocksController < Admin::BaseController
       )
       head(:ok)
     rescue => e
-      render(json: {}, status: :unprocessable_entity)
-    end
-  end
-
-  def edit
-    @text_block = TextBlock.find(params[:id])
-  end
-
-  def update
-    @text_block = TextBlock.find(params[:id])
-    if @text_block.update(text_blocks_params)
-      head(:ok)
-    else
       render(json: {}, status: :unprocessable_entity)
     end
   end
@@ -105,21 +101,6 @@ class Admin::TextBlocksController < Admin::BaseController
     render(json: { updated: true }, status: :ok)
   end
 
-  def fetch_edit_card
-    render(
-      partial: 'edit_card',
-      locals: {
-        block: TextBlock.new(order_number: params[:order_number],
-                             collection_id: params[:collection_id],
-                             contents: params[:contents]),
-        language: params[:language],
-        order_number: params[:order_number],
-        new_id: "new-#{SecureRandom.uuid}",
-        selected_block_id: -1,
-      },
-    )
-  end
-
   def destroy_multiple
     if params[:collection_id].present?
       @collection = Collection.find(params[:collection_id])
@@ -133,76 +114,6 @@ class Admin::TextBlocksController < Admin::BaseController
     rescue => e
       render(json: {}, status: :unprocessable_entity)
     end
-  end
-
-  def merge
-    @text_block = TextBlock.find(params[:id])
-    ActiveRecord::Base.transaction do
-      next_blocks = TextBlock.where(collection_id: @text_block.collection_id)
-                             .where(language: @text_block.language)
-                             .where("order_number > ?", @text_block.order_number)
-                             .order(order_number: :asc)
-      if next_blocks.first
-        @text_block.contents = "#{@text_block.contents} #{next_blocks.first.contents}"
-        @text_block.save!
-        next_blocks.first.destroy!
-      end
-      next_blocks.each do |block|
-        block.decrement!(:order_number, 1)
-      end
-      head(:ok)
-    rescue => e
-      render(json: {}, status: :unprocessable_entity)
-    end
-  end
-
-  def swap
-    @text_block = TextBlock.find(params[:id])
-    ActiveRecord::Base.transaction do
-      next_block = TextBlock.where(collection_id: @text_block.collection_id)
-                            .where(language: @text_block.language)
-                            .where(order_number: @text_block.order_number + 1).first
-      if next_block
-        @text_block.order_number = -1
-        @text_block.save!
-        next_block.decrement!(:order_number, 1)
-        @text_block.order_number = next_block.order_number + 1
-        @text_block.save!
-      end
-      head(:ok)
-    rescue => e
-      render(json: {}, status: :unprocessable_entity)
-    end
-  end
-
-  def split
-    @text_block = TextBlock.find(params[:id])
-    ActiveRecord::Base.transaction do
-      next_blocks = TextBlock.where(collection_id: @text_block.collection_id)
-                             .where(language: @text_block.language)
-                             .where("order_number > ?", @text_block.order_number)
-                             .order(order_number: :desc)
-      next_blocks.each do |block|
-        block.increment!(:order_number, 1)
-      end
-      TextBlock.create!(collection_id: @text_block.collection_id,
-                        language: @text_block.language,
-                        order_number: @text_block.order_number + 1,
-                        contents: params[:last_contents].strip
-      )
-      @text_block.update!(contents: params[:first_contents].strip)
-      head(:ok)
-    rescue => e
-      render(json: {}, status: :unprocessable_entity)
-    end
-  end
-
-  def tag_term
-    @text_block = TextBlock.find(params[:id])
-    @text_block.update!(text_blocks_params)
-    head(:ok)
-  rescue => e
-    render(json: {}, status: :unprocessable_entity)
   end
 
   def export
