@@ -26,7 +26,7 @@
               <div class="inline-flex mt-6 mb-6">
                 <div class="flex grid grid-flow-col space-x-2 items-center">
                   <div class="inline-flex">
-                    <%= form.check_box :exact_match, name: :exact_match, data: { action: "your-controller-name#toggleExactMatch" } %>
+                    <%= form.check_box :exact_match, name: :exact_match %>
                   </div>
                   <div class="inline-flex">
                     <%= t('advanced_search.exact_match') %>
@@ -309,6 +309,7 @@
                                                   :year_end,
                                                   :translation_year_start,
                                                   :translation_year_end,
+                                                  collocations: %i[first second],
                                                   search_text_block_pair: { supergroup_ids: [],
                                                                             group_ids: [],
                                                                             collection_ids: [],
@@ -334,6 +335,7 @@
                                                   :year_end,
                                                   :translation_year_start,
                                                   :translation_year_end,
+                                                  collocations: %i[first second],
                                                   search_text_block_pair: { supergroup_ids: [],
                                                                             group_ids: [],
                                                                             collection_ids: [],
