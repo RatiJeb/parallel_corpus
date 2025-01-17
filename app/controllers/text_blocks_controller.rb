@@ -32,8 +32,11 @@ class TextBlocksController < ApplicationController
   end
 
   def advanced_search
-
     @text_block_pairs = Views::TextBlockPair
+    @text_block_pairs = @text_block_pairs.none.page(0) if filter_params_missing?
+
+    return if @text_block_pairs.blank?
+
     @text_block_pairs = @text_block_pairs.includes(collection: :group).where(collection: Collection.where(group: Group.where(supergroup: Supergroup.where(status: :active), status: :active), status: :active)).search(params[:query], params[:exact_match].to_s != '0') #, params[:termin].to_s != "0")
 
     if params[:collocations].present?
@@ -43,7 +46,7 @@ class TextBlocksController < ApplicationController
     end
 
     if params[:original_language].present? && params[:original_language] != 'both'
-      @text_block_pairs = @text_block_pairs.where(collection: Collection.where(group: Group.where(supergroup: Supergroup.where(status: :active), status: :active), status: :active), original_language: params[:original_language] == 'ka' ? 0 : 1)
+      @text_block_pairs = @text_block_pairs.where(original_language: params[:original_language] == 'ka' ? 0 : 1)
     end
 
     @text_block_pairs = @text_block_pairs.where(collection: { year: params[:year_start]..params[:year_end] }) if params[:year_start].present? || params[:year_end].present?
@@ -98,5 +101,12 @@ class TextBlocksController < ApplicationController
     }
     CacheService.set('text_blocks_count', value, DateTime.current + 2.hours)
     value
+  end
+
+  def filter_params_missing?
+    !(params[:query].present? || params[:collocations].present? || params[:collections].present? ||
+      params[:translators].present? || params[:year_start].present? || params[:year_end].present? ||
+      params[:translation_year_start].present? || params[:translation_year_start].present? ||
+      params[:search_text_block_pair]&.values&.flatten&.select(&:present?).present?)
   end
 end

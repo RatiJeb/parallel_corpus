@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2025_01_16_185855) do
+ActiveRecord::Schema[7.1].define(version: 2025_01_17_180344) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -351,15 +351,15 @@ ActiveRecord::Schema[7.1].define(version: 2025_01_16_185855) do
   SQL
   create_view "text_block_pairs", sql_definition: <<-SQL
       SELECT concat((tb_left.id)::text, '-', (tb_right.id)::text) AS id,
+      COALESCE(tb_left.order_number, tb_right.order_number) AS order_number,
+      col.id AS collection_id,
       tb_left.id AS original_id,
-      tb_left.order_number,
-      tb_left.collection_id,
       tb_left.contents AS original_contents,
-      col_left.original_language,
+      col.original_language,
       tb_right.id AS translation_id,
       tb_right.contents AS translation_contents
      FROM ((text_blocks tb_left
-       JOIN collections col_left ON ((tb_left.collection_id = col_left.id)))
-       FULL JOIN text_blocks tb_right ON (((tb_left.collection_id = tb_right.collection_id) AND (tb_left.order_number = tb_right.order_number) AND (tb_left.language <> tb_right.language))));
+       FULL JOIN text_blocks tb_right ON (((tb_left.collection_id = tb_right.collection_id) AND (tb_left.order_number = tb_right.order_number) AND (tb_left.language <> tb_right.language))))
+       JOIN collections col ON ((((col.id = tb_left.collection_id) AND (col.original_language = tb_left.language)) OR ((col.id = tb_right.collection_id) AND (col.original_language <> tb_right.language)))));
   SQL
 end

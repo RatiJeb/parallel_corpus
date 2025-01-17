@@ -45,7 +45,6 @@ en:
     from_year: "From year"
     to_year: "To year"
     translated: "Translated"
-    results: "Results"
     author: "Author"
     translator: "Translator"
     type: "Type"
@@ -59,6 +58,7 @@ en:
     from_records: "Records"
     previous: "Previous"
     next: "Next"
+    no_results: "Records not found"
   admin:
     fields: "Fields"
     add_new_field: "Add new Field"

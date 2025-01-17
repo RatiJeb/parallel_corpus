@@ -14,6 +14,15 @@ module Views
             query,
             false,
           ),
+      ).or(
+        where(
+          Views::TextBlockPair
+            .arel_table[:translation_contents]
+            .matches_regexp(
+              query,
+              false,
+            ),
+        ),
       )
     }
 

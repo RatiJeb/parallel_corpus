@@ -60,7 +60,6 @@ ka:
     from_year: "წლიდან"
     to_year: "წლამდე"
     translated: "თარგმნილია"
-    results: "შედეგი"
     author: "ავტორი"
     translator: "მთარგმნელი"
     type: "ტიპი"
@@ -74,6 +73,7 @@ ka:
     from_records: "ჩანაწერიდან"
     previous: "წინა"
     next: "შემდეგი"
+    no_results: "მოიძებნა 0 ჩანაწერი"
   admin:
     fields: "დარგები"
     add_new_field: "ახალი დარგის დამატება"
