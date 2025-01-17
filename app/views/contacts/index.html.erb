@@ -1,0 +1,10 @@
+<div class="flex w-full px-8 mt-16">
+  <%= render 'contacts/form', locals: { feedback: @feedback } %>
+  <div class="flex-1 flex flex-col items-center my-2">
+    <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2978.4014772693295!2d44.748628100000005!3d41.7118548!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x4044733896d370a3%3A0x3510d0efe0a0792e!2zSWxpYSBTdGF0ZSBVbml2ZXJzaXR5LCBCdWlsZGluZyBGIC8g4YOY4YOa4YOY4YOQ4YOhIOGDoeGDkOGDruGDlOGDmuGDm-GDrOGDmOGDpOGDnSDhg6Phg5zhg5jhg5Xhg5Thg6Dhg6Hhg5jhg6Lhg5Thg6Lhg5gsIEYg4YOZ4YOd4YOg4YOe4YOj4YOh4YOY!5e0!3m2!1sen!2sge!4v1737051878814!5m2!1sen!2sge" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+    <p class="mt-4"><b><%= t('contact.info') %>:</b></p>
+    <p><%= t('contact.email') %>: sample@email.com</p>
+    <p><%= t('contact.phone') %>: 123 456 789</p>
+    <p><%= t('contact.address') %></p>
+  </div>
+</div>

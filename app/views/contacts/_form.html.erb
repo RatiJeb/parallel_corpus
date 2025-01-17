@@ -1,0 +1,27 @@
+<%= turbo_frame_tag 'feedback', class: 'flex-1 my-2' do %>
+  <% if @feedback.errors.any? %>
+    <div class="text-red-500 px-4">
+      <h2><%= pluralize(@feedback.errors.count, t('contact.error')) %>:</h2>
+      <ul>
+        <% @feedback.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% elsif @feedback.persisted? %>
+    <p class="px-4 pb-2 text-center text-green-600 font-bold"><%= t('contact.thanks') %></p>
+  <% end %>
+  <%= form_with model: @feedback, url: contacts_path, method: :post, class: 'flex flex-col px-4' do |f| %>
+    <%= f.label :first_name, class: 'mb-2' %>
+    <%= f.text_field :first_name, required: true %>
+    <%= f.label :last_name, class: 'my-2' %>
+    <%= f.text_field :last_name, required: true %>
+    <%= f.label :email, class: 'my-2' %>
+    <%= f.email_field :email, required: true %>
+    <%= f.label :subject, class: 'my-2' %>
+    <%= f.text_field :subject, required: true %>
+    <%= f.label :content, class: 'my-2' %>
+    <%= f.text_area :content, class: 'h-24', required: true %>
+    <%= f.submit t('contact.submit'), class: 'inline-flex block rounded-md bg-mountbatten-500 mt-4 px-3 py-4 text-center text-sm font-semibold text-white shadow-sm hover:bg-mountbatten-400 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-mountbatten-500' %>
+  <% end %>
+<% end %>

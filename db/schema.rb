@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_12_21_134854) do
+ActiveRecord::Schema[7.1].define(version: 2025_01_16_185855) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -107,6 +107,17 @@ ActiveRecord::Schema[7.1].define(version: 2024_12_21_134854) do
     t.index ["group_id", "order_number"], name: "index_collections_on_group_id_and_order_number", unique: true
     t.index ["group_id"], name: "index_collections_on_group_id"
     t.index ["old_id"], name: "index_collections_on_old_id", unique: true
+  end
+
+  create_table "feedbacks", force: :cascade do |t|
+    t.string "first_name", limit: 50, null: false
+    t.string "last_name", limit: 50, null: false
+    t.string "email", limit: 100, null: false
+    t.string "subject", limit: 255, null: false
+    t.text "content", null: false
+    t.boolean "read", default: false, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "fields", force: :cascade do |t|

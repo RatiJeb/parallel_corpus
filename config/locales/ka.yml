@@ -1,4 +1,19 @@
 ka:
+  activerecord:
+    errors:
+      messages:
+        blank: 'არ უნდა იყოს ცარიელი'
+        invalid: 'არასწორია'
+        too_long: 'ძალიან გრძელია (მაქსიმუმი არის %{count} სიმბოლო)'
+        record_invalid: 'არასწორი ჩანაწერი'
+    attributes:
+      feedback:
+        first_name: 'სახელი'
+        last_name: 'გვარი'
+        email: 'ელ.ფოსტა'
+        subject: 'სათაური'
+        content: 'თემა'
+
   app:
     title: "პარალელური კორპუსი"
   header:
@@ -228,3 +243,16 @@ ka:
         left: "მარცხნივ"
         right: "მარჯვნივ"
     collocate_count: "მოთხოვნილი სიტყვის სიხშირე: %{count}"
+  footer:
+    sponsors: "სპონსორები:"
+  contact:
+    info: "საკონტაქტო ინფორმაცია"
+    email: "ელ.ფოსტა"
+    phone: "ტელ"
+    address: "მისამართი: 3-5, ქ. ჩოლოყაშვილის გამზ. თბილისი"
+    submit: "გაგზავნა"
+    error: "შეცდომა"
+    thanks: "გმადლობთ უკუკავშირისთვის!"
+  feedback_mailer:
+    feedback:
+      subject: "უკუკავშირი %{visitor}-სგან: %{subject}"

@@ -228,3 +228,20 @@ en:
         left: "Left"
         right: "Right"
     collocate_count: "Requested word frequency: %{count}"
+  footer:
+    sponsors: "Sponsored by:"
+  contact:
+    info: "Contact Information"
+    email: "Email"
+    phone: "Tel"
+    address: "Address: 3-5, K. Cholokashvili Ave, Tbilisi"
+    first_name: "First Name"
+    last_name: "Last Name"
+    subject: "Subject"
+    content: "Content"
+    submit: "Send"
+    error: "error"
+    thanks: "Thank you for your feedback!"
+  feedback_mailer:
+    feedback:
+      subject: "Feedback - %{visitor}: %{subject}"

@@ -1,0 +1,17 @@
+<footer class="py-6 flex flex-col">
+  <div class="px-6 flex justify-center">
+    <%= link_to 'https://lexicography.iliauni.edu.ge/', class: 'px-6' do %>
+      <%= image_tag 'ISU-lexicography.png', alt: 'Ilia State University Lexicography Logo', class: 'h-16' %>
+    <% end %>
+    <%= link_to 'https://iliauni.edu.ge/' , class: 'px-6' do %>
+      <%= image_tag 'ISU.png', alt: 'Ilia State University Logo', class: 'h-16' %>
+    <% end %>
+    <%= link_to 'https://sulakauri.ge/' , class: 'px-6' do %>
+      <%= image_tag 'sulakauri.png', alt: 'Bakur Sulakauri logo', class: 'h-16' %>
+    <% end %>
+    <%= link_to 'https://unilab.iliauni.edu.ge/' , class: 'px-6' do %>
+      <%= image_tag 'unilab.png', alt: 'unilab logo', class: 'h-16' %>
+    <% end %>
+  </div>
+  <p class="text-center text-sm mt-4">© <%= Time.zone.today.year %></p>
+</footer>

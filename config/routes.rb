@@ -7,6 +7,7 @@ Rails.application.routes.draw do
     end
     resources :collocations, only: [:index]
     root 'text_blocks#index'
+    resources :contacts, only: %i[index create]
     devise_for :users, controllers: { invitations: 'users/invitations' }
 
     namespace :admin do

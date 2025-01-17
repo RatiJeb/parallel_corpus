@@ -53,7 +53,7 @@
               <a href="#" class="px-8 h-full py-3"><%= t('navbar.about_project') %></a>
             </div>
             <div class="inline-flex justify-center items-center bg-stone-100 text-md hover:bg-stone-50">
-              <a href="#" class="px-8 h-full py-3"><%= t('navbar.contact') %></a>
+              <%= link_to t('navbar.contact'), contacts_path(locale: I18n.locale), class: 'px-8 h-full py-3' %>
             </div>
           </div>
         </div>
