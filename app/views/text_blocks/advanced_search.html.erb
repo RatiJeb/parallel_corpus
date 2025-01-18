@@ -1,7 +1,7 @@
 <div data-controller="search-highlight" data-search-highlight-full-word-match-value="true">
 
-  <div class="max-w-screen-2xl mx-auto justify-items-stretch relative" style="display: grid; gap: 2rem; grid-auto-columns: 350px auto; grid-auto-rows: auto auto">
-    <div id="search-form-div" class="mt-4 flex" style="grid-row-start: 1; grid-row-end: 3; position: relative">
+  <div id='search-form-with-results' class="max-w-screen-2xl mx-auto justify-items-stretch flex relative">
+    <div id="search-form-div" class="mt-4 flex mr-8">
       <%= form_for @search, url: advanced_search_text_blocks_path(locale: I18n.locale), method: :get do |form| %>
         <div style="position: sticky; top: 16%; left: 3%">
           <div id='isVisible' class="py-4 px-4 flex grid grid-flow-row justify-items-stretch bg-stone-200" style="height: 80dvh; overflow-y:scroll;">
@@ -292,7 +292,7 @@
         </div>
       <% end %>
     </div>
-    <div id="search-result-div" class="flex" style="grid-area: 2 / 2 / auto / 3">
+    <div id="search-result-div" class="flex">
       <%= content_tag :div, t('advanced_search.no_results'), class: 'absolute top-6 right-16' if @text_block_pairs.blank? %>
       <div class="flex grid grid-flow-row">
         <div class="flex items-center justify-between py-3">

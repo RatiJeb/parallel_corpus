@@ -34,8 +34,8 @@ class TextBlock < ApplicationRecord
                    FROM text_blocks
                    INNER JOIN collections ON text_blocks.collection_id = collections.id AND collections.status = 0
                    INNER JOIN groups ON collections.group_id = groups.id AND groups.status = 0
-                   INNER JOIN supergroups ON groups.supergroup_id = supergroups.id AND supergroups.status = 0,
-                   LATERAL regexp_split_to_table(contents, '\s+') AS word
+                   INNER JOIN supergroups ON groups.supergroup_id = supergroups.id AND supergroups.status = 0
+                   INNER JOIN text_block_component_pivots ON text_blocks.id = text_block_component_pivots.text_block_id
                    GROUP BY language) AS word_counts
              GROUP BY language;"
 

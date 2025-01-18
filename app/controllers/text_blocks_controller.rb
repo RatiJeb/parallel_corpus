@@ -93,10 +93,19 @@ class TextBlocksController < ApplicationController
     supergroup_id = Supergroup.where(status: :active).pluck(:id)
     group_id = Group.where(status: :active, supergroup_id:).pluck(:id)
     collection_id = Collection.where(status: :active, group_id:).pluck(:id)
+    pairs_count = ActiveRecord::Base.connection.execute(
+      <<~SQL
+        SELECT count(*)
+        FROM text_block_pairs
+        INNER JOIN collections ON text_block_pairs.collection_id = collections.id AND collections.status = #{Collection.statuses['active']}
+        INNER JOIN groups ON collections.group_id = groups.id AND groups.status = #{Group.statuses['active']}
+        INNER JOIN supergroups ON groups.supergroup_id = supergroups.id AND supergroups.status = #{Supergroup.statuses['active']};
+      SQL
+    )
     value = {
-      pairs: ::NumbersFormattingService.call(Views::TextBlockPair.where(collection_id:).count),
-      collections: ::NumbersFormattingService.call(supergroup_id.count),
-      groups: ::NumbersFormattingService.call(group_id.count),
+      pairs: ::NumbersFormattingService.call(pairs_count.first['count']),
+      collections: ::NumbersFormattingService.call(collection_id.size),
+      groups: ::NumbersFormattingService.call(group_id.size),
       words: TextBlock.word_count_by_language,
     }
     CacheService.set('text_blocks_count', value, DateTime.current + 2.hours)
