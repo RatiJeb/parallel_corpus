@@ -203,8 +203,8 @@ ActiveRecord::Schema[7.1].define(version: 2025_01_17_180344) do
   end
 
   create_table "text_block_component_pivots", force: :cascade do |t|
-    t.bigint "text_block_id", null: false
-    t.bigint "text_block_component_id", null: false
+    t.bigint "text_block_id"
+    t.bigint "text_block_component_id"
     t.integer "position"
     t.index ["text_block_component_id", "text_block_id", "position"], name: "idx_on_text_block_component_id_text_block_id_positi_7b56eeaf41"
     t.index ["text_block_component_id"], name: "index_text_block_component_pivots_on_text_block_component_id"
@@ -213,11 +213,7 @@ ActiveRecord::Schema[7.1].define(version: 2025_01_17_180344) do
 
   create_table "text_block_components", force: :cascade do |t|
     t.string "value"
-    t.integer "language"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["language"], name: "index_text_block_components_on_language"
-    t.index ["value"], name: "index_text_block_components_on_value", unique: true
+    t.index ["value"], name: "index_text_block_components_on_value"
   end
 
   create_table "text_blocks", force: :cascade do |t|
@@ -297,8 +293,6 @@ ActiveRecord::Schema[7.1].define(version: 2025_01_17_180344) do
   add_foreign_key "collections", "groups"
   add_foreign_key "groups", "supergroups"
   add_foreign_key "terms", "text_blocks"
-  add_foreign_key "text_block_component_pivots", "text_block_components"
-  add_foreign_key "text_block_component_pivots", "text_blocks"
   add_foreign_key "text_blocks", "collections"
 
   create_view "collection_details", sql_definition: <<-SQL

@@ -36,42 +36,25 @@ module Admin
       def upsert_multiple_components
         sql = <<~SQL
           WITH cte AS (SELECT id,
-                 language,
-                 collection_id,
-                 order_number,
-                 old_id,
-                 LOWER(REGEXP_REPLACE(word, '^[^ა-ჰa-zA-Z0-9]+|[^ა-ჰa-zA-Z0-9]+$', '', 'g')) AS value,
-                 position
-          FROM text_blocks
-                   LEFT JOIN STRING_TO_TABLE(contents, ' ') WITH ORDINALITY AS WORD_WITH_POSITION(word, position) ON TRUE
-          WHERE id IN (#{TextBlock.where(collection_id: @collection.id).ids.to_s[1...-1]})),
-                   conflicted_records AS (
-                       SELECT id, value, language
-                       FROM text_block_components
-                       WHERE value IN (
-                           SELECT value
-                           FROM cte
-                           WHERE value IS NOT NULL AND value != ''
-                       )
-                   ),
-                         inserted_records AS (
-                             INSERT INTO text_block_components (value, language, created_at, updated_at)
-                                 SELECT cte.value, cte.language, NOW(), NOW()
-                                 FROM cte
-                                 WHERE value IS NOT NULL AND value != ''
-                                 ON CONFLICT (value) DO NOTHING
-                                 RETURNING id, value, language
-                         )
-               INSERT INTO text_block_component_pivots(text_block_id, text_block_component_id, position)
-                SELECT cte.id,
-                       text_block_comp.id,
-                       cte.position
-                FROM cte
-                  JOIN (SELECT id, value, language
-                    FROM inserted_records
-                    UNION ALL
-                    SELECT id, value, language
-                    FROM conflicted_records) text_block_comp ON text_block_comp.value = cte.value AND text_block_comp.language = cte.language;
+                              LOWER(REGEXP_REPLACE(word, '^[^ა-ჰa-zA-Z0-9]+|[^ა-ჰa-zA-Z0-9]+$', '', 'g')) AS value,
+                              position
+                       FROM text_blocks
+                                LEFT JOIN string_to_table(contents, ' ') WITH ORDINALITY AS word_with_position(word, position)
+                                          ON TRUE
+                       WHERE collection_id = #{@collection.id}),
+               insert_new_components AS (
+                   INSERT INTO text_block_components (value)
+                       SELECT DISTINCT cte.value
+                       FROM cte
+                                LEFT JOIN text_block_components comp ON cte.value = comp.value
+                       WHERE cte.value IS NOT NULL
+                         AND cte.value != ''
+                         AND comp.value IS NULL)
+          INSERT
+          INTO text_block_component_pivots (text_block_id, text_block_component_id, position)
+          SELECT cte.id, text_block_components.id, cte.position
+          FROM cte
+                   INNER JOIN text_block_components ON cte.value = text_block_components.value;
         SQL
         ActiveRecord::Base.connection.execute(sql)
       end
