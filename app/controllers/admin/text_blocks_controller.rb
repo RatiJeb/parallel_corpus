@@ -2,7 +2,6 @@ require 'tempfile'
 
 class Admin::TextBlocksController < Admin::BaseController
   before_action :set_search_params, only: [:index, :edit_multiple]
-  before_action :require_admin_or_superadmin, only: [:destroy_multiple]
 
   def index
     @collection = Collection.find(params[:collection_id]) unless params[:collection_id].blank?
