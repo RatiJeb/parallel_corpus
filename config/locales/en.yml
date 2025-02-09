@@ -188,8 +188,8 @@ en:
     title: "Do you want to delete the translator?"
     text: "This translator will be deleted completely"
   delete_text_pairs_modal:
-    title: "Do you want to delete text pairs?"
-    text: "All text pairs from selected collection will be deleted."
+    title: "Do you want to delete text pair?"
+    text: "Selected text pair from the collection will be deleted."
   delete_text_block_modal:
     title: "Do you want to delete the text block?"
     text: "This text block will be deleted completely."

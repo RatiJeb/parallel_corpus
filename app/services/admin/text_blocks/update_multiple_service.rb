@@ -23,7 +23,7 @@ module Admin
       end
 
       def upsert_multiple
-        upsert_params = @params[:text_blocks].map do |tb|
+        upsert_params = @params[:text_blocks].select { |tb| tb.keys.size == 4 }.map do |tb|
           param = tb.as_json(except: 'id')
           param['language'] = TextBlock.languages[param['language']]
           param['collection_id'] = @collection.id

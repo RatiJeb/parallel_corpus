@@ -1,5 +1,4 @@
 <div id="text-block-<%= block&.id || new_id %>" class="col-span-1<%= ' selected-text-block' if block&.id == selected_block_id %>">
-  <% if block.present? %>
     <div class="px-3 rounded-md ring-2 <%= language == 'ka' ? 'mr-3 bg-mountbatten-100 ring-mountbatten-500' : 'ml-3 bg-gray-100 ring-gray-500'%>">
       <div
         class="sm:items-start sm:gap-4 sm:py-3 w-full"
@@ -8,7 +7,7 @@
           <div class="flex items-center">
             <div class="grid justify-items-start">
               <div class="inline-flex" id="<%= "#{language.upcase}-#{order_number}" %>">
-                <%= "#{language.upcase}-#{order_number.to_i + 1}" %>
+                <%= "#{language.upcase}-#{order_number.to_i}" %>
               </div>
             </div>
           </div>
@@ -56,8 +55,8 @@
                   <textarea rows="8"
                             data-text-block-target="textarea"
                             class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-md focus:ring-oceanside-500 focus:border-oceanside-500 block w-full dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-oceanside-500 dark:focus:border-oceanside-500"
-                            id="<%= language %>_text_block_contents<%= block.id %>"
-                            spellcheck="false"><%= block.contents %></textarea>
+                            id="<%= language %>_text_block_contents<%= block&.id || new_id %>"
+                            spellcheck="false"><%= block&.contents %></textarea>
         </div>
       </div>
 
@@ -101,5 +100,4 @@
         </button>
       </div>
     </div>
-  <% end %>
 </div>

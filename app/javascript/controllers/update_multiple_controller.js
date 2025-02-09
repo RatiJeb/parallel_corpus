@@ -9,10 +9,10 @@ export default class extends Controller {
   async trigger() {
     const searchParams = new URLSearchParams(window.location.search);
     let params = {collection_id: searchParams.get('collection_id'), text_blocks: []}
-    document.querySelectorAll('[id^=\'text-block-\']:not([id^=\'text-block-dummy\']):not([id^=\'text-block-0\'])').forEach((block) => {
+    document.querySelectorAll('[id^=\'text-block-\']:not([id^=\'text-block-0\'])').forEach((block) => {
       let [language, order_number] = block.outerText.split('-')
       let id = block.id.split('text-block-')[1]
-      let contents = block.children[0].children[0].children[1].children[0].value
+      let contents = block?.children[0]?.children[0]?.children[1]?.children[0]?.value
       params.text_blocks.push({language: language.toLowerCase(), order_number, id, contents})
     })
 
@@ -23,8 +23,6 @@ export default class extends Controller {
     }else{
       window.alert('ცვლილებების შენახვისას წარმოიშვა შეცდომა.');
     }
-
-  //   data-new="true"
   }
 
 }

@@ -14,24 +14,20 @@ export default class extends Controller {
     const [newCardOrderId, languageIndex] = this.extractOrderIdAndLang(currentCard);
     const collectionId = searchParams.get('collection_id')
 
-    const newCardHTML = await this.fetchNewCardHTML(newCardOrderId, collectionId,languageIndex === 0 ? 'ka' : 'en');
+    const newCardHTML = await this.fetchNewCardHTML(newCardOrderId + 1, collectionId,languageIndex === 0 ? 'ka' : 'en');
     const nextContainer = parentContainer.nextElementSibling
     if (nextContainer) {
       const overflowCard = nextContainer.children[languageIndex];
       overflowCard.insertAdjacentHTML('beforebegin', newCardHTML);
       nextContainer.children[languageIndex + 1].remove()
-      if(!overflowCard.id.includes('text-block-dummy')){
-        overflowCard.children[0].children[0].children[0].children[0].innerText = `${languageIndex === 0 ? 'KA' : 'EN'}-${newCardOrderId + 2}`
-        this.moveCardToNextContainer(overflowCard, nextContainer, languageIndex, newCardOrderId + 3);
-      }
+      overflowCard.children[0].children[0].children[0].children[0].innerText = `${languageIndex === 0 ? 'KA' : 'EN'}-${newCardOrderId + 2}`
+      await this.moveCardToNextContainer(overflowCard, nextContainer, languageIndex, newCardOrderId + 3, collectionId);
     } else {
       const newContainer = document.createElement('div');
-      const dummyChild = document.createElement('div');
+      const newAdjacentCardHTML = await this.fetchNewCardHTML(newCardOrderId + 1, collectionId,languageIndex === 0 ? 'en' : 'ka');
       newContainer.classList.add('mt-3', 'flex', 'justify-stretch', 'grid', 'grid-cols-2', 'grid-flow-col', 'max-w-screen-2xl');
-      dummyChild.classList.add('col-span-1')
-      dummyChild.setAttribute('id', `text-block-dummy${Math.random()}`)
       newContainer.innerHTML = newCardHTML;
-      languageIndex === 0 ? newContainer.appendChild(dummyChild) : newContainer.insertBefore(dummyChild, newContainer.childNodes[0]);
+      languageIndex === 0 ? newContainer.children[0].insertAdjacentHTML('afterend', newAdjacentCardHTML) : newContainer.children[0].insertAdjacentHTML('beforebegin', newAdjacentCardHTML);
       parentContainer.parentNode.appendChild(newContainer);
     }
   }
@@ -47,26 +43,22 @@ export default class extends Controller {
     }
   }
 
-  moveCardToNextContainer(card, parentContainer, index, orderId) {
+  async moveCardToNextContainer(card, parentContainer, index, orderId, collectionId) {
     const nextContainer = parentContainer.nextElementSibling
 
     if (nextContainer) {
       const overflowCard = nextContainer.children[index];
       nextContainer.insertBefore(card, overflowCard);
       nextContainer.children[index + 1].remove()
-      if(!overflowCard.id.includes('text-block-dummy')){
-        overflowCard.children[0].children[0].children[0].children[0].innerText = `${index === 0 ? 'KA' : 'EN'}-${orderId}`
-        this.moveCardToNextContainer(overflowCard, nextContainer, index, orderId + 1);
-      }
+      overflowCard.children[0].children[0].children[0].children[0].innerText = `${index === 0 ? 'KA' : 'EN'}-${orderId}`
+      await this.moveCardToNextContainer(overflowCard, nextContainer, index, orderId + 1);
     } else {
-      // Create a new container and append the card
+      // Create a new container and append 2 empty cards
       const newContainer = document.createElement('div');
-      const dummyChild = document.createElement('div')
+      const newAdjacentCardHTML = await this.fetchNewCardHTML(orderId, collectionId,index === 0 ? 'en' : 'ka');
       newContainer.classList.add('mt-3', 'flex', 'justify-stretch', 'grid', 'grid-cols-2', 'grid-flow-col', 'max-w-screen-2xl');
-      dummyChild.classList.add('col-span-1')
-      dummyChild.setAttribute('id', `text-block-dummy${Math.random()}`)
       newContainer.appendChild(card);
-      index === 0 ? newContainer.appendChild(dummyChild) : newContainer.insertBefore(dummyChild, newContainer.childNodes[0]);
+      index === 0 ? newContainer.children[0].insertAdjacentHTML('afterend', newAdjacentCardHTML) : newContainer.children[0].insertAdjacentHTML('beforebegin', newAdjacentCardHTML);
       parentContainer.parentNode.appendChild(newContainer);
     }
   }
