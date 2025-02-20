@@ -40,7 +40,7 @@
                 </p>
               <% end %>
               <p>
-                <%= t('advanced_search.original_language') %>: <%= text_block_pair.original_language %>
+                <%= t('advanced_search.original_language') %>: <%= text_block_pair.collection.original_language %>
               </p>
               <p>
                 <%= t('advanced_search.published_date') %>: <%= text_block_pair.collection.year %>
@@ -54,12 +54,12 @@
             <div class="flex grid grid-flow-row space-y-4">
               <div class="inline-flex text-justify">
                 <span class="highlightable">
-                  <%= clean_from_tags(text_block_pair.original_contents.to_s) %>
+                  <%= clean_from_tags(text_block_pair.contents.to_s) %>
                 </span>
               </div>
               <div class="inline-flex text-justify">
                 <span class="highlightable">
-                  <%= clean_from_tags(text_block_pair.translation_contents.to_s) %>
+                  <%= clean_from_tags(text_block_pair.en_contents.to_s) %>
                 </span>
               </div>
             </div>

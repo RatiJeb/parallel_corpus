@@ -292,9 +292,9 @@
         </div>
       <% end %>
     </div>
-    <div id="search-result-div" class="flex">
-      <%= content_tag :div, t('advanced_search.no_results'), class: 'absolute top-6 right-16' if @text_block_pairs.blank? %>
-      <div class="flex grid grid-flow-row">
+    <div id="search-result-div" class="flex w-full">
+      <%= content_tag :div, t('advanced_search.results', results: 0), class: 'absolute top-6 right-16' if @text_block_pairs.blank? %>
+      <div class="w-full">
         <div class="flex items-center justify-between py-3">
           <% if @text_block_pairs.total_pages > 0 %>
             <%= render 'shared/paging', records: @text_block_pairs,

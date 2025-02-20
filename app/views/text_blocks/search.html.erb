@@ -4,10 +4,12 @@
       <%= render 'shared/search_bar' %>
     </div>
     <div class="inline-flex text-gray-400 text-sm items-center">
-      <%= @text_block_pairs.total_count %> <%= t('advanced_search.results') %>
+      <%= t('advanced_search.results', results: @text_block_pairs.total_count) %>
     </div>
   </div>
-
+  <div class="max-w-screen-2xl mx-auto flex items-center justify-between py-3">
+    <%= render 'shared/paging', records: @text_block_pairs, url_method: -> (**params){ search_text_blocks_path(**params) }, paging_params: { query: params[:query] } %>
+  </div>
   <div data-search-highlight-target="body" class="max-w-screen-2xl mx-auto flex grid grid-flow-row space-y-3">
     <%= render 'shared/search_results', text_block_pairs: @text_block_pairs %>
   </div>

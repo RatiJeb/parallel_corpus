@@ -58,7 +58,7 @@ en:
     from_records: "Records"
     previous: "Previous"
     next: "Next"
-    no_results: "Records not found"
+    results: "%{results} Records found"
   admin:
     fields: "Fields"
     add_new_field: "Add new Field"

@@ -6,8 +6,12 @@ class TextBlocksController < ApplicationController
   end
 
   def search
-    @text_block_pairs = Views::TextBlockPair
-    @text_block_pairs = @text_block_pairs
+    @text_block_pairs = TextBlock
+                          .select(' COALESCE(text_blocks.id, tb_en.id) AS id,
+                                    COALESCE(text_blocks.collection_id, tb_en.collection_id) AS collection_id,
+                                    COALESCE(text_blocks.order_number, tb_en.order_number) AS order_number,
+                                    text_blocks.contents,
+                                    tb_en.contents AS en_contents')
                           .includes(
                             collection:
                               [
@@ -21,32 +25,42 @@ class TextBlocksController < ApplicationController
                               ],
                           )
                           .joins(collection: { group: :supergroup })
+                          .joins(matched_text_blocks_sql)
+                          .joins(en_text_blocks_sql)
                           .merge(Collection.active)
                           .merge(Group.active)
                           .merge(Supergroup.active)
-                          .search(params[:query])
-                          .order(:original_id)
+                          .where(language: :ka)
+                          .order(:collection_id, :order_number)
                           .page(params[:page])
                           .per(20)
                           .load
   end
 
   def advanced_search
-    @text_block_pairs = Views::TextBlockPair
+    @text_block_pairs = TextBlock
     @text_block_pairs = @text_block_pairs.none.page(0) if filter_params_missing?
+    @text_block_pairs = @text_block_pairs
+                          .select(' COALESCE(text_blocks.id, tb_en.id) AS id,
+                                    COALESCE(text_blocks.collection_id, tb_en.collection_id) AS collection_id,
+                                    COALESCE(text_blocks.order_number, tb_en.order_number) AS order_number,
+                                    text_blocks.contents,
+                                    tb_en.contents AS en_contents')
+                          .joins(en_text_blocks_sql)
+                          .joins(matched_text_blocks_sql)
 
-    return if @text_block_pairs.blank?
-
-    @text_block_pairs = @text_block_pairs.includes(collection: :group).where(collection: Collection.where(group: Group.where(supergroup: Supergroup.where(status: :active), status: :active), status: :active)).search(params[:query], params[:exact_match].to_s != '0') #, params[:termin].to_s != "0")
+    @text_block_pairs = @text_block_pairs.includes(collection: %i[group authors translators types genres fields publishings])
+    @text_block_pairs = @text_block_pairs.where(collection: Collection.where(group: Group.where(supergroup: Supergroup.where(status: :active), status: :active), status: :active))
 
     if params[:collocations].present?
       first_id = TextBlockComponent.find_by(value: params[:collocations][:first])&.id
       second_id = TextBlockComponent.find_by(value: params[:collocations][:second])&.id
-      @text_block_pairs = @text_block_pairs.where(original_id: TextBlockComponentPivot.joins("INNER JOIN text_block_component_pivots p2 on text_block_component_pivots.text_block_id = p2.text_block_id and text_block_component_pivots.text_block_component_id = #{first_id} AND p2.text_block_component_id = #{second_id} AND text_block_component_pivots.position + 1 = p2.position").select(:text_block_id))
+      @text_block_pairs = @text_block_pairs.where(id: TextBlockComponentPivot.joins("INNER JOIN text_block_component_pivots p2 on text_block_component_pivots.text_block_id = p2.text_block_id and text_block_component_pivots.text_block_component_id = #{first_id} AND p2.text_block_component_id = #{second_id} AND text_block_component_pivots.position + 1 = p2.position").select(:text_block_id))
     end
 
     if params[:original_language].present? && params[:original_language] != 'both'
-      @text_block_pairs = @text_block_pairs.where(original_language: params[:original_language] == 'ka' ? 0 : 1)
+      @text_block_pairs = @text_block_pairs
+                            .where(collection: { original_language: params[:original_language] == 'ka' ? 0 : 1 })
     end
 
     @text_block_pairs = @text_block_pairs.where(collection: { year: params[:year_start]..params[:year_end] }) if params[:year_start].present? || params[:year_end].present?
@@ -66,7 +80,7 @@ class TextBlocksController < ApplicationController
       @text_block_pairs = @text_block_pairs.where(collection: collections.matching_types(params[:search_text_block_pair][:type_ids])) if params[:search_text_block_pair][:type_ids]&.any?(&:present?)
     end
 
-    @text_block_pairs = @text_block_pairs.order(:original_id).page(params[:page]).per(20)
+    @text_block_pairs = @text_block_pairs.order(:id).page(params[:page]).per(20)
   end
 
   private
@@ -93,17 +107,20 @@ class TextBlocksController < ApplicationController
     supergroup_id = Supergroup.where(status: :active).pluck(:id)
     group_id = Group.where(status: :active, supergroup_id:).pluck(:id)
     collection_id = Collection.where(status: :active, group_id:).pluck(:id)
-    pairs_count = ActiveRecord::Base.connection.execute(
-      <<~SQL
-        SELECT count(*)
-        FROM text_block_pairs
-        INNER JOIN collections ON text_block_pairs.collection_id = collections.id AND collections.status = #{Collection.statuses['active']}
-        INNER JOIN groups ON collections.group_id = groups.id AND groups.status = #{Group.statuses['active']}
-        INNER JOIN supergroups ON groups.supergroup_id = supergroups.id AND supergroups.status = #{Supergroup.statuses['active']};
-      SQL
-    )
+    pairs_count = TextBlock
+                    .joins("FULL OUTER JOIN text_blocks tb_1
+                            ON text_blocks.collection_id = tb_1.collection_id
+                            AND text_blocks.order_number = tb_1.order_number
+                            AND text_blocks.language != tb_1.language")
+                    .joins(collection: { group: :supergroup })
+                    .merge(Collection.active)
+                    .merge(Group.active)
+                    .merge(Supergroup.active)
+                    .where('text_blocks.language = 0 OR text_blocks.language IS NULL')
+                    .group(:collection_id, :order_number)
+                    .count.count
     value = {
-      pairs: ::NumbersFormattingService.call(pairs_count.first['count']),
+      pairs: ::NumbersFormattingService.call(pairs_count),
       collections: ::NumbersFormattingService.call(collection_id.size),
       groups: ::NumbersFormattingService.call(group_id.size),
       words: TextBlock.word_count_by_language,
@@ -117,5 +134,36 @@ class TextBlocksController < ApplicationController
       params[:translators].present? || params[:year_start].present? || params[:year_end].present? ||
       params[:translation_year_start].present? || params[:translation_year_start].present? ||
       params[:search_text_block_pair]&.values&.flatten&.select(&:present?).present?)
+  end
+
+  def en_text_blocks_sql
+    <<~SQL
+      FULL OUTER JOIN text_blocks tb_en
+        ON tb_en.order_number = text_blocks.order_number
+        AND tb_en.collection_id = text_blocks.collection_id
+        AND tb_en.language != text_blocks.language
+    SQL
+  end
+
+  def matched_text_blocks_sql
+    return if params[:query].blank?
+
+    <<~SQL
+      INNER JOIN (SELECT tb.collection_id, tb.order_number
+            FROM text_blocks tb
+            LEFT JOIN text_blocks tb_1
+              ON tb.collection_id = tb_1.collection_id
+              AND tb.order_number = tb_1.order_number
+              AND tb.language != tb_1.language
+            WHERE tb.contents ~* '#{match_regex}'
+            GROUP BY tb.collection_id, tb.order_number) text_block_match
+              ON text_blocks.order_number = text_block_match.order_number
+              AND text_blocks.collection_id = text_block_match.collection_id
+              AND text_blocks.language = 0
+    SQL
+  end
+
+  def match_regex
+    params[:exact_match].to_s == '1' ? "(^|[^a-zA-Z0-9ა-ჰ-])#{params[:query]}($|[^a-zA-Z0-9ა-ჰ-])" : params[:query]
   end
 end

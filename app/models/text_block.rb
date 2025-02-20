@@ -50,4 +50,8 @@ class TextBlock < ApplicationRecord
   def serialize
     JSON.generate(as_json)
   end
+
+  def en_contents
+    read_attribute(:en_contents)
+  end
 end
