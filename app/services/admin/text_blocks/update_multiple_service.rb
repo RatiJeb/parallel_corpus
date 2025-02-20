@@ -7,7 +7,7 @@ module Admin
 
       def call
         ActiveRecord::Base.transaction do
-          @collection = Collection.find(@params[:collection_id])
+          @collection = Collection.includes(group: :supergroup).find(@params[:collection_id])
           destroy_multiple
           upsert_multiple
           upsert_multiple_components
@@ -34,6 +34,8 @@ module Admin
       end
 
       def upsert_multiple_components
+        return unless @collection.active? && @collection.group.active? && @collection.group.supergroup.active?
+
         sql = <<~SQL
           WITH cte AS (SELECT id,
                               LOWER(REGEXP_REPLACE(word, '^[^ა-ჰa-zA-Z0-9]+|[^ა-ჰa-zA-Z0-9]+$', '', 'g')) AS value,

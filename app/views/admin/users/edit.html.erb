@@ -9,7 +9,7 @@
 
     <%= render 'admin/shared/breadcrumbs', crumbs: crumbs %>
 
-    <%= render 'admin/users/shared/form', url: admin_user_path(locale: I18n.locale), method: :put %>
+    <%= render 'admin/users/shared/form', url: admin_user_path(@user, locale: I18n.locale), method: :put %>
 
     <%= render 'admin/shared/confirm_delete_modal', modal_title: t('delete_user_modal.title'), modal_text: t('delete_user_modal.text') %>
   </div>

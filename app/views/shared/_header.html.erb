@@ -44,7 +44,7 @@
               </div>
             <% end %>
             <div class="inline-flex justify-center items-center bg-stone-100 text-md hover:bg-stone-50">
-              <%= link_to t('navbar.collocations'), collocations_path(locale: I18n.locale, query: params[:query]), class: 'px-8 h-full py-3' %>
+              <%= link_to t('navbar.collocations'), collocations_path(locale: I18n.locale, query: params.dig(:collocations, :collocate) || params[:query]), class: 'px-8 h-full py-3' %>
             </div>
             <div class="inline-flex justify-center items-center bg-stone-100 text-md hover:bg-stone-50">
               <a href="#" class="px-8 h-full py-3"><%= t('navbar.instructions') %></a>

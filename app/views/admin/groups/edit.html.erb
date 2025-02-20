@@ -10,7 +10,7 @@
 
     <%= render 'admin/shared/breadcrumbs', crumbs: crumbs %>
 
-    <%= render 'admin/groups/shared/form', url: admin_group_path(locale: I18n.locale), method: :put %>
+    <%= render 'admin/groups/shared/form', url: admin_group_path(@group, locale: I18n.locale), method: :put %>
 
     <%= render 'admin/shared/confirm_delete_modal', modal_title: t('delete_group_modal.title'), modal_text: t('delete_group_modal.text') %>
   </div>

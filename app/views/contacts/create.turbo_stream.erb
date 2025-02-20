@@ -1,1 +1,7 @@
-<%= turbo_stream.replace 'feedback', partial: 'contacts/form', locals: { feedback: @feedback } %>
+<% if @feedback.errors.any? %>
+  <%= turbo_stream.replace 'feedback', partial: 'contacts/form', locals: { feedback: @feedback } %>
+<% else %>
+  <% feedback = @feedback.class.new %>
+  <% def feedback.persisted?; true; end %>
+  <%= turbo_stream.replace 'feedback', partial: 'contacts/form', locals: { feedback: } %>
+<% end %>

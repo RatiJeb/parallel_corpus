@@ -11,7 +11,7 @@
 
     <%= render 'admin/shared/breadcrumbs', crumbs: crumbs %>
 
-    <%= render 'admin/collections/shared/form', url: admin_collection_path(locale: I18n.locale), method: :put %>
+    <%= render 'admin/collections/shared/form', url: admin_collection_path(@collection, locale: I18n.locale), method: :put %>
 
     <%= render 'admin/shared/confirm_delete_modal', modal_title: t('delete_collection_modal.modal_title'), modal_text: t('delete_collection_modal.modal_text') %>
   </div>

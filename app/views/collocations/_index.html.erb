@@ -20,7 +20,7 @@
         </div>
         <div class="table-row-group font-medium h-3">
           <% collocations_data[:left]&.each do |collocation_data| %>
-            <%= link_to advanced_search_text_blocks_path(collocations: {first: collocation_data.attributes['value'], second: params[:query]}), class:'table-row', data: { turbo: false } do %>
+            <%= link_to advanced_search_text_blocks_path(collocations: { collocate: params[:query], first: collocation_data.attributes['value'], second: params[:query] }), class:'table-row', data: { turbo: false } do %>
               <div class="table-cell px-4 border-stone-100 border-2 text-left"><%= collocation_data.attributes['value'] %></div>
               <div class="table-cell">
                 <div class="flex">
@@ -59,7 +59,7 @@
         </div>
         <div class="table-row-group font-medium h-3">
           <% collocations_data[:right]&.each do |collocation_data| %>
-            <%= link_to advanced_search_text_blocks_path(collocations: {first: params[:query], second:  collocation_data.attributes['value']}), class:'table-row', data: { turbo: false } do %>
+            <%= link_to advanced_search_text_blocks_path(collocations: { collocate: params[:query], first: params[:query], second:  collocation_data.attributes['value'] }), class:'table-row', data: { turbo: false } do %>
               <div class="table-cell px-4 border-stone-100 border-2 text-left"><%= collocation_data.attributes['value'] %></div>
               <div class="table-cell">
                 <div class="flex">

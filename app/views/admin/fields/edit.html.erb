@@ -3,7 +3,7 @@
 <main>
   <div class="mx-auto max-w-screen-2xl sm:px-6 lg:px-8">
     <%= render('admin/shared/form',
-               url: admin_field_path(locale: I18n.locale),
+               url: admin_field_path(@field, locale: I18n.locale),
                method: :put,
                record: @field,
                back_url: admin_fields_path(locale: I18n.locale),

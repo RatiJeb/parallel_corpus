@@ -41,7 +41,7 @@
                                columns: { uid: true,
                                           edit_url_method: -> (**params){ edit_admin_publishing_path(**params.merge(locale: I18n.locale)) },
                                           edit_url_params: { id: publishing.id },
-                                          delete_url_method: -> (record){ admin_publishing_index_path(record) },
+                                          delete_url_method: -> (record){ admin_publishing_path(record) },
                                           delete_redirect_url_method: admin_publishing_index_path(locale: I18n.locale),
                                           delete_modal_title: t('delete_publishing_modal.title'),
                                           delete_modal_text: t('delete_publishing_modal.text'),

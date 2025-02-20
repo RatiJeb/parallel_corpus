@@ -9,7 +9,7 @@
 
     <%= render 'admin/shared/breadcrumbs', crumbs: crumbs %>
 
-    <%= render 'admin/supergroups/shared/form', url: admin_supergroup_path(locale: I18n.locale), method: :put %>
+    <%= render 'admin/supergroups/shared/form', url: admin_supergroup_path(@supergroup, locale: I18n.locale), method: :put %>
 
     <%= render 'admin/shared/confirm_delete_modal', modal_title: t('delete_sub_corpora_modal.title'), modal_text: t('delete_sub_corpora_modal.text') %>
   </div>

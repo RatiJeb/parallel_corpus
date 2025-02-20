@@ -21,7 +21,7 @@ class Admin::PublishingController < Admin::BaseController
   def create
     @publishing = Publishing.new(publishing_params)
     if @publishing.save
-      redirect_to admin_publishings_path
+      redirect_to admin_publishing_index_path
     else
       render :new, status: :unprocessable_entity
     end
@@ -34,7 +34,7 @@ class Admin::PublishingController < Admin::BaseController
   def update
     @publishing = Publishing.find(params[:id])
     if @publishing.update(publishing_params)
-      redirect_to admin_publishings_path
+      redirect_to admin_publishing_index_path
     else
       render :edit, status: :unprocessable_entity
     end

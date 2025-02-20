@@ -97,7 +97,7 @@
     <% if (current_user.admin? || current_user.superadmin?) && @group.persisted? %>
       <button type="button"
               data-controller="delete-record"
-              data-delete-record-url-value="<%= admin_group_path(@group) %>"
+              data-delete-record-url-value="<%= admin_group_path(@group, locale: I18n.locale) %>"
               data-delete-record-redirect-url-value="<%= admin_groups_path(locale: I18n.locale, supergroup_id: @group.supergroup.id) %>"
               data-action="click->delete-record#submit"
               class="inline-flex justify-center rounded-md bg-gray-500 ring-2 ring-gray-500 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-gray-400 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gray-500">

@@ -3,11 +3,11 @@
 <main>
   <div class="mx-auto max-w-screen-2xl sm:px-6 lg:px-8">
     <%= render('admin/shared/form',
-               url: admin_publishing_index_path(locale: I18n.locale),
+               url: admin_publishing_path(@publishing, locale: I18n.locale),
                method: :put,
                record: @publishing,
                back_url: admin_publishing_index_path(locale: I18n.locale),
-               delete_url: ->(record){ admin_publishing_index_path(record) }
+               delete_url: ->(record){ admin_publishing_path(record) }
               ) %>
 
     <%= render 'admin/shared/confirm_delete_modal', modal_title: t('delete_publishing_modal.title'), modal_text: t('delete_publishing_modal.text') %>

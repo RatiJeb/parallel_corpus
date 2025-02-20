@@ -4,7 +4,7 @@ class CollocationsController < ApplicationController
   def index
     @collocations_data = {}
 
-    return unless params[:query].present?
+    return if params[:query].blank?
 
     @collocations_data[:all_count] = TextBlockComponentPivot.count
     @collocations_data[:first_count] = TextBlockComponentPivot

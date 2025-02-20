@@ -6,6 +6,7 @@ class TextBlock < ApplicationRecord
   has_one :supergroup, through: :group
   has_many :text_block_component_pivots, dependent: :destroy
   has_many :text_block_components, through: :text_block_component_pivots
+  has_many :terms, dependent: :destroy
 
   enum language: { ka: 0, en: 1 }
 

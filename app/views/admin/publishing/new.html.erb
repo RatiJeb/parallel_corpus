@@ -6,7 +6,7 @@
                url: admin_publishing_index_path(locale: I18n.locale),
                method: :post,
                record: @publishing,
-               back_url: admin_publishing_index_path
+               back_url: admin_publishing_index_path(locale: I18n.locale)
               ) %>
   </div>
 </main>
